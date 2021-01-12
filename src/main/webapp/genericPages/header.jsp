@@ -26,7 +26,7 @@
                         <div style="border: 2px solid #ffffff; border-radius: 50%;
                              width: 40px; height: 40px; padding: 3px; background-color: white;
                              margin-left: 5%;">
-                            <img width="18" height="18" src="icons/ic_user.svg" alt="User"/>
+                            <img width="18" height="18" src="../icons/ic_user.svg" alt="User"/>
                         </div>
                     </td>
                 </tr>

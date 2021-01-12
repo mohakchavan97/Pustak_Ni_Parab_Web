@@ -1,0 +1,42 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 13 Jan, 2021, 1:03:47 AM
+    Author     : Mohak Chavan
+*/
+
+input{
+    font-size: large;
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-color: #767676;
+    transition: 0.25s ease-in-out;
+    -webkit-transition: 0.25s ease-in-out;
+}
+
+input[type="submit"]{
+    border: 0px;
+    background-color: #008577;
+    color: #ffffff;
+}
+
+input[type="submit"]:focus{
+    outline-width: 0px;
+}
+
+input[type="text"]:focus, input[type="number"]:focus{
+    outline-width: 0px;
+    border-bottom-color: #008577;
+}
+
+select:focus {
+    outline-color: #008577;
+}
+
+select, input{
+    padding: 1.5% 2%;
+}

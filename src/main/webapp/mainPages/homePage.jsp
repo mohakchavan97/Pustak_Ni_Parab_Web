@@ -12,13 +12,12 @@
         <title>JSP Page</title>
     </head>
     <body style="background-color: white;">
-
         
-        <jsp:include page="genericPages/header.jsp" flush="true">
+        <jsp:include page="../genericPages/header.jsp" flush="true">
              <jsp:param name="userName" value="<%=request.getParameter(\"user\")%>"/>
         </jsp:include>
          
-        <div id="homeContent">
+        <div id="homeContent" style="margin-top: 15%;">
         </div>
 
     </body>
