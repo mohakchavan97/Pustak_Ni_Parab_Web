@@ -18,13 +18,13 @@ input{
     -webkit-transition: 0.25s ease-in-out;
 }
 
-input[type="submit"]{
+input[type="submit"], input[type="button"]{
     border: 0px;
     background-color: #008577;
     color: #ffffff;
 }
 
-input[type="submit"]:focus{
+input[type="submit"]:focus, input[type="button"]:focus{
     outline-width: 0px;
 }
 

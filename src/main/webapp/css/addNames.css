@@ -4,7 +4,7 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : 13 Jan, 2021, 12:07:38 AM
+    Created on : 25 Jan, 2021, 12:40:13 PM
     Author     : Mohak Chavan
 */
 
@@ -14,14 +14,13 @@ and open the template in the editor.
     margin-right: 2%;
     font-size: large;
     padding-right: 3%;
+    white-space: nowrap;
+    float: right;
+    clear: right;
 }
 
 .spanClass{
     font-size: larger;
     padding-right: 2%;
     width: 125px;
-}
-
-select{
-    font-size: medium;
 }
