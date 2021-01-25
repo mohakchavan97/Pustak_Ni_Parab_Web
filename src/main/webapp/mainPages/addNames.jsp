@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add Names</title>
-	<!--<script type="text/javascript" src="../javascripts/issues.js"></script>-->
+	<script type="text/javascript" src="../javascripts/addNames.js"></script>
 	<link rel="stylesheet" href="../css/addNames.css"/>
     </head>
     <body style="background-color: white;">
