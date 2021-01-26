@@ -1,0 +1,45 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25 Jan, 2021, 6:01:00 PM
+    Author     : Mohak Chavan
+*/
+
+@import "base.css";
+
+.spanClass{
+    font-size: xx-large;
+    padding: 3%;
+    border-right: 2px solid darkgray;
+    width: 13%;
+}
+
+.td-content{
+    margin-left: 2%;
+    width: 90%;
+    padding-top: 2%;
+    border-bottom: 2px solid darkgray;
+    padding-bottom: 3%;
+    padding-left: 2%;
+}
+
+div#nameCard{
+    width: 30%;
+    /*height: 100px;
+    padding: 15px;*/
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 1px 2px 9px 1px grey;
+    margin: 1%;
+    border: 2px solid #008577;
+}
+
+.cardTable{
+    width: 100%;
+    background-color: white; 
+    border-radius: 5px;
+    padding: 1.5% 1.5% 1.5% 0%;
+}

@@ -15,7 +15,7 @@
     </head>
     <body style="background-color: white;">
 
-        <jsp:include page="../genericPages/header.jsp" flush="true">
+        <jsp:include page="../genericContent/header.jsp" flush="true">
             <jsp:param name="userName" value="<%=request.getParameter(\"user\")%>"/>
         </jsp:include>
 
