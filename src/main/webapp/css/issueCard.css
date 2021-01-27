@@ -1,0 +1,118 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 26 Jan, 2021, 4:53:11 PM
+    Author     : Mohak Chavan
+*/
+
+@import "base.css";
+
+:root{
+    --green: #008577;
+    --pink: #D81B60;
+}
+
+.td-th-large{
+    margin-right: 2%;
+    font-size: large;
+    padding-right: 3%;
+    padding-bottom: 1.5%;
+}
+
+.td-content{
+    padding-top: 1%;
+    padding-bottom: 2%;
+}
+
+.td-content-1{
+    text-align: left;
+    width: 20%;
+    padding-left: 6%;
+}
+
+.spanClass{
+    font-size: larger;
+    padding-right: 2%;
+    width: 125px;
+}
+
+.issueCard{
+    width: 30%;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 1px 2px 9px 1px grey;
+    margin: 1%;
+    border: 2px solid var(--green);
+}
+
+.issueTable{
+    width: 100%;
+    background-color: white;
+    border-radius: 5px;
+    padding: 2% 2% 0% 2%;
+}
+
+.issueCheckBox{
+    --size: 20px;
+    width: var(--size);
+    height: var(--size);
+}
+
+.container{
+    cursor: pointer;
+}
+
+.container input[type="checkbox"]{
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.checkMark{
+    --checkBoxSize: 20px;
+    position: absolute;
+    width: var(--checkBoxSize);
+    height: var(--checkBoxSize);
+    background-color: white;
+    border: 2px solid darkgray;
+}
+
+.container:hover input ~ .checkMark{
+    background-color: lightgray;
+}
+
+.container input:active ~ .checkMark{
+    border-color: var(--green);
+    box-shadow: 0px 3px 7px 1px grey;
+}
+
+.container input:checked ~ .checkMark{
+    background-color: var(--pink);
+    border-color: var(--pink);
+}
+
+.checkMark:after{
+    content: "";
+    position: absolute;
+    /*display: none;*/
+}
+
+.container input:checked ~ .checkMark:after{
+    /*display: block;*/
+}
+
+.container .checkMark:after{
+    left: 5px;
+    bottom: 5px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
