@@ -33,12 +33,6 @@ and open the template in the editor.
     padding-left: 6%;
 }
 
-.spanClass{
-    font-size: larger;
-    padding-right: 2%;
-    width: 125px;
-}
-
 .issueCard{
     width: 30%;
     border-radius: 5px;

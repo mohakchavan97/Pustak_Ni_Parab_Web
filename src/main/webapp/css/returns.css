@@ -1,0 +1,56 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 27 Jan, 2021, 11:15:46 AM
+    Author     : Mohak Chavan
+*/
+
+
+@import "base.css";
+
+.returnTable .td-th-large{
+    margin-right: 1%;
+    font-size: large;
+    padding-right: 3%;
+}
+
+.returnTable .spanClass{
+    font-size: larger;
+    padding: 3% 3% 2% 3%;;
+}
+
+.returnTable.spanClass{
+    font-size: xx-large;
+    font-weight: bold;
+    padding: 3% 2% 0% 2%;
+}
+
+#returnContent .returnTable{
+    float: left;
+    width: 40%;
+    padding-bottom: 2%;
+}
+
+select{
+    font-size: medium;
+    width: 80%;
+}
+
+.submitButton{
+    font-weight: bold;
+    font-variant: all-petite-caps;
+    font-size: large;
+    position: fixed;
+    bottom: 1%;
+    width: 16%;
+    left: 42%;
+    z-index: 5;
+    box-shadow: 0px 2px 8px 3px grey;
+}
+
+.issueCard:last-child{
+    margin-bottom: 7%;
+}

@@ -14,7 +14,7 @@
     <body>
 
         <div id="header" style="position: fixed; top: 0%; left: 0.5%; right: 0.5%; background-color: white;
-	     box-shadow: 0px 2px 5px 4px grey;">
+	     box-shadow: 0px 2px 5px 4px grey; z-index: 10;">
             <table style="width: 100%; background-color: #008577; margin-top: 0.1%;" border="0" align="center">
                 <tr>
                     <th style="width: 90%">

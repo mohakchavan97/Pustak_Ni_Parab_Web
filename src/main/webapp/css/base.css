@@ -27,6 +27,7 @@ input[type="submit"], input[type="button"]{
     border: 0px;
     background-color: var(--primary_color);
     color: #ffffff;
+    cursor: pointer;
 }
 
 input[type="submit"]:focus, input[type="button"]:focus{
