@@ -9,6 +9,9 @@ package com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers;
  *
  * @author Mohak Chavan
  */
-public class BaseAuthenticator {
+public class FirebaseAuthenticator {
+
+    public FirebaseAuthenticator() {
+    }
     
 }

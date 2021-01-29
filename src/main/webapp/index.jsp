@@ -23,7 +23,7 @@
             }
         </script>
         <div>
-            <form action="UserSignedIn" method="post" id="userForm">
+            <form action="HomePage" method="post" id="userForm">
                 <input type="hidden" id="idToken" name="idToken"/>
                 <input type="hidden" id="accessToken" name="accessToken"/>
             </form>

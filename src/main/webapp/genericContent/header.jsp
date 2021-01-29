@@ -21,12 +21,15 @@
                         <h1 align="center" style="color: white;">Pustak Ni Parab</h1>
                     </th>
                     <th style="width: 6%;">
-                        <h4 align="right" style="color: white;"><%=request.getParameter("userName")%></h4>
+                        <h4 align="right" style="color: white;"><%=request.getParameter("userGivenName")%></h4>
                     </th>
                     <td style="width: 4%; padding-right: 2%;">
-                        <div style="border: 2px solid #ffffff; border-radius: 50%;
-                             width: 40px; height: 40px; padding: 3px; background-color: white; margin-left: 5%;">
-                            <img width="18" height="18" src="../icons/ic_user.svg" alt="User"/>
+                        <div style="border: 2px solid #ffffff; border-radius: 50%; width: 50px; height: 50px;
+			     background-color: white; margin-left: 5%; overflow: hidden;">
+                            <!--src="../icons/ic_user.svg"-->
+			    <img style="width: 100%; height: 100%; object-fit: cover;"
+				 src="<%=request.getParameter("userPhoto")%>"
+				 alt="User"/>
                         </div>
                     </td>
                 </tr>
