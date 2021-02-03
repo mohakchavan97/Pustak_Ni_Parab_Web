@@ -4,6 +4,7 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.Models.CurrentUser"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,6 +21,9 @@
                     <th style="width: 90%">
                         <h1 align="center" style="color: white;">Pustak Ni Parab</h1>
                     </th>
+		    <%
+			if (!CurrentUser.getDisplayName().isEmpty() && CurrentUser.getDisplayName() != null) {
+		    %>
                     <th style="width: 6%;">
                         <h4 align="right" style="color: white;"><%=request.getParameter("userGivenName")%></h4>
                     </th>
@@ -32,6 +36,9 @@
 				 alt="User"/>
                         </div>
                     </td>
+		    <%
+			}
+		    %>
                 </tr>
             </table>
         </div>
