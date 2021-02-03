@@ -30,5 +30,7 @@ public final class Constants {
     }
 
     public static final String GOOGLE_CLIENT_ID = "172709641516-rdv19n8cbqpb1u4p3d0tfhp3fqht9dbk.apps.googleusercontent.com";
+    public static final String GOOGLE_ISSUER_1 = "accounts.google.com";
+    public static final String GOOGLE_ISSUER_2 = "https://accounts.google.com";
 
 }

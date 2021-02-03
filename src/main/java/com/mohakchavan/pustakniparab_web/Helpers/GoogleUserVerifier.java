@@ -9,11 +9,13 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.BaseAuthenticator;
 import com.mohakchavan.pustakniparab_web.Models.CurrentUser;
 import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 
 /**
  *
@@ -21,12 +23,26 @@ import java.util.logging.Logger;
  */
 public class GoogleUserVerifier {
 
+    private BaseAuthenticator baseAuthenticator;
+
     public GoogleUserVerifier() {
+    }
+
+    public GoogleUserVerifier(ServletContext context) {
+	baseAuthenticator = new BaseAuthenticator(context);
     }
 
     public void verifyUser(String idToken) {
 	try {
 	    final GoogleIdToken.Payload payload = verifyUserAndGetPayload(idToken);
+
+	    if (!Constants.GOOGLE_CLIENT_ID.equals(payload.getAudience())) {
+		throw new IllegalArgumentException("Audience mismatch");
+	    } else if (!Constants.GOOGLE_CLIENT_ID.equals(payload.getAuthorizedParty())) {
+		throw new IllegalArgumentException("Client ID mismatch");
+	    } else if (!Constants.GOOGLE_ISSUER_1.equals(payload.getIssuer()) && !Constants.GOOGLE_ISSUER_2.equals(payload.getIssuer())) {
+		throw new IllegalArgumentException("Issuer mismatch");
+	    }
 
 	    CurrentUser.setCurrentUser(
 		    payload.getSubject(),
@@ -34,8 +50,10 @@ public class GoogleUserVerifier {
 		    payload.getEmail(),
 		    payload.get("picture").toString(),
 		    payload.getIssuer());
+
 	} catch (Exception ex) {
 	    Logger.getLogger(GoogleUserVerifier.class.getName()).log(Level.SEVERE, null, ex);
+	    System.out.println(ex.toString());
 	}
     }
 

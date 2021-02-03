@@ -7,21 +7,15 @@ package com.mohakchavan.pustakniparab_web.MainServlets;
 
 import com.mohakchavan.pustakniparab_web.Helpers.GoogleUserVerifier;
 import com.mohakchavan.pustakniparab_web.Models.CurrentUser;
-import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -52,18 +46,21 @@ public class HomePage extends HttpServlet {
 
 	    String idToken = request.getParameter("idToken").trim();
 	    String accessToken = request.getParameter("accessToken").trim();
-	    File file = new File(request.getServletContext().getRealPath(Constants.PATHS.SERVICE_ACCOUNT_PATH));
-	    JSONObject json = (JSONObject) new JSONParser().parse(new InputStreamReader(new FileInputStream(file)));
+	    ServletContext context = request.getServletContext();
 
-	    GoogleUserVerifier baseAuthenticator = new GoogleUserVerifier();
+	    GoogleUserVerifier baseAuthenticator = new GoogleUserVerifier(context);
 	    baseAuthenticator.verifyUser(idToken);
+
 	    request.setAttribute("userGivenName", CurrentUser.getDisplayName());
 	    request.setAttribute("userPhoto", CurrentUser.getPhotoUrl());
 	    request.getRequestDispatcher("./mainPages/homePage.jsp").forward(request, response);
 
 	    out.println("</body>");
 	    out.println("</html>");
-	} catch (Exception ex) {
+	} catch (IOException ex) {
+	    Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
+	    System.out.println(ex.toString());
+	} catch (ServletException ex) {
 	    Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
 	    System.out.println(ex.toString());
 	} finally {
