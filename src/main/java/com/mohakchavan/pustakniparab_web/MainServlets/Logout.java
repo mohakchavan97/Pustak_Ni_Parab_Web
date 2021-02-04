@@ -5,19 +5,10 @@
  */
 package com.mohakchavan.pustakniparab_web.MainServlets;
 
-import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.BaseAuthenticator;
-import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.BaseHelper;
-import com.mohakchavan.pustakniparab_web.Models.CurrentUser;
-import com.mohakchavan.pustakniparab_web.Models.VerifiedUsers;
-import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +18,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Mohak Chavan
  */
-public class HomePage extends HttpServlet {
+@WebServlet(name = "Logout", urlPatterns = {"/logout"})
+public class Logout extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -46,53 +38,19 @@ public class HomePage extends HttpServlet {
 	    out.println("<!DOCTYPE html>");
 	    out.println("<html>");
 	    out.println("<head>");
-	    out.println("<title>Home | Pustak Ni Parab</title>");
+	    out.println("<title>Servlet Logout</title>");
 	    out.println("</head>");
 	    out.println("<body>");
+	    out.println("<h1>Servlet Logout at " + request.getContextPath() + "</h1>");
 
-	    String idToken = request.getParameter("idToken").trim();
-	    String accessToken = request.getParameter("accessToken").trim();
-	    ServletContext context = request.getServletContext();
-	    final HttpSession session = request.getSession(true);
+	    HttpSession session = request.getSession(false);
+	    if (session != null) {
+		session.invalidate();
+	    }
+	    request.getRequestDispatcher("/login").forward(request, response);
 
-	    BaseAuthenticator baseAuthenticator = new BaseAuthenticator(context);
-	    baseAuthenticator.authenticateUserAndInitializeFirebase(idToken);
-
-	    final CountDownLatch latch = new CountDownLatch(1);
-	    BaseHelper baseHelper = new BaseHelper();
-	    baseHelper.getAllVerifiedUsers(
-		    new BaseHelper.onCompleteRetrieval() {
-		@Override
-		public void onComplete(Object data) {
-		    List<VerifiedUsers> users = (List<VerifiedUsers>) data;
-		    for (VerifiedUsers user : users) {
-			if (user.getUserUid().equals(CurrentUser.getuId())) {
-			    //add session for verified user
-			    session.setAttribute(Constants.SESSION_KEY_NAMES.IS_CURRENT_USER_VERIFIED, true);
-			}
-		    }
-		    latch.countDown();
-		}
-	    },
-		    new BaseHelper.onFailure() {
-		@Override
-		public void onFail(Object data) {
-		    //send error to client side via error attribute
-		    latch.countDown();
-		}
-	    });
-	    latch.await();
-	    request.getRequestDispatcher("./mainPages/homePage.jsp").forward(request, response);
 	    out.println("</body>");
 	    out.println("</html>");
-	} catch (IOException ex) {
-	    Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
-	    System.out.println(ex.toString());
-	} catch (ServletException ex) {
-	    Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
-	    System.out.println(ex.toString());
-	} catch (InterruptedException ex) {
-	    Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
 	} finally {
 	    out.close();
 	}

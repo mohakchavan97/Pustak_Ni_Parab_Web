@@ -4,6 +4,7 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.CurrentUser"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,17 +16,25 @@
     <body style="background-color: white;">
 
         <jsp:include page="../genericContent/header.jsp" flush="true">
-	    <jsp:param name="userGivenName" value="<%=request.getAttribute(\"userGivenName\")%>"/>
-	    <jsp:param name="userPhoto" value="<%=request.getAttribute(\"userPhoto\")%>"/>
+	    <jsp:param name="userGivenName" value="<%=CurrentUser.getDisplayName()%>"/>
+	    <jsp:param name="userPhoto" value="<%=CurrentUser.getPhotoUrl()%>"/>
         </jsp:include>
 
-        <div id="homeContent" style="margin-top: 15%;">
+        <div id="homeContent" style="margin-top: 15%;" align="center">
 	    <h1>Pustak Ni Parab Home Page</h1>
 	    <p><%
 		out.print(CurrentUser.getuId());
 		out.print("<br/>");
 		out.print(CurrentUser.getProvider());
 		%></p>
+	    <br/>
+	    <p style="padding: 5%;">
+		<%
+		    out.println(session.getId()+"<br/>"+session.getAttribute(Constants.SESSION_KEY_NAMES.IS_CURRENT_USER_VERIFIED));
+		%>
+	    </p>
+	    <a href="newBooks">New Books</a>
+	    <a href="logout">Logout</a>
         </div>
 
     </body>

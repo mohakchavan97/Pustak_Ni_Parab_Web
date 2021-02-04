@@ -39,6 +39,7 @@
 		    document.getElementById("idToken").value = googleUser.getAuthResponse().id_token;
 		    document.getElementById("accessToken").value = googleUser.getAuthResponse(true).access_token;
 		    document.getElementById("userForm").submit();
+		    googleUser.disconnect();
 		}
 	    </script>
 	    <div>

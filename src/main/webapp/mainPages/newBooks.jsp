@@ -4,6 +4,8 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
+<%@page import="com.mohakchavan.pustakniparab_web.Models.CurrentUser"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,11 +17,18 @@
     </head>
     <body style="background-color: white;">
 
-        <jsp:include page="../genericContent/header.jsp" flush="true">
-            <jsp:param name="userName" value="<%=request.getParameter(\"user\")%>"/>
-        </jsp:include>
+        <%--<jsp:include page="../genericContent/header.jsp" flush="true">--%>
+            <%--<jsp:param name="userGivenName" value="<%=CurrentUser.getDisplayName()%>"/>--%>
+	    <%--<jsp:param name="userPhoto" value="<%=CurrentUser.getPhotoUrl()%>"/>--%>
+        <%--</jsp:include>--%>
 
 	<div id="newBooksContent" align="center" style="margin-top: 15%;">
+	    <p style="padding: 5%;">
+		<%
+		    out.println(session.getId()+"<br/>"+session.getAttribute(Constants.SESSION_KEY_NAMES.IS_CURRENT_USER_VERIFIED));
+		    out.println("<br/>"+CurrentUser.getDisplayName());
+		%>
+	    </p>
             <form id="issue" method="post" >
                 <table style="margin-top: 1%;" cellpadding="3%">
                     <tr>
