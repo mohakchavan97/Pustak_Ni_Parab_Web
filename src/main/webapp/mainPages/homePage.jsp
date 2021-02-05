@@ -32,6 +32,8 @@
 		<%
 		    out.println(session.getId()+"<br/>"+session.getAttribute(Constants.SESSION_KEY_NAMES.IS_CURRENT_USER_VERIFIED));
 		%>
+		<br/><br/>
+		<img src="./charts/barChart.jpeg" alt="alt"/>
 	    </p>
 	    <a href="newBooks">New Books</a>
 	    <a href="logout">Logout</a>

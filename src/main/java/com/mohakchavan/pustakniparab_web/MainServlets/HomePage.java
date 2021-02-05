@@ -10,6 +10,8 @@ import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.BaseHelper;
 import com.mohakchavan.pustakniparab_web.Models.CurrentUser;
 import com.mohakchavan.pustakniparab_web.Models.VerifiedUsers;
 import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
+import java.awt.Color;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -22,6 +24,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtils;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -82,6 +89,29 @@ public class HomePage extends HttpServlet {
 		}
 	    });
 	    latch.await();
+
+	    DefaultCategoryDataset data = new DefaultCategoryDataset();
+	    data.addValue(1.0, "A", "A");
+	    data.addValue(2.0, "A", "B");
+	    data.addValue(3.0, "A", "C");
+	    data.addValue(4.0, "A", "D");
+	    JFreeChart chart = ChartFactory.createBarChart("Demo Chart", "X-axisLabel", "Y-axisLabel", data, PlotOrientation.VERTICAL, true, true, false);
+	    chart.setBackgroundPaint(Color.yellow);
+	    ChartUtils.saveChartAsJPEG(new File("./charts/barChart.jpeg"), chart, 640, 480);
+
+//	    baseHelper.getAllBaseData(
+//		    new BaseHelper.onCompleteRetrieval() {
+//		@Override
+//		public void onComplete(Object data) {
+//		    
+//		}
+//	    },
+//		    new BaseHelper.onFailure() {
+//		@Override
+//		public void onFail(Object data) {
+//		    
+//		}
+//	    });
 	    request.getRequestDispatcher("./mainPages/homePage.jsp").forward(request, response);
 	    out.println("</body>");
 	    out.println("</html>");
