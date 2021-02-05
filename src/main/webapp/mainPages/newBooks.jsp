@@ -12,23 +12,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add New Books</title>
-	<script type="text/javascript" src="../javascripts/newBooks.js"></script>
-	<link rel="stylesheet" href="../css/newBooks.css"/>
+	<script type="text/javascript" src="./javascripts/newBooks.js"></script>
+	<link rel="stylesheet" href="./css/newBooks.css"/>
     </head>
     <body style="background-color: white;">
 
-        <%--<jsp:include page="../genericContent/header.jsp" flush="true">--%>
-            <%--<jsp:param name="userGivenName" value="<%=CurrentUser.getDisplayName()%>"/>--%>
-	    <%--<jsp:param name="userPhoto" value="<%=CurrentUser.getPhotoUrl()%>"/>--%>
-        <%--</jsp:include>--%>
+        <jsp:include page="./genericContent/header.jsp" flush="true">
+            <jsp:param name="userGivenName" value="<%=CurrentUser.getDisplayName()%>"/>
+	    <jsp:param name="userPhoto" value="<%=CurrentUser.getPhotoUrl()%>"/>
+        </jsp:include>
 
 	<div id="newBooksContent" align="center" style="margin-top: 15%;">
-	    <p style="padding: 5%;">
-		<%
-		    out.println(session.getId()+"<br/>"+session.getAttribute(Constants.SESSION_KEY_NAMES.IS_CURRENT_USER_VERIFIED));
-		    out.println("<br/>"+CurrentUser.getDisplayName());
-		%>
-	    </p>
             <form id="issue" method="post" >
                 <table style="margin-top: 1%;" cellpadding="3%">
                     <tr>

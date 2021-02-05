@@ -4,18 +4,20 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.Models.CurrentUser"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Returns</title>
-	<link rel="stylesheet" href="../css/returns.css"/>
+	<link rel="stylesheet" href="./css/returns.css"/>
     </head>
     <body>
 
-	<jsp:include page="../genericContent/header.jsp" flush="true">
-            <jsp:param name="userName" value="<%=request.getParameter(\"user\")%>"/>
+	<jsp:include page="./genericContent/header.jsp" flush="true">
+            <jsp:param name="userGivenName" value="<%=CurrentUser.getDisplayName()%>"/>
+	    <jsp:param name="userPhoto" value="<%=CurrentUser.getPhotoUrl()%>"/>
         </jsp:include>
 
 	<div id="returns" style="margin-top: 15%;">

@@ -4,18 +4,20 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.Models.CurrentUser"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>View ALL Names</title>
-	<link rel="stylesheet" href="../css/viewAllNames.css"/>
+	<link rel="stylesheet" href="./css/viewAllNames.css"/>
     </head>
     <body style="background-color: #f5f5f5;">
 	
-	<jsp:include page="../genericContent/header.jsp" flush="true">
-            <jsp:param name="userName" value="<%=request.getParameter(\"user\")%>"/>
+	<jsp:include page="./genericContent/header.jsp" flush="true">
+            <jsp:param name="userGivenName" value="<%=CurrentUser.getDisplayName()%>"/>
+	    <jsp:param name="userPhoto" value="<%=CurrentUser.getPhotoUrl()%>"/>
         </jsp:include>
 	
         <div id="allNameCards" align="center" style="margin-top: 10%;">

@@ -15,8 +15,8 @@
     </head>
     <body style="background-color: white;">
 
-        <jsp:include page="../genericContent/header.jsp" flush="true">
-	    <jsp:param name="userGivenName" value="<%=CurrentUser.getDisplayName()%>"/>
+        <jsp:include page="./genericContent/header.jsp" flush="true">
+            <jsp:param name="userGivenName" value="<%=CurrentUser.getDisplayName()%>"/>
 	    <jsp:param name="userPhoto" value="<%=CurrentUser.getPhotoUrl()%>"/>
         </jsp:include>
 

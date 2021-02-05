@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="../css/nameCard.css"/>
+        <link rel="stylesheet" href="./css/nameCard.css"/>
     </head>
     <body>
 	<div id="nameCard" style="float: left;">
