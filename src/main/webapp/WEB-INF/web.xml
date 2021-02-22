@@ -22,6 +22,10 @@
         <servlet-name>NewBooks</servlet-name>
         <jsp-file>/mainPages/newBooks.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>Issues</servlet-name>
+        <jsp-file>/mainPages/issues.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserSignedIn</servlet-name>
         <url-pattern>/UserSignedIn</url-pattern>
@@ -41,6 +45,10 @@
     <servlet-mapping>
         <servlet-name>NewBooks</servlet-name>
         <url-pattern>/newBooks</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Issues</servlet-name>
+        <url-pattern>/issues</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
