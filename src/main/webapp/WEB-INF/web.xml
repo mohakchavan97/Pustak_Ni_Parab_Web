@@ -26,6 +26,18 @@
         <servlet-name>Issues</servlet-name>
         <jsp-file>/mainPages/issues.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>AddName</servlet-name>
+        <jsp-file>/mainPages/addNames.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>Returns</servlet-name>
+        <jsp-file>/mainPages/returns.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewAllNames</servlet-name>
+        <jsp-file>/mainPages/viewAllNames.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserSignedIn</servlet-name>
         <url-pattern>/UserSignedIn</url-pattern>
@@ -49,6 +61,18 @@
     <servlet-mapping>
         <servlet-name>Issues</servlet-name>
         <url-pattern>/issues</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddName</servlet-name>
+        <url-pattern>/addName</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Returns</servlet-name>
+        <url-pattern>/returns</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewAllNames</servlet-name>
+        <url-pattern>/viewAllNames</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -117,7 +117,7 @@
 		    <td class="drawerImg"><img src="./icons/ic_issues.svg" alt="ic_issues" align="center" style="vertical-align: middle;"/></td>
 		    <td class="drawerLabel">Add New Issue</td>
 		</tr>
-		<tr>
+		<tr style="cursor: pointer;" onclick="location.href = './returns';">
 		    <td class="drawerImg"><img src="./icons/ic_returns.svg" alt="ic_returns" align="center" style="vertical-align: middle;"/></td>
 		    <td class="drawerLabel">Returns</td>
 		</tr>
@@ -126,13 +126,13 @@
 		    <td class="drawerHeader">Names</td>
 		</tr>
 		<tr><td colspan="2"><hr/></td></tr>
-		<tr>
+		<tr style="cursor: pointer;" onclick="location.href = './addName';">
 		    <td class="drawerImg"><img src="./icons/ic_add_name.svg" alt="ic_add_name" align="center" style="vertical-align: middle;"/></td>
 		    <td class="drawerLabel">Add New Person</td>
 		</tr>
-		<tr>
-		    <td class="drawerImg"><img src="./icons/ic_search.svg" alt="ic_search" align="center" style="vertical-align: middle;"/></td>
-		    <td class="drawerLabel">Search Name</td>
+		<tr style="cursor: pointer;" onclick="location.href = './viewAllNames';">
+		    <td class="drawerImg"><img src="./icons/ic_all_names.svg" alt="ic_viewAll" align="center" style="vertical-align: middle;"/></td>
+		    <td class="drawerLabel">View All Names</td>
 		</tr>
 		<tr><td colspan="2"><hr/></td></tr>
 		<tr style="cursor: pointer;" onclick="location.href = './newBooks';">

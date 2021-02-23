@@ -29,17 +29,24 @@
             </table>
         </div>
 
+	<div id="loader" style="display: none;">
+	    <jsp:include page="../genericContent/loader.jsp" flush="true"></jsp:include>
+	</div>
+
 	<div id="loginContent" style="margin-top: 15%;" align="center">
 
 	    <div style="padding-bottom: 1%; font-size: x-large;">To use the Pustak Ni Parab, please sign in with Google by clicking the below button.</div>
 
-	    <div class="g-signin2" data-onsuccess="onSignIn" data-longtitle="true" data-theme="dark"></div>
+	    <div class="g-signin2" data-onsuccess="onSignIn" data-longtitle="true" data-theme="dark" onclick="signInClicked();"></div>
 	    <script>
 		function onSignIn(googleUser) {
 		    document.getElementById("idToken").value = googleUser.getAuthResponse().id_token;
 		    document.getElementById("accessToken").value = googleUser.getAuthResponse(true).access_token;
 		    document.getElementById("userForm").submit();
 		    googleUser.disconnect();
+		}
+		function signInClicked() {
+		    document.getElementById("loader").style.display = "block";
 		}
 	    </script>
 	    <div>
