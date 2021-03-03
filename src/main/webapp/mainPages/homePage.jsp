@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : homePage
     Created on : 12 Jan, 2021, 5:24:49 PM
     Author     : Mohak Chavan
@@ -15,12 +15,16 @@
     </head>
     <body style="background-color: white;">
 
-        <jsp:include page="./genericContent/header.jsp" flush="true">
+        <jsp:include page="../genericContent/header.jsp" flush="true">
             <jsp:param name="userGivenName" value="<%=CurrentUser.getDisplayName()%>"/>
 	    <jsp:param name="userPhoto" value="<%=CurrentUser.getPhotoUrl()%>"/>
         </jsp:include>
 
-        <div id="homeContent" style="margin-top: 15%;" align="center">
+	<div id="loader" style="display: none;">
+	    <jsp:include page="../genericContent/loader.jsp" flush="true"/>
+	</div>
+
+	<div id="homeContent" style="margin-top: 15%;" align="center">
 	    <h1>Pustak Ni Parab Home Page</h1>
 	    <p><%
 		out.print(CurrentUser.getuId());
@@ -30,13 +34,15 @@
 	    <br/>
 	    <p style="padding: 5%;">
 		<%
-		    out.println(session.getId()+"<br/>"+session.getAttribute(Constants.SESSION_KEY_NAMES.IS_CURRENT_USER_VERIFIED));
+		    out.println(session.getId() + "<br/>" + session.getAttribute(Constants.SESSION_KEY_NAMES.IS_CURRENT_USER_VERIFIED));
 		%>
 		<br/><br/>
-		<img src="./charts/barChart.jpeg" alt="alt"/>
+		<img src=<%out.print("\"./charts/" + session.getId() + "_demoChart.jpeg\"");%> alt="alt"/>
 	    </p>
 	    <a href="newBooks">New Books</a>
+	    <a href="issues">Issues</a>
 	    <a href="logout">Logout</a>
+	    <input type="button" onclick="document.getElementById('loader').style.display='block';">
         </div>
 
     </body>

@@ -36,6 +36,15 @@ import org.jfree.data.category.DefaultCategoryDataset;
  */
 public class HomePage extends HttpServlet {
 
+    @Override
+    public void init() throws ServletException {
+	File chartFolder = new File(getServletContext().getRealPath("/charts"));
+	if (!chartFolder.exists()) {
+	    chartFolder.mkdir();
+	}
+	super.init(); //To change body of generated methods, choose Tools | Templates.
+    }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -97,7 +106,14 @@ public class HomePage extends HttpServlet {
 	    data.addValue(4.0, "A", "D");
 	    JFreeChart chart = ChartFactory.createBarChart("Demo Chart", "X-axisLabel", "Y-axisLabel", data, PlotOrientation.VERTICAL, true, true, false);
 	    chart.setBackgroundPaint(Color.yellow);
-	    ChartUtils.saveChartAsJPEG(new File("./charts/barChart.jpeg"), chart, 640, 480);
+	    File demoFile = new File(context.getRealPath("/charts/" + session.getId() + "_demoChart.jpeg"));
+	    if (!demoFile.exists()) {
+		demoFile.createNewFile();
+	    } else {
+		demoFile.delete();
+		demoFile.createNewFile();
+	    }
+	    ChartUtils.saveChartAsJPEG(demoFile, chart, 640, 480);
 
 //	    baseHelper.getAllBaseData(
 //		    new BaseHelper.onCompleteRetrieval() {
