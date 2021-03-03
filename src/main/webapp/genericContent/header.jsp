@@ -4,6 +4,7 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.CurrentUser"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -97,7 +98,16 @@
 
 	<div id="navigationDrawer" style="display: none;">
 	    <jsp:include page="navigationDrawer.jsp" flush="true"></jsp:include>
-	</div>
+	    </div>
 
+	<%
+	    if (!(Boolean) session.getAttribute(Constants.SESSION_KEY_NAMES.IS_CURRENT_USER_VERIFIED)) {
+	%>
+	<div id="notVerifiedUser" align="center" style="margin-top: 10%; color: red; font-size: x-large; font-weight: bolder; margin-bottom: -11.8%;">
+	    You are not a verified user. Please verify yourself.
+	</div>
+	<%
+	    }
+	%>
     </body>
 </html>
