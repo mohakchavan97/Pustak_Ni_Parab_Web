@@ -23,6 +23,7 @@ public final class Constants {
 	    public static final String URL = "https://pustak-ni-parab.firebaseio.com";
 	    public static final String VERIFIED_USERS = "VerifiedUsers";
 	    public static final String BASEPOINT = "BasePoint";
+	    public static final String TESTDATA = "TestData";
 	    public static final String ISSUES = "Issues";
 	    public static final String NAMES = "Names";
 	    public static final String NEW_BOOKS = "NewBooks";

@@ -48,7 +48,8 @@ public class BaseHelper {
     }
 
     private void setBaseReference() {
-	baseReference = getRootReference().child(Constants.FIREBASE.DATABASE.BASEPOINT);
+//	baseReference = getRootReference().child(Constants.FIREBASE.DATABASE.BASEPOINT);
+	baseReference = getRootReference().child(Constants.FIREBASE.DATABASE.TESTDATA);
     }
 
     public void getAllVerifiedUsers(final onCompleteRetrieval onCompleteRetrieval, final onFailure onFailure) {
