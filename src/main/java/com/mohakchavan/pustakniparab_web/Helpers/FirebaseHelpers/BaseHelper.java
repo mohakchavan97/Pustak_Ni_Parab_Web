@@ -35,7 +35,7 @@ public class BaseHelper {
 	setBaseReference();
     }
 
-    public DatabaseReference getRootReference() {
+    private DatabaseReference getRootReference() {
 	return rootReference;
     }
 
