@@ -174,15 +174,15 @@
                     <tr>
                         <th align="right" class="td-th-large">Address:</th>
                         <td align="left" style="margin-left: 2%">
-                            <input type="text" name="<%=Constants.IDS.ISSUER_ADDRESS%>" id="<%=Constants.IDS.ISSUER_ADDRESS%>"
-                                   <% /*if (getid) {
-                                           out.print(" value=\"" + rs.getString(4) + ", " + rs.getString(5) + ", " + rs.getString(6) + "\"");
-                                       }*/
-				       if (!isVerified) {
-					   out.print(" disabled ");
-				       }
-                                   %>
-				   readonly/>
+                            <textarea type="text" name="<%=Constants.IDS.ISSUER_ADDRESS%>" id="<%=Constants.IDS.ISSUER_ADDRESS%>"
+				      <% /*if (getid) {
+					      out.print(" value=\"" + rs.getString(4) + ", " + rs.getString(5) + ", " + rs.getString(6) + "\"");
+					  }*/
+					  if (!isVerified) {
+					      out.print(" disabled ");
+					  }
+				      %>
+				      readonly></textarea>
                         </td>
                     </tr>
                     <tr>

@@ -26,6 +26,12 @@ select{
     font-size: medium;
 }
 
+textarea{
+    font-size: large;
+    resize: vertical;
+    width: 90%;
+}
+
 .issr{
     width: 30%;
 }

@@ -63,5 +63,21 @@ function validation() {
 }
 
 function getname(allNames) {
-    console.log(allNames);
+    var issr_name = document.getElementById("issuer_name");
+    var issr_add = document.getElementById("issuer_address");
+    var issr_cont = document.getElementById("issuer_contact");
+    var sel_name = document.getElementById("sel_name");
+    for (var i = 0; i < allNames.length; i++) {
+	if (allNames[i][0].toString() === sel_name.options[sel_name.selectedIndex].value.toString()) {
+	    issr_name.value = (allNames[i][1].toString()
+		    + (allNames[i][2].toString().length ? " " + allNames[i][2].toString() : "")).trim();
+	    var add = "" + allNames[i][3].toString();
+	    add += add.length ? ", " + allNames[i][4].toString() : allNames[i][4].toString();
+	    add += add.length ? ", " + allNames[i][5].toString() : allNames[i][5].toString();
+	    issr_add.value = add.trim();
+	    issr_cont.value = (allNames[i][6].toString()).trim();
+	    break;
+	}
+    }
+
 }
