@@ -113,7 +113,7 @@
 		    <td class="drawerHeader">Issues</td>
 		</tr>
 		<tr><td colspan="2"><hr/></td></tr>
-		<tr style="cursor: pointer;" onclick="location.href = './issues';">
+		<tr style="cursor: pointer;" onclick="location.href = './AddIssue';">
 		    <td class="drawerImg"><img src="./icons/ic_issues.svg" alt="ic_issues" align="center" style="vertical-align: middle;"/></td>
 		    <td class="drawerLabel">Add New Issue</td>
 		</tr>

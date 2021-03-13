@@ -10,16 +10,16 @@ function validation() {
     var filter_mob = /^[6-9]+\d{9}/;
 
     if ((mob.value.length) > 0) {
-        if (!filter_mob.test(mob.value.toString()))
-        {
-            alert('Enter 10 digit Mobile Number');
-            mob.focus();
-            return false;
-        }
+	if (!filter_mob.test(mob.value.toString()))
+	{
+	    alert('Enter 10 digit Mobile Number');
+	    mob.focus();
+	    return false;
+	}
     }
     return true;
 }
 
-function viewall(){
-    location.href="./Names_Backend_2";
+function viewall() {
+    location.href = "./Names_Backend_2";
 }

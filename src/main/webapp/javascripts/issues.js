@@ -54,6 +54,14 @@ function validation() {
 	alert('Select Proper Date');
 	return false;
     }
-
+    var isForAdd = document.createElement("input");
+    isForAdd.setAttribute("hidden", "true");
+    isForAdd.setAttribute("name", "isForAdd");
+    isForAdd.setAttribute("id", "isForAdd");
+    isForAdd.setAttribute("value", "YES");
     return true;
+}
+
+function getname(allNames) {
+    console.log(allNames);
 }

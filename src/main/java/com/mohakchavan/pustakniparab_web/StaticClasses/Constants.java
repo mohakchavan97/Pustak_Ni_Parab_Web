@@ -49,6 +49,20 @@ public final class Constants {
 	public static final String SOME_ERROR = "Some Error Occurred. Please try again.";
     }
 
+    public static final class IDS {
+
+	public static final String BOOK_NAME = "book_name";
+	public static final String PRICE = "price";
+	public static final String AUTHOR_PUBLISHER = "author_publisher";
+	public static final String SEL_NAME = "sel_name";
+	public static final String ISSUER_CONTACT = "issuer_contact";
+	public static final String ISSUER_NAME = "issuer_name";
+	public static final String ISSUER_ADDRESS = "issuer_address";
+	public static final String ISSUE_DATE = "issue_date";
+//	public static final String  = "";
+
+    }
+
     public static final class USER_KEY_NAMES {
 
 	public static final String UID = "uId";
@@ -58,6 +72,8 @@ public final class Constants {
 	public static final String PROVIDER = "provider";
     }
 
+    public static final String YES = "YES";
+    public static final String NO = "NO";
     public static final String GOOGLE_CLIENT_ID = "172709641516-rdv19n8cbqpb1u4p3d0tfhp3fqht9dbk.apps.googleusercontent.com";
     public static final String GOOGLE_ISSUER_1 = "accounts.google.com";
     public static final String GOOGLE_ISSUER_2 = "https://accounts.google.com";

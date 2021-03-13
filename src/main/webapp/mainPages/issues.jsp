@@ -4,6 +4,9 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.mohakchavan.pustakniparab_web.Models.Names"%>
+<%@page import="java.util.List"%>
 <%@page import="java.util.TimeZone"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
@@ -20,16 +23,20 @@
     <body style="background-color: white;">
 
 	<div id="header">
-	    <%--<jsp:include page="./genericContent/header.jsp" flush="true">--%>
-	    <%--<jsp:param name="userGivenName" value="<%=CurrentUser.getDisplayName()%>"/>--%>
-	    <%--<jsp:param name="userPhoto" value="<%=CurrentUser.getPhotoUrl()%>"/>--%>
-	    <%--</jsp:include>--%>
+	    <jsp:include page="./genericContent/header.jsp" flush="true">
+		<jsp:param name="userGivenName" value="<%=CurrentUser.getDisplayName()%>"/>
+		<jsp:param name="userPhoto" value="<%=CurrentUser.getPhotoUrl()%>"/>
+	    </jsp:include>
 	</div>
 
 
 	<%
-	    //Boolean isVerified = (Boolean) session.getAttribute(Constants.SESSION_KEY_NAMES.IS_CURRENT_USER_VERIFIED);
-	    Boolean isVerified = true;
+	    Boolean isVerified = (Boolean) session.getAttribute(Constants.SESSION_KEY_NAMES.IS_CURRENT_USER_VERIFIED);
+	    List<Names> namesList = null;
+	    try {
+		namesList = (List<Names>) request.getAttribute("allNamesHTML");
+	    } catch (Exception ex) {
+	    }
 	%>
 
 	<div id="issueContent" align="center" style="margin-top: 15%;">
@@ -39,7 +46,7 @@
 			<th rowspan="3" class="spanClass">Book Details</th>
 			<th align="right" class="td-th-large">Name:</th>
 			<td align="left" style="margin-left: 2%;">
-			    <input type="text" name="book_name" id="book_name"
+			    <input type="text" name="<%=Constants.IDS.BOOK_NAME%>" id="<%=Constants.IDS.BOOK_NAME%>"
 				   <%				       /*if (!(bk_nm.isEmpty())) {
 					   out.print(" value=\"" + bk_nm.trim().toString() + "\"");
 				       }*/
@@ -53,7 +60,7 @@
                     <tr>
                         <th align="right" class="td-th-large">Price:</th>
                         <td align="left" style="margin-left: 2%">
-                            <input type="number" name="price" id="price"
+                            <input type="number" name="<%=Constants.IDS.PRICE%>" id="<%=Constants.IDS.PRICE%>"
                                    <% /* if (!(pr.isEmpty())) {
                                            out.print(" value=\"" + pr.trim().toString() + "\"");
                                        }*/
@@ -67,7 +74,7 @@
                     <tr>
                         <th align="right" class="td-th-large">Author/Publication:</th>
                         <td align="left" style="margin-left: 2%">
-                            <input type="text" name="auth_pub" id="auth_pub"
+                            <input type="text" name="<%=Constants.IDS.AUTHOR_PUBLISHER%>" id="<%=Constants.IDS.AUTHOR_PUBLISHER%>"
                                    <% /*if (!(ap.isEmpty())) {
                                            out.print(" value=\"" + ap.trim().toString() + "\"");
                                        }*/
@@ -85,7 +92,8 @@
 			<th rowspan="4" class="spanClass">Issuer Details</th>
                         <th align="right" class="td-th-large">Select ID:</th>
                         <td align="left" style="margin-left: 2%">
-                            <select name="sel_name" onchange="getname()" id="sel_name"
+                            <select name="<%=Constants.IDS.SEL_NAME%>" onchange='getname([<%=getAllNamesToString(namesList)%>])'
+				    id="<%=Constants.IDS.SEL_NAME%>"
 				    <%
 					if (!isVerified) {
 					    out.print(" disabled ");
@@ -98,6 +106,22 @@
                                             }*/
                                         %>
                                         >Select Name</option>
+				<%!
+				    String getAllNamesToString(List<Names> list) {
+					if (!list.isEmpty()) {
+					    String toReturn = "";
+					    for (Names names : list) {
+						toReturn += "[\"" + names.getSer_no() + "\",\"" + names.getFirstName() + "\",\""
+							+ names.getLastName() + "\",\"" + names.getBlkOrFltNo() + "\",\""
+							+ names.getStreetName() + "\",\"" + names.getLocalityOrArea() + "\",\""
+							+ names.getContact() + "\"],";
+					    }
+					    toReturn = toReturn.substring(0, toReturn.length() - 1);
+					    return toReturn;
+					}
+					return null;
+				    }
+				%>
                                 <% /*try {
                                         Class.forName("com.mysql.jdbc.Driver");
                                         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pustak_ni_parab", "root", "");
@@ -115,21 +139,24 @@
                                                 out.println(">" + rs.getInt(1) + "</option>");
                                             } while (rs.next());
                                         }*/
-
+				    for (Names names : namesList) {
+					out.println("<option value=\"" + names.getSer_no() + "\""
+						+ ">" + names.getSer_no() + "</option>");
+				    }
                                 %>
-                                <option value="-2"
-                                        <% /*if (id == -2) {
-                                                out.print(" selected");
-                                            }*/
-                                        %>
-                                        >Other</option>
+                                <!--  <option value="-2" -->
+				<% /*if (id == -2) {
+					out.print(" selected");
+				    }*/
+				%>
+				<!-- Other</option> -->
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <th align="right" class="td-th-large">Name:</th>
                         <td align="left" style="margin-left: 2%">
-                            <input type="text" name="issuer_name"
+                            <input type="text" name="<%=Constants.IDS.ISSUER_NAME%>" id="<%=Constants.IDS.ISSUER_NAME%>"
                                    <% /*sql = "SELECT * FROM `names` WHERE `Serial_No` = " + id;
                                        rs = st.executeQuery(sql);
                                        rs.next();
@@ -141,13 +168,13 @@
 					   out.print(" disabled ");
 				       }
                                    %>
-                                   required />
+                                   required readonly/>
                         </td>
                     </tr>
                     <tr>
                         <th align="right" class="td-th-large">Address:</th>
                         <td align="left" style="margin-left: 2%">
-                            <input type="text" name="issuer_add"
+                            <input type="text" name="<%=Constants.IDS.ISSUER_ADDRESS%>" id="<%=Constants.IDS.ISSUER_ADDRESS%>"
                                    <% /*if (getid) {
                                            out.print(" value=\"" + rs.getString(4) + ", " + rs.getString(5) + ", " + rs.getString(6) + "\"");
                                        }*/
@@ -155,13 +182,13 @@
 					   out.print(" disabled ");
 				       }
                                    %>
-                                   />
+				   readonly/>
                         </td>
                     </tr>
                     <tr>
                         <th align="right" class="td-th-large">Contact No:</th>
                         <td align="left" style="margin-left: 2%">
-                            <input type="number" name="issuer_cont" id="issuer_cont"
+                            <input type="number" name="<%=Constants.IDS.ISSUER_CONTACT%>" id="<%=Constants.IDS.ISSUER_CONTACT%>"
                                    <% /*if (getid) {
                                            out.print(" value=\"" + rs.getString(7) + "\"");
                                        }*/
@@ -169,7 +196,7 @@
 					   out.print(" disabled ");
 				       }
                                    %>
-                                   />
+				   readonly/>
                             <% /*} catch (Exception ex) {
                                     out.println(ex.toString());
                                 }*/
@@ -183,16 +210,15 @@
 			<td></td>
                         <th align="right" class="td-th-large">Issue Date:</th>
                         <td align="left" style="margin-left: 2%">
-                            <input type="hidden" name="issue_date" id="issue_date" required />
+                            <input type="hidden" name="<%=Constants.IDS.ISSUE_DATE%>" id="<%=Constants.IDS.ISSUE_DATE%>" required />
 			    <select name="issue_day" id="issue_day" class="issr" onchange="setDate()">
 				<option value="0_0">Date</option>
-				
-				<%!
-				    String getTwoDigit(int number) {
+
+				<%!				    String getTwoDigit(int number) {
 					return String.valueOf(number).length() < 2 ? "0" + String.valueOf(number) : String.valueOf(number);
 				    }
 				%>
-				
+
 				<%
 				    Calendar today = Calendar.getInstance(TimeZone.getTimeZone("Asia/Kolkata"));
 				    for (int i = 1; i <= 31; i++) {

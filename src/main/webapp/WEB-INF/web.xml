@@ -88,7 +88,7 @@
 	</session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>mainPages/issues.jsp</welcome-file>
-        <!--<welcome-file>mainPages/loginPage.jsp</welcome-file>-->
+        <welcome-file>mainPages/loginPage.jsp</welcome-file>
+        <!--<welcome-file>mainPages/issues.jsp</welcome-file>-->
     </welcome-file-list>
 </web-app>
