@@ -67,7 +67,7 @@ public class BaseHelper {
 			    }
 			    onCompleteRetrieval.onComplete(verifiedUsers);
 			} else {
-			    onFailure.onFail(Constants.ERRORS.SOME_ERROR);
+			    onFailure.onFail(Constants.ERRORS.SOME_ERROR_FULL);
 			}
 		    }
 

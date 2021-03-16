@@ -39,14 +39,22 @@ public final class Constants {
 	}
     }
 
-    public static final class SESSION_KEY_NAMES {
+    public static final class ATTRIBUTE_KEY_NAMES {
 
 	public static final String IS_CURRENT_USER_VERIFIED = "isCuurentUserVerified";
+	public static final String HAS_ERROR_WITH_DATA = "hasErrorWithData";
+	public static final String ALL_NAMES_FOR_HTML = "allNamesHTML";
+	public static final String IS_REQUEST_FOR_ADD_ISSUE = "isForAdd";
+	public static final String IS_TRANSACTION_SUCCESS = "isSuccessfull";
     }
 
     public static final class ERRORS {
 
-	public static final String SOME_ERROR = "Some Error Occurred. Please try again.";
+	public static final String SOME_ERROR = "Some Error Occurred.";
+	public static final String TRY_AGAIN = "Please try again.";
+	public static final String ISSUE_NOT_ADDED = "Issue not added." + SPACE + Constants.ERRORS.SOME_ERROR_FULL;
+	public static final String NO_NAME_ID = "The selected ID of the name does not exists. " + TRY_AGAIN;
+	public static final String SOME_ERROR_FULL = SOME_ERROR + SPACE + TRY_AGAIN;
     }
 
     public static final class IDS {
@@ -77,5 +85,7 @@ public final class Constants {
     public static final String GOOGLE_CLIENT_ID = "172709641516-rdv19n8cbqpb1u4p3d0tfhp3fqht9dbk.apps.googleusercontent.com";
     public static final String GOOGLE_ISSUER_1 = "accounts.google.com";
     public static final String GOOGLE_ISSUER_2 = "https://accounts.google.com";
+
+    public static final String SPACE = " ";
 
 }

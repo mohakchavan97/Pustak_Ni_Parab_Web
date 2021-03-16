@@ -62,7 +62,7 @@ public class NamesHelper {
 		    onCompleteRetrieval.onComplete(name);
 		} else {
 		    //nameid does not exists
-
+		    onFail.onFail(Constants.ERRORS.NO_NAME_ID);
 		}
 	    }
 

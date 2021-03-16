@@ -84,7 +84,7 @@ public class HomePage extends HttpServlet {
 		    for (VerifiedUsers user : users) {
 			if (user.getUserUid().equals(CurrentUser.getuId())) {
 			    //add session for verified user
-			    session.setAttribute(Constants.SESSION_KEY_NAMES.IS_CURRENT_USER_VERIFIED, true);
+			    session.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED, true);
 			}
 		    }
 		    latch.countDown();

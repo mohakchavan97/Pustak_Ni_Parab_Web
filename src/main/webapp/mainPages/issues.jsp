@@ -31,10 +31,10 @@
 
 
 	<%
-	    Boolean isVerified = (Boolean) session.getAttribute(Constants.SESSION_KEY_NAMES.IS_CURRENT_USER_VERIFIED);
+	    Boolean isVerified = (Boolean) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED);
 	    List<Names> namesList = null;
 	    try {
-		namesList = (List<Names>) request.getAttribute("allNamesHTML");
+		namesList = (List<Names>) request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_NAMES_FOR_HTML);
 	    } catch (Exception ex) {
 	    }
 	%>
@@ -44,7 +44,7 @@
 	     <%
 		 String errorData = "";
 		 try {
-		     errorData = request.getAttribute("hasErrorWithData").toString().trim();
+		     errorData = request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_ERROR_WITH_DATA).toString().trim();
 		 } catch (Exception ex) {
 		     out.print(" hidden ");
 		 }

@@ -56,7 +56,7 @@ public class AddIssue extends HttpServlet {
 	boolean isForAdd = false;
 	Enumeration params = request.getParameterNames();
 	while (params.hasMoreElements()) {
-	    if (params.nextElement().toString().contentEquals("isForAdd")) {
+	    if (params.nextElement().toString().contentEquals(Constants.ATTRIBUTE_KEY_NAMES.IS_REQUEST_FOR_ADD_ISSUE)) {
 		isForAdd = true;
 		break;
 	    } else {
@@ -75,7 +75,7 @@ public class AddIssue extends HttpServlet {
 		Logger.getLogger(AddIssue.class.getName()).log(Level.SEVERE, null, ex);
 	    }
 
-	} else if (isForAdd && request.getParameter("isForAdd").contentEquals(Constants.YES)) {
+	} else if (isForAdd && request.getParameter(Constants.ATTRIBUTE_KEY_NAMES.IS_REQUEST_FOR_ADD_ISSUE).contentEquals(Constants.YES)) {
 	    //Enable this code if request is for adding a issue
 	    try {
 
@@ -107,18 +107,19 @@ public class AddIssue extends HttpServlet {
 				    @Override
 				    public void onComplete(boolean committed, Object data) {
 					if (committed) {
-					    
+
 					    latch.countDown();
 
 					} else {
 					    //Some error
+					    request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_ERROR_WITH_DATA, Constants.ERRORS.ISSUE_NOT_ADDED);
 					    latch.countDown();
-
 					}
 				    }
 				});
 			    } else {
 				//name is not verified
+				request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_ERROR_WITH_DATA, Constants.ERRORS.SOME_ERROR_FULL);
 				latch.countDown();
 			    }
 			}
@@ -126,6 +127,7 @@ public class AddIssue extends HttpServlet {
 		}, new BaseHelper.onFailure() {
 		    @Override
 		    public void onFail(Object data) {
+			request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_ERROR_WITH_DATA, Constants.ERRORS.SOME_ERROR_FULL);
 			latch.countDown();
 		    }
 		});
@@ -192,13 +194,14 @@ public class AddIssue extends HttpServlet {
 //			for (Names name : namesList) {
 //			    allNamesHTML += "<option value=\"" + name.getSer_no() + "\">" + name.getSer_no() + "</option>";
 //			}
-		request.setAttribute("allNamesHTML", namesList);
+		request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_NAMES_FOR_HTML, namesList);
 		latch.countDown();
 	    }
 	}, new BaseHelper.onFailure() {
 	    @Override
 	    public void onFail(Object data) {
 		System.err.println(((DatabaseError) data).toString());
+		request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_ERROR_WITH_DATA, Constants.ERRORS.SOME_ERROR_FULL);
 		latch.countDown();
 	    }
 	});
