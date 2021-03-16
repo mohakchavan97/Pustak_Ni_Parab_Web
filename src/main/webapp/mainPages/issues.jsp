@@ -4,6 +4,7 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.Models.Issues"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.Names"%>
 <%@page import="java.util.List"%>
@@ -20,7 +21,25 @@
 	<script type="text/javascript" src="./javascripts/issues.js"></script>
 	<link rel="stylesheet" href="./css/issues.css"/>
     </head>
-    <body style="background-color: white;" onload="setDate();">
+    <body style="background-color: white;" onload='setDate();
+	  <%
+	      Boolean isVerified = (Boolean) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED);
+
+	      List<Names> namesList = null;
+	      try {
+		  namesList = (List<Names>) request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_NAMES_FOR_HTML);
+	      } catch (Exception ex) {
+	      }
+
+	      Issues addedIssue = null;
+	      try {
+		  addedIssue = (Issues) request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_TRANSACTION_SUCCESS);
+		  out.print("issueWasAdded([\"" + addedIssue.getIssueNo() + "\",\"" + addedIssue.getBookName() + "\",\""
+			  + addedIssue.getIssuerName() + "\",\"" + addedIssue.getIssueDate() + "\"]);");
+	      } catch (Exception ex) {
+	      }
+	  %>
+	  '>
 
 	<div id="header">
 	    <jsp:include page="./genericContent/header.jsp" flush="true">
@@ -29,16 +48,9 @@
 	    </jsp:include>
 	</div>
 
-
-	<%
-	    Boolean isVerified = (Boolean) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED);
-	    List<Names> namesList = null;
-	    try {
-		namesList = (List<Names>) request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_NAMES_FOR_HTML);
-	    } catch (Exception ex) {
-	    }
-	%>
-
+	<div id="loader" style="display: none;">
+	    <jsp:include page="./genericContent/loader.jsp" flush="true"/>
+	</div>
 
 	<div id="errorDiv" 
 	     <%

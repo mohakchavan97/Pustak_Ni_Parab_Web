@@ -55,6 +55,7 @@ function validation() {
 	return false;
     }
 
+    document.getElementById("loader").style.display = "block";
     var isForAdd = document.createElement("input");
     isForAdd.setAttribute("hidden", "true");
     isForAdd.setAttribute("name", "isForAdd");
@@ -89,4 +90,7 @@ function getname(allNames) {
     }
 }
 
+function issueWasAdded(addedIssue) {
+    alert('Issue was added successfully.\n\nIssue ID: ' + addedIssue[0] + "\nBook Name: " + addedIssue[1]
+	    + "\nPerson Name: " + addedIssue[2] + "\nIssue Date: " + addedIssue[3]);
 }
