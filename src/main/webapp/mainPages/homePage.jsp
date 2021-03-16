@@ -34,7 +34,7 @@
 	    <br/>
 	    <p style="padding: 5%;">
 		<%
-		    out.println(session.getId() + "<br/>" + session.getAttribute(Constants.SESSION_KEY_NAMES.IS_CURRENT_USER_VERIFIED));
+		    out.println(session.getId() + "<br/>" + session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED));
 		%>
 		<br/><br/>
 		<img src=<%out.print("\"./charts/" + session.getId() + "_demoChart.jpeg\"");%> alt="alt"/>

@@ -101,7 +101,7 @@
 	    </div>
 
 	<%
-	    if (!(Boolean) session.getAttribute(Constants.SESSION_KEY_NAMES.IS_CURRENT_USER_VERIFIED)) {
+	    if (!(Boolean) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED)) {
 	%>
 	<div id="notVerifiedUser" align="center" style="margin-top: 10%; color: red; font-size: x-large; font-weight: bolder; margin-bottom: -11.8%;">
 	    You are not a verified user. Please verify yourself.
