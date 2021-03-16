@@ -27,7 +27,7 @@ function setDate() {
 }
 
 function validation() {
-    var mob = document.getElementById('issuer_cont');
+    var mob = document.getElementById('issuer_contact');
     var id = document.getElementById('sel_name');
     var filter_mob = /^[6-9]+\d{9}/;
     var dt = document.getElementById("issue_date");
@@ -42,7 +42,7 @@ function validation() {
 
     }
 
-    if ((id.options[id.selectedIndex].value) === "0_0") {
+    if ((id.options[id.selectedIndex].value.toString()) === "0_0") {
 	alert('Select the Issuer ID');
 	id.focus();
 	return false;
@@ -54,11 +54,13 @@ function validation() {
 	alert('Select Proper Date');
 	return false;
     }
+    
     var isForAdd = document.createElement("input");
     isForAdd.setAttribute("hidden", "true");
     isForAdd.setAttribute("name", "isForAdd");
     isForAdd.setAttribute("id", "isForAdd");
     isForAdd.setAttribute("value", "YES");
+    document.getElementById("issue").appendChild(isForAdd);
     return true;
 }
 
