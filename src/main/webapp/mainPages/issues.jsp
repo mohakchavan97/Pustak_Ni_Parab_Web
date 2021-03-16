@@ -20,7 +20,7 @@
 	<script type="text/javascript" src="./javascripts/issues.js"></script>
 	<link rel="stylesheet" href="./css/issues.css"/>
     </head>
-    <body style="background-color: white;">
+    <body style="background-color: white;" onload="setDate();">
 
 	<div id="header">
 	    <jsp:include page="./genericContent/header.jsp" flush="true">
@@ -38,6 +38,19 @@
 	    } catch (Exception ex) {
 	    }
 	%>
+
+
+	<div id="errorDiv" 
+	     <%
+		 String errorData = "";
+		 try {
+		     errorData = request.getAttribute("hasErrorWithData").toString().trim();
+		 } catch (Exception ex) {
+		     out.print(" hidden ");
+		 }
+	     %>
+	     align="center" style="margin-top: 13%; margin-bottom: -14.8%; color: red;
+	     font-size: x-large; font-weight: bolder; word-wrap: break-word;"><%=errorData.toString()%></div>
 
 	<div id="issueContent" align="center" style="margin-top: 15%;">
 	    <form id="issue" method="post" action="AddIssue" onsubmit="return validation();">
