@@ -19,14 +19,14 @@ import java.util.List;
  * @author Mohak Chavan
  */
 public class NamesHelper {
-    
+
     private final DatabaseReference namesReference;
     private ValueEventListener allNamesListener;
-    
+
     public NamesHelper() {
 	namesReference = new BaseHelper().getBaseReference().child(Constants.FIREBASE.DATABASE.NAMES);
     }
-    
+
     private void setAllNamesListener(final BaseHelper.onCompleteRetrieval onCompleteRetrieval, final BaseHelper.onFailure onFail) {
 	allNamesListener = new ValueEventListener() {
 	    @Override
@@ -40,17 +40,37 @@ public class NamesHelper {
 		}
 		onCompleteRetrieval.onComplete(namesList);
 	    }
-	    
+
 	    @Override
 	    public void onCancelled(DatabaseError error) {
 		onFail.onFail(error);
 	    }
 	};
     }
-    
+
     public void getAllNamesOnce(final BaseHelper.onCompleteRetrieval onCompleteRetrieval, final BaseHelper.onFailure onFail) {
 	setAllNamesListener(onCompleteRetrieval, onFail);
 	namesReference.orderByChild("ser_no").addListenerForSingleValueEvent(allNamesListener);
     }
-    
+
+    public void getNameDetails(String nameId, final BaseHelper.onCompleteRetrieval onCompleteRetrieval, final BaseHelper.onFailure onFail) {
+	namesReference.child(nameId).addListenerForSingleValueEvent(new ValueEventListener() {
+	    @Override
+	    public void onDataChange(DataSnapshot snapshot) {
+		if (snapshot.exists()) {
+		    Names name = snapshot.getValue(Names.class);
+		    onCompleteRetrieval.onComplete(name);
+		} else {
+		    //nameid does not exists
+
+		}
+	    }
+
+	    @Override
+	    public void onCancelled(DatabaseError error) {
+		onFail.onFail(error);
+	    }
+	});
+    }
+
 }

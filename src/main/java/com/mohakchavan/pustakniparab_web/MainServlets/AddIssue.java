@@ -63,33 +63,15 @@ public class AddIssue extends HttpServlet {
 		isForAdd = false;
 	    }
 	}
+	NamesHelper namesHelper = new NamesHelper();
 
 	if (!isForAdd) {
 	    //Enable this code if request is from homepage.
 	    try {
-		final CountDownLatch latch = new CountDownLatch(1);
-		NamesHelper namesHelper = new NamesHelper();
-		namesHelper.getAllNamesOnce(new BaseHelper.onCompleteRetrieval() {
-		    @Override
-		    public void onComplete(Object data) {
-			List<Names> namesList = (List<Names>) data;
-//			String allNamesHTML = "";
-//			for (Names name : namesList) {
-//			    allNamesHTML += "<option value=\"" + name.getSer_no() + "\">" + name.getSer_no() + "</option>";
-//			}
-			request.setAttribute("allNamesHTML", namesList);
-			latch.countDown();
-		    }
-		}, new BaseHelper.onFailure() {
-		    @Override
-		    public void onFail(Object data) {
-			System.err.println(((DatabaseError) data).toString());
-			latch.countDown();
-		    }
-		});
-		latch.await();
-		dispatchToIssuesJSP.forward(request, response);
-	    } catch (InterruptedException ex) {
+
+		redirectToIssuesJSP(request, response, namesHelper, dispatchToIssuesJSP);
+
+	    } catch (IOException | InterruptedException | ServletException ex) {
 		Logger.getLogger(AddIssue.class.getName()).log(Level.SEVERE, null, ex);
 	    }
 
@@ -97,7 +79,8 @@ public class AddIssue extends HttpServlet {
 	    //Enable this code if request is for adding a issue
 	    try {
 
-		String book_name, auth_pub, iss_name, iss_add, iss_date, iss_id, iss_cont, book_price;
+		String book_name, auth_pub, iss_date, book_price;
+		final String iss_name, iss_add, iss_id, iss_cont;
 		book_name = request.getParameter(Constants.IDS.BOOK_NAME).trim().toUpperCase();
 		auth_pub = request.getParameter(Constants.IDS.AUTHOR_PUBLISHER).trim().toUpperCase();
 		iss_name = request.getParameter(Constants.IDS.ISSUER_NAME).trim().toUpperCase();
@@ -107,23 +90,48 @@ public class AddIssue extends HttpServlet {
 		iss_id = request.getParameter(Constants.IDS.SEL_NAME).trim().toUpperCase();
 		book_price = request.getParameter(Constants.IDS.PRICE).trim().toUpperCase();
 
-		Issues newIssue = new Issues(book_name, book_price, auth_pub, iss_id, iss_name, iss_add, iss_cont, iss_date, Constants.NO, "");
-		IssuesHelper issuesHelper = new IssuesHelper();
+		final Issues newIssue = new Issues(book_name, book_price, auth_pub, iss_id, iss_name, iss_add, iss_cont, iss_date, Constants.NO, "");
 		final CountDownLatch latch = new CountDownLatch(1);
-		issuesHelper.addNewIssue(newIssue, new BaseHelper.onCompleteTransaction() {
+		//For Verifying the name from cloud
+		namesHelper.getNameDetails(iss_id, new BaseHelper.onCompleteRetrieval() {
 		    @Override
-		    public void onComplete(boolean committed, Object data) {
-			if (committed) {
-			    latch.countDown();
+		    public void onComplete(Object data) {
+			if (data != null) {
+			    Names name = (Names) data;
+			    if (iss_name.contentEquals(name.returnFullName().toUpperCase())
+				    && iss_add.contentEquals(name.returnFullAddress().toUpperCase())
+				    && iss_cont.contentEquals(name.getContact().toUpperCase())) {
 
-			} else {
-			    //Some error
+				IssuesHelper issuesHelper = new IssuesHelper();
+				issuesHelper.addNewIssue(newIssue, new BaseHelper.onCompleteTransaction() {
+				    @Override
+				    public void onComplete(boolean committed, Object data) {
+					if (committed) {
+					    
+					    latch.countDown();
 
+					} else {
+					    //Some error
+					    latch.countDown();
+
+					}
+				    }
+				});
+			    } else {
+				//name is not verified
+				latch.countDown();
+			    }
 			}
 		    }
+		}, new BaseHelper.onFailure() {
+		    @Override
+		    public void onFail(Object data) {
+			latch.countDown();
+		    }
 		});
+
 		latch.await();
-		dispatchToIssuesJSP.forward(request, response);
+		redirectToIssuesJSP(request, response, namesHelper, dispatchToIssuesJSP);
 
 		out.println("</body>");
 		out.println("</html>");
@@ -171,5 +179,31 @@ public class AddIssue extends HttpServlet {
     public String getServletInfo() {
 	return "Short description";
     }// </editor-fold>
+
+    private void redirectToIssuesJSP(final HttpServletRequest request, HttpServletResponse response, NamesHelper namesHelper,
+	    RequestDispatcher dispatcherForIssuesJSP) throws InterruptedException, ServletException, IOException {
+	final CountDownLatch latch = new CountDownLatch(1);
+
+	namesHelper.getAllNamesOnce(new BaseHelper.onCompleteRetrieval() {
+	    @Override
+	    public void onComplete(Object data) {
+		List<Names> namesList = (List<Names>) data;
+//			String allNamesHTML = "";
+//			for (Names name : namesList) {
+//			    allNamesHTML += "<option value=\"" + name.getSer_no() + "\">" + name.getSer_no() + "</option>";
+//			}
+		request.setAttribute("allNamesHTML", namesList);
+		latch.countDown();
+	    }
+	}, new BaseHelper.onFailure() {
+	    @Override
+	    public void onFail(Object data) {
+		System.err.println(((DatabaseError) data).toString());
+		latch.countDown();
+	    }
+	});
+	latch.await();
+	dispatcherForIssuesJSP.forward(request, response);
+    }
 
 }
