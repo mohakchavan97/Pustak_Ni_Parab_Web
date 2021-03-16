@@ -107,7 +107,7 @@ public class AddIssue extends HttpServlet {
 				    @Override
 				    public void onComplete(boolean committed, Object data) {
 					if (committed) {
-
+					    request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_TRANSACTION_SUCCESS, data);
 					    latch.countDown();
 
 					} else {
