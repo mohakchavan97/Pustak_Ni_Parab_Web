@@ -54,7 +54,7 @@ function validation() {
 	alert('Select Proper Date');
 	return false;
     }
-    
+
     var isForAdd = document.createElement("input");
     isForAdd.setAttribute("hidden", "true");
     isForAdd.setAttribute("name", "isForAdd");
@@ -69,17 +69,24 @@ function getname(allNames) {
     var issr_add = document.getElementById("issuer_address");
     var issr_cont = document.getElementById("issuer_contact");
     var sel_name = document.getElementById("sel_name");
-    for (var i = 0; i < allNames.length; i++) {
-	if (allNames[i][0].toString() === sel_name.options[sel_name.selectedIndex].value.toString()) {
-	    issr_name.value = (allNames[i][1].toString()
-		    + (allNames[i][2].toString().length ? " " + allNames[i][2].toString() : "")).trim();
-	    var add = "" + allNames[i][3].toString();
-	    add += add.length ? ", " + allNames[i][4].toString() : allNames[i][4].toString();
-	    add += add.length ? ", " + allNames[i][5].toString() : allNames[i][5].toString();
-	    issr_add.value = add.trim();
-	    issr_cont.value = (allNames[i][6].toString()).trim();
-	    break;
+    if (sel_name.options[sel_name.selectedIndex].value.toString() === "0_0") {
+	issr_name.value = "";
+	issr_add.value = "";
+	issr_cont.value = "";
+    } else {
+	for (var i = 0; i < allNames.length; i++) {
+	    if (allNames[i][0].toString() === sel_name.options[sel_name.selectedIndex].value.toString()) {
+		issr_name.value = (allNames[i][1].toString()
+			+ (allNames[i][2].toString().length ? " " + allNames[i][2].toString() : "")).trim();
+		var add = "" + allNames[i][3].toString();
+		add += add.length ? ", " + allNames[i][4].toString() : allNames[i][4].toString();
+		add += add.length ? ", " + allNames[i][5].toString() : allNames[i][5].toString();
+		issr_add.value = add.trim();
+		issr_cont.value = (allNames[i][6].toString()).trim();
+		break;
+	    }
 	}
     }
+}
 
 }
