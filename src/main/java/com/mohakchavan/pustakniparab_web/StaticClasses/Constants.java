@@ -67,6 +67,7 @@ public final class Constants {
 	public static final String ISSUER_NAME = "issuer_name";
 	public static final String ISSUER_ADDRESS = "issuer_address";
 	public static final String ISSUE_DATE = "issue_date";
+	public static final String ISSUE_ID = "issue_id";
 //	public static final String  = "";
 
     }
