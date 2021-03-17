@@ -21,25 +21,32 @@
 	<script type="text/javascript" src="./javascripts/issues.js"></script>
 	<link rel="stylesheet" href="./css/issues.css"/>
     </head>
-    <body style="background-color: white;" onload='setDate();
-	  <%
-	      Boolean isVerified = (Boolean) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED);
+    <body style="background-color: white;" onload='setDate();'>
 
-	      List<Names> namesList = null;
-	      try {
-		  namesList = (List<Names>) request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_NAMES_FOR_HTML);
-	      } catch (Exception ex) {
-	      }
+	<%
+	    Boolean isVerified = (Boolean) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED);
 
-	      Issues addedIssue = null;
-	      try {
-		  addedIssue = (Issues) request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_TRANSACTION_SUCCESS);
-		  out.print("issueWasAdded([\"" + addedIssue.getIssueNo() + "\",\"" + addedIssue.getBookName() + "\",\""
-			  + addedIssue.getIssuerName() + "\",\"" + addedIssue.getIssueDate() + "\"]);");
-	      } catch (Exception ex) {
-	      }
-	  %>
-	  '>
+	    List<Names> namesList = null;
+	    try {
+		namesList = (List<Names>) request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_NAMES_FOR_HTML);
+	    } catch (Exception ex) {
+	    }
+
+	    Issues addedIssue = null;
+	    try {
+		addedIssue = (Issues) request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_TRANSACTION_SUCCESS);
+		if (addedIssue != null) {
+		    out.println("<div id=\"returnedResult\">");
+		    request.setAttribute(Constants.IDS.ISSUE_ID, String.valueOf(addedIssue.getIssueNo()));
+		    request.setAttribute(Constants.IDS.BOOK_NAME, addedIssue.getBookName());
+		    request.setAttribute(Constants.IDS.ISSUER_NAME, addedIssue.getIssuerName());
+		    request.setAttribute(Constants.IDS.ISSUE_DATE, addedIssue.getIssueDate());
+		    request.getRequestDispatcher("./genericContent/returnResultModal.jsp").include(request, response);
+		    out.println("</div>");
+		}
+	    } catch (Exception ex) {
+	    }
+	%>
 
 	<div id="header">
 	    <jsp:include page="./genericContent/header.jsp" flush="true">

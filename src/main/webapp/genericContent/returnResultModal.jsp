@@ -51,10 +51,17 @@
 	    }
 
 	    .resultLabel{
-		font-weight: bold;
 		font-size: medium;
 		padding: 2% 1%;
 		vertical-align: top;
+	    }
+
+	    .boldFont{
+		font-weight: bold;
+	    }
+	    
+	    .underLined{
+		text-decoration: underline;
 	    }
 	</style>
     </head>
@@ -67,24 +74,20 @@
 		</tr>
 		<tr><td colspan="2"><hr/></td></tr>
 		<tr>
-		    <td class="resultLabel" align="right" style="width:35%;">Issue ID:</td>
-		    <td class="resultLabel" align="left">20202</td>
-		    <!--<td class="resultLabel" align="left"><% //request.getParameter(Constants.IDS.ISSUE_ID)%></td>-->
+		    <td class="resultLabel boldFont" align="right" style="width:35%;">Issue ID:</td>
+		    <td class="resultLabel boldFont underLined" align="left"><%=request.getAttribute(Constants.IDS.ISSUE_ID)%></td>
 		</tr>
 		<tr>
-		    <td class="resultLabel" align="right" style="width:35%;">Book Name:</td>
-		    <td class="resultLabel" align="left">physics department of intitute</td>
-		    <!--<td class="resultLabel" align="left"><% //request.getParameter(Constants.IDS.BOOK_NAME)%></td>-->
+		    <td class="resultLabel boldFont" align="right" style="width:35%;">Book Name:</td>
+		    <td class="resultLabel" align="left"><%=request.getAttribute(Constants.IDS.BOOK_NAME)%></td>
 		</tr>
 		<tr>
-		    <td class="resultLabel" align="right" style="width:35%;">Person Name:</td>
-		    <td class="resultLabel" align="left">mohak yoigta chavan</td>
-		    <!--<td class="resultLabel" align="left"><% //request.getParameter(Constants.IDS.ISSUER_NAME)%></td>-->
+		    <td class="resultLabel boldFont" align="right" style="width:35%;">Person Name:</td>
+		    <td class="resultLabel" align="left"><%=request.getAttribute(Constants.IDS.ISSUER_NAME)%></td>
 		</tr>
 		<tr>
-		    <td class="resultLabel" align="right" style="width:35%;">Issue Date:</td>
-		    <td class="resultLabel" align="left">16 Mar 2021</td>
-		    <!--<td class="resultLabel" align="left"><% //request.getParameter(Constants.IDS.ISSUE_DATE)%></td>-->
+		    <td class="resultLabel boldFont" align="right" style="width:35%;">Issue Date:</td>
+		    <td class="resultLabel" align="left"><%=request.getAttribute(Constants.IDS.ISSUE_DATE)%></td>
 		</tr>
 		<tr>
 		    <td colspan="2" align="center" style="padding-top: 5%;">
