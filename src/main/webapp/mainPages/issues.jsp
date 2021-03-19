@@ -252,7 +252,7 @@
 				%>
 
 				<%
-				    Calendar today = Calendar.getInstance(TimeZone.getTimeZone("Asia/Kolkata"));
+				    Calendar today = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIME_ZONE));
 				    for (int i = 1; i <= 31; i++) {
 					out.print("<option value=\"" + getTwoDigit(i) + "\"");
 					if (i == today.get(Calendar.DAY_OF_MONTH)) {
@@ -266,13 +266,12 @@
 			    <select name="issue_month" id="issue_month" class="issr" onchange="setDate()">
 				<option value="0_0">Month</option>
 				<%
-				    String months[] = {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
-				    for (int i = 0; i < months.length; i++) {
-					out.print("<option value=\"" + months[i] + "\"");
+				    for (int i = 0; i < Constants.ARRAYS.MONTHS.length; i++) {
+					out.print("<option value=\"" + Constants.ARRAYS.MONTHS[i] + "\"");
 					if (i == today.get(Calendar.MONTH)) {
 					    out.print(" selected ");
 					}
-					out.println(">" + months[i] + "</option>");
+					out.println(">" + Constants.ARRAYS.MONTHS[i] + "</option>");
 				    }
 				%>
 			    </select>

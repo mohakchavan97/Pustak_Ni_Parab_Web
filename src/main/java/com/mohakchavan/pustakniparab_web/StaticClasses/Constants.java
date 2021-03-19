@@ -81,6 +81,12 @@ public final class Constants {
 	public static final String PROVIDER = "provider";
     }
 
+    public static final class ARRAYS {
+
+	public static final String MONTHS[] = {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
+    }
+
+    public static final String TIME_ZONE = "Asia/Kolkata";
     public static final String YES = "YES";
     public static final String NO = "NO";
     public static final String GOOGLE_CLIENT_ID = "172709641516-rdv19n8cbqpb1u4p3d0tfhp3fqht9dbk.apps.googleusercontent.com";

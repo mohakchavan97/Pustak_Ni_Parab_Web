@@ -91,56 +91,89 @@ public class AddIssue extends HttpServlet {
 		book_price = request.getParameter(Constants.IDS.PRICE).trim().toUpperCase();
 
 		final Issues newIssue = new Issues(book_name, book_price, auth_pub, iss_id, iss_name, iss_add, iss_cont, iss_date, Constants.NO, "");
-		final CountDownLatch latch = new CountDownLatch(1);
-		//For Verifying the name from cloud
-		namesHelper.getNameDetails(iss_id, new BaseHelper.onCompleteRetrieval() {
-		    @Override
-		    public void onComplete(Object data) {
-			if (data != null) {
-			    Names name = (Names) data;
-			    if (iss_name.contentEquals(name.returnFullName().toUpperCase())
-				    && iss_add.contentEquals(name.returnFullAddress().toUpperCase())
-				    && iss_cont.contentEquals(name.getContact().toUpperCase())) {
+		verifyNameAndAddIssue(request, response, namesHelper, newIssue, dispatchToIssuesJSP);
 
-				IssuesHelper issuesHelper = new IssuesHelper();
-				issuesHelper.addNewIssue(newIssue, new BaseHelper.onCompleteTransaction() {
-				    @Override
-				    public void onComplete(boolean committed, Object data) {
-					if (committed) {
-					    request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_TRANSACTION_SUCCESS, data);
-					    latch.countDown();
-
-					} else {
-					    //Some error
-					    request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_ERROR_WITH_DATA, Constants.ERRORS.ISSUE_NOT_ADDED);
-					    latch.countDown();
-					}
-				    }
-				});
-			    } else {
-				//name is not verified
-				request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_ERROR_WITH_DATA, Constants.ERRORS.SOME_ERROR_FULL);
-				latch.countDown();
-			    }
-			}
-		    }
-		}, new BaseHelper.onFailure() {
-		    @Override
-		    public void onFail(Object data) {
-			request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_ERROR_WITH_DATA, Constants.ERRORS.SOME_ERROR_FULL);
-			latch.countDown();
-		    }
-		});
-
-		latch.await();
-		redirectToIssuesJSP(request, response, namesHelper, dispatchToIssuesJSP);
-
-		out.println("</body>");
-		out.println("</html>");
 	    } catch (InterruptedException ex) {
 		Logger.getLogger(AddIssue.class.getName()).log(Level.SEVERE, null, ex);
 	    }
 	}
+
+	out.println("</body>");
+	out.println("</html>");
+    }
+
+    private void redirectToIssuesJSP(final HttpServletRequest request, HttpServletResponse response, NamesHelper namesHelper,
+	    RequestDispatcher dispatcherForIssuesJSP) throws InterruptedException, ServletException, IOException {
+	final CountDownLatch latch = new CountDownLatch(1);
+
+	namesHelper.getAllNamesOnce(new BaseHelper.onCompleteRetrieval() {
+	    @Override
+	    public void onComplete(Object data) {
+		List<Names> namesList = (List<Names>) data;
+//			String allNamesHTML = "";
+//			for (Names name : namesList) {
+//			    allNamesHTML += "<option value=\"" + name.getSer_no() + "\">" + name.getSer_no() + "</option>";
+//			}
+		request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_NAMES_FOR_HTML, namesList);
+		latch.countDown();
+	    }
+	}, new BaseHelper.onFailure() {
+	    @Override
+	    public void onFail(Object data) {
+		System.err.println(((DatabaseError) data).toString());
+		request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_ERROR_WITH_DATA, Constants.ERRORS.SOME_ERROR_FULL);
+		latch.countDown();
+	    }
+	});
+	latch.await();
+	dispatcherForIssuesJSP.forward(request, response);
+    }
+
+    private void verifyNameAndAddIssue(final HttpServletRequest request, final HttpServletResponse response, NamesHelper namesHelper,
+	    final Issues newIssue, RequestDispatcher dispatchToIssuesJSP) throws InterruptedException, ServletException, IOException {
+	final CountDownLatch latch = new CountDownLatch(1);
+	//For Verifying the name from cloud
+	namesHelper.getNameDetails(newIssue.getIssuerId(), new BaseHelper.onCompleteRetrieval() {
+	    @Override
+	    public void onComplete(Object data) {
+		if (data != null) {
+		    Names name = (Names) data;
+		    if (newIssue.getIssuerName().contentEquals(name.returnFullName().toUpperCase())
+			    && newIssue.getIssuerAddr().contentEquals(name.returnFullAddress().toUpperCase())
+			    && newIssue.getIssuerCont().contentEquals(name.getContact().toUpperCase())) {
+
+			IssuesHelper issuesHelper = new IssuesHelper();
+			issuesHelper.addNewIssue(newIssue, new BaseHelper.onCompleteTransaction() {
+			    @Override
+			    public void onComplete(boolean committed, Object data) {
+				if (committed) {
+				    request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_TRANSACTION_SUCCESS, data);
+				    latch.countDown();
+
+				} else {
+				    //Some error
+				    request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_ERROR_WITH_DATA, Constants.ERRORS.ISSUE_NOT_ADDED);
+				    latch.countDown();
+				}
+			    }
+			});
+		    } else {
+			//name is not verified
+			request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_ERROR_WITH_DATA, Constants.ERRORS.SOME_ERROR_FULL);
+			latch.countDown();
+		    }
+		}
+	    }
+	}, new BaseHelper.onFailure() {
+	    @Override
+	    public void onFail(Object data) {
+		request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_ERROR_WITH_DATA, Constants.ERRORS.SOME_ERROR_FULL);
+		latch.countDown();
+	    }
+	});
+
+	latch.await();
+	redirectToIssuesJSP(request, response, namesHelper, dispatchToIssuesJSP);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -181,32 +214,4 @@ public class AddIssue extends HttpServlet {
     public String getServletInfo() {
 	return "Short description";
     }// </editor-fold>
-
-    private void redirectToIssuesJSP(final HttpServletRequest request, HttpServletResponse response, NamesHelper namesHelper,
-	    RequestDispatcher dispatcherForIssuesJSP) throws InterruptedException, ServletException, IOException {
-	final CountDownLatch latch = new CountDownLatch(1);
-
-	namesHelper.getAllNamesOnce(new BaseHelper.onCompleteRetrieval() {
-	    @Override
-	    public void onComplete(Object data) {
-		List<Names> namesList = (List<Names>) data;
-//			String allNamesHTML = "";
-//			for (Names name : namesList) {
-//			    allNamesHTML += "<option value=\"" + name.getSer_no() + "\">" + name.getSer_no() + "</option>";
-//			}
-		request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_NAMES_FOR_HTML, namesList);
-		latch.countDown();
-	    }
-	}, new BaseHelper.onFailure() {
-	    @Override
-	    public void onFail(Object data) {
-		System.err.println(((DatabaseError) data).toString());
-		request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_ERROR_WITH_DATA, Constants.ERRORS.SOME_ERROR_FULL);
-		latch.countDown();
-	    }
-	});
-	latch.await();
-	dispatcherForIssuesJSP.forward(request, response);
-    }
-
 }
