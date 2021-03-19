@@ -54,6 +54,7 @@ public final class Constants {
 
 	public static final String SOME_ERROR = "Some Error Occurred.";
 	public static final String TRY_AGAIN = "Please try again.";
+	public static final String NO_ISSUES = "No Issues Found.";
 	public static final String ISSUE_NOT_ADDED = "Issue not added." + SPACE + Constants.ERRORS.SOME_ERROR_FULL;
 	public static final String NO_NAME_ID = "The selected ID of the name does not exists. " + TRY_AGAIN;
 	public static final String SOME_ERROR_FULL = SOME_ERROR + SPACE + TRY_AGAIN;
@@ -70,6 +71,7 @@ public final class Constants {
 	public static final String ISSUER_ADDRESS = "issuer_address";
 	public static final String ISSUE_DATE = "issue_date";
 	public static final String ISSUE_ID = "issue_id";
+	public static final String NAME_ID = "name_id";
 //	public static final String  = "";
 
     }

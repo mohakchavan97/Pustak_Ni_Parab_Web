@@ -154,51 +154,28 @@
 	    <div style="width: 100%; float: right;"><hr/></div>
 
 	    <div id="returnResults">
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
 
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
+		<%
+		    if (issuesList != null && !issuesList.isEmpty()) {
+			for (Issues issue : issuesList) {
+		%>
 
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
+		<jsp:include page="./genericContent/issueCard.jsp" flush="true">
+		    <jsp:param name="issue_id" value="<%=String.valueOf(issue.getIssueNo())%>"/>
+		    <jsp:param name="book_name" value="<%=issue.getBookName()%>"/>
+		    <jsp:param name="name_id" value="<%=issue.getIssuerId()%>"/>
+		    <jsp:param name="issuer_name" value="<%=issue.getIssuerName()%>"/>
+		    <jsp:param name="issue_date" value="<%=issue.getIssueDate()%>"/>
+		</jsp:include>
 
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
+		<%
+			}
+		    } else {
+			out.println("<div id=\"errorDiv\" align=\"center\" style=\"margin-top: 13%; margin-bottom: -14.8%; color: red;"
+				+ "font-size: x-large; font-weight: bolder; word-wrap: break-word;\">" + Constants.ERRORS.NO_ISSUES + "</div>");
+		    }
+		%>
 
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-
-		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
 	    </div>
 
 	    <input type="button" value="Submit" class="submitButton"/>
