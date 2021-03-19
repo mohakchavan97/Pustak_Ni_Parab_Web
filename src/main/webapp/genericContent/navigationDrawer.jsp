@@ -117,7 +117,7 @@
 		    <td class="drawerImg"><img src="./icons/ic_issues.svg" alt="ic_issues" align="center" style="vertical-align: middle;"/></td>
 		    <td class="drawerLabel">Add New Issue</td>
 		</tr>
-		<tr style="cursor: pointer;" onclick="location.href = './returns';">
+		<tr style="cursor: pointer;" onclick="location.href = './ReturnIssue';">
 		    <td class="drawerImg"><img src="./icons/ic_returns.svg" alt="ic_returns" align="center" style="vertical-align: middle;"/></td>
 		    <td class="drawerLabel">Returns</td>
 		</tr>

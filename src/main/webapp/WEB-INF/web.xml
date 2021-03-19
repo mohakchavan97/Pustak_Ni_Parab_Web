@@ -42,6 +42,10 @@
         <servlet-name>AddIssue</servlet-name>
         <servlet-class>com.mohakchavan.pustakniparab_web.MainServlets.AddIssue</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReturnIssue</servlet-name>
+        <servlet-class>com.mohakchavan.pustakniparab_web.MainServlets.ReturnIssue</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserSignedIn</servlet-name>
         <url-pattern>/UserSignedIn</url-pattern>
@@ -81,6 +85,10 @@
     <servlet-mapping>
         <servlet-name>AddIssue</servlet-name>
         <url-pattern>/AddIssue</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReturnIssue</servlet-name>
+        <url-pattern>/ReturnIssue</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

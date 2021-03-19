@@ -4,6 +4,10 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.Models.Names"%>
+<%@page import="com.mohakchavan.pustakniparab_web.Models.Issues"%>
+<%@page import="java.util.List"%>
+<%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.CurrentUser"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,6 +16,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Returns</title>
 	<link rel="stylesheet" href="./css/returns.css"/>
+	<script type="text/javascript" src="./javascript/returns.js"></script>
     </head>
     <body>
 
@@ -19,6 +24,38 @@
             <jsp:param name="userGivenName" value="<%=CurrentUser.getDisplayName()%>"/>
 	    <jsp:param name="userPhoto" value="<%=CurrentUser.getPhotoUrl()%>"/>
         </jsp:include>
+
+	<%
+	    Boolean isVerified = (Boolean) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED);
+
+	    List<Issues> issuesList = null;
+	    try {
+		issuesList = (List<Issues>) request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_ISSUES_FOR_HTML);
+	    } catch (Exception ex) {
+	    }
+	    List<Names> namesList = null;
+	    try {
+		namesList = (List<Names>) request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_NAMES_FOR_HTML);
+	    } catch (Exception ex) {
+	    }
+	%>
+
+
+	<div id="loader" style="display: none;">
+	    <jsp:include page="./genericContent/loader.jsp" flush="true"/>
+	</div>
+
+	<div id="errorDiv" 
+	     <%
+		 String errorData = "";
+		 try {
+		     errorData = request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_ERROR_WITH_DATA).toString().trim();
+		 } catch (Exception ex) {
+		     out.print(" hidden ");
+		 }
+	     %>
+	     align="center" style="margin-top: 13%; margin-bottom: -14.8%; color: red;
+	     font-size: x-large; font-weight: bolder; word-wrap: break-word;"><%=errorData.toString()%></div>
 
 	<div id="returns" style="margin-top: 15%;">
 
@@ -28,7 +65,13 @@
 			<tr>
 			    <th align="right" class="td-th-large">Issue ID:</th>
 			    <td align="left" style="margin-left: 2%;">
-				<input type="text" name="issue_id" id="issue_id" autofocus />
+				<input type="text" name="<%=Constants.IDS.ISSUE_ID%>" id="<%=Constants.IDS.ISSUE_ID%>"
+				       <%
+					   if (!isVerified) {
+					       out.print(" disabled ");
+					   }
+				       %>
+				       autofocus />
 			    </td>
 			</tr>
 			<tr>
@@ -37,7 +80,13 @@
 			<tr>
 			    <th align="right" class="td-th-large">Book Name:</th>
 			    <td align="left" style="margin-left: 2%;">
-				<input type="text" name="issue_id" id="issue_id" />
+				<input type="text" name="<%=Constants.IDS.BOOK_NAME%>" id="<%=Constants.IDS.BOOK_NAME%>"
+				       <%
+					   if (!isVerified) {
+					       out.print(" disabled ");
+					   }
+				       %>
+				       />
 			    </td>
 			</tr>
 		    </table>
@@ -48,8 +97,38 @@
 			<tr>
 			    <th align="right" class="td-th-large">Select ID:</th>
 			    <td align="left" style="margin-left: 2%;">
-				<select name="name_id" id="name_id">
+				<!--onchange='getname([<%=getAllNamesToString(namesList)%>])'-->
+				<select name="<%=Constants.IDS.SEL_NAME%>" id="<%=Constants.IDS.SEL_NAME%>"
+
+					<%
+					    if (!isVerified) {
+						out.print(" disabled ");
+					    }
+					%>
+					>
+				    <%!
+					String getAllNamesToString(List<Names> list) {
+					    if (!list.isEmpty()) {
+						String toReturn = "";
+						for (Names names : list) {
+						    toReturn += "[\"" + names.getSer_no() + "\",\"" + names.getFirstName() + "\",\""
+							    + names.getLastName() + "\",\"" + names.getBlkOrFltNo() + "\",\""
+							    + names.getStreetName() + "\",\"" + names.getLocalityOrArea() + "\",\""
+							    + names.getContact() + "\"],";
+						}
+						toReturn = toReturn.substring(0, toReturn.length() - 1);
+						return toReturn;
+					    }
+					    return null;
+					}
+				    %>
 				    <option value="0_0" selected>Select Name ID</option>
+				    <%
+					for (Names names : namesList) {
+					    out.println("<option value=\"" + names.getSer_no() + "\""
+						    + ">" + names.getSer_no() + "</option>");
+					}
+				    %>
 				</select>
 			    </td>
 			</tr>
@@ -59,7 +138,13 @@
 			<tr>
 			    <th align="right" class="td-th-large">Issuer Name:</th>
 			    <td align="left" style="margin-left: 2%;">
-				<input type="text" name="issue_id" id="issue_id" />
+				<input type="text" name="<%=Constants.IDS.ISSUER_NAME%>" id="<%=Constants.IDS.ISSUER_NAME%>"
+				       <%
+					   if (!isVerified) {
+					       out.print(" disabled ");
+					   }
+				       %>
+				       />
 			    </td>
 			</tr>
 		    </table>
@@ -108,9 +193,9 @@
 		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
 
 		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-		
+
 		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
-		
+
 		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>
 
 		<jsp:include page="../genericContent/issueCard.jsp" flush="true"></jsp:include>

@@ -44,7 +44,9 @@ public final class Constants {
 	public static final String IS_CURRENT_USER_VERIFIED = "isCuurentUserVerified";
 	public static final String HAS_ERROR_WITH_DATA = "hasErrorWithData";
 	public static final String ALL_NAMES_FOR_HTML = "allNamesHTML";
+	public static final String ALL_ISSUES_FOR_HTML = "allIssuesHTML";
 	public static final String IS_REQUEST_FOR_ADD_ISSUE = "isForAdd";
+	public static final String IS_REQUEST_TO_RETURN_ISSUE = "isForReturn";
 	public static final String IS_TRANSACTION_SUCCESS = "isSuccessfull";
     }
 

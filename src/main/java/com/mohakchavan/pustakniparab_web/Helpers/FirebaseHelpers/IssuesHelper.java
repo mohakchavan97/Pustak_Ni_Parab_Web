@@ -10,8 +10,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
+import com.google.firebase.database.ValueEventListener;
 import com.mohakchavan.pustakniparab_web.Models.Issues;
 import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -20,6 +23,7 @@ import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
 public class IssuesHelper {
 
     private final DatabaseReference issueReference;
+    private ValueEventListener allIssuesListener;
 
     public IssuesHelper() {
 	issueReference = new BaseHelper().getBaseReference().child(Constants.FIREBASE.DATABASE.ISSUES);
@@ -30,7 +34,7 @@ public class IssuesHelper {
 	    @Override
 	    public Transaction.Result doTransaction(MutableData currentData) {
 		if (currentData.getValue() != null) {
-		    if (currentData.hasChild(Constants.FIREBASE.DATABASE.TOTAL_RECORDS) 
+		    if (currentData.hasChild(Constants.FIREBASE.DATABASE.TOTAL_RECORDS)
 			    && currentData.child(Constants.FIREBASE.DATABASE.TOTAL_RECORDS).getValue() != null) {
 			long currentTotal = currentData.child(Constants.FIREBASE.DATABASE.TOTAL_RECORDS).getValue(Long.class);
 			++currentTotal;
@@ -58,6 +62,32 @@ public class IssuesHelper {
 		onCompleteTransaction.onComplete(committed, newIssueDetails);
 	    }
 	});
+    }
+
+    public void getAllIssuesOnce(BaseHelper.onCompleteRetrieval onCompleteRetrieval, BaseHelper.onFailure onFail) {
+	setAllIssuesListener(onCompleteRetrieval, onFail);
+	issueReference.orderByChild("issueNo").addListenerForSingleValueEvent(allIssuesListener);
+    }
+
+    private void setAllIssuesListener(final BaseHelper.onCompleteRetrieval onCompleteRetrieval, final BaseHelper.onFailure onFail) {
+	allIssuesListener = new ValueEventListener() {
+	    @Override
+	    public void onDataChange(DataSnapshot snapshot) {
+		List<Issues> issues = new ArrayList<>();
+		for (DataSnapshot snap : snapshot.getChildren()) {
+		    if (snap.getKey() != null && !snap.getKey().isEmpty() && !snap.getKey().contentEquals(Constants.FIREBASE.DATABASE.TOTAL_RECORDS)) {
+			Issues issue = snap.getValue(Issues.class);
+			issues.add(issue);
+		    }
+		}
+		onCompleteRetrieval.onComplete(issues);
+	    }
+
+	    @Override
+	    public void onCancelled(DatabaseError error) {
+		onFail.onFail(error);
+	    }
+	};
     }
 
 }
