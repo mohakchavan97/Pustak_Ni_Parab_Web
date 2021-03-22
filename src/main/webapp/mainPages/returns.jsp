@@ -16,9 +16,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Returns</title>
 	<link rel="stylesheet" href="./css/returns.css"/>
-	<script type="text/javascript" src="./javascript/returns.js"></script>
+	<script type="text/javascript" src="./javascripts/returns.js"></script>
     </head>
-    <body>
+    <body onload="assignVar()">
 
 	<jsp:include page="./genericContent/header.jsp" flush="true">
             <jsp:param name="userGivenName" value="<%=CurrentUser.getDisplayName()%>"/>
@@ -66,12 +66,13 @@
 			    <th align="right" class="td-th-large">Issue ID:</th>
 			    <td align="left" style="margin-left: 2%;">
 				<input type="text" name="<%=Constants.IDS.ISSUE_ID%>" id="<%=Constants.IDS.ISSUE_ID%>"
+				       onkeypress="checkPressedCharForIssID(event)" onkeyup="checkWholeValueForIssID()"
 				       <%
 					   if (!isVerified) {
 					       out.print(" disabled ");
 					   }
 				       %>
-				       autofocus />
+				        />
 			    </td>
 			</tr>
 			<tr>
@@ -81,6 +82,7 @@
 			    <th align="right" class="td-th-large">Book Name:</th>
 			    <td align="left" style="margin-left: 2%;">
 				<input type="text" name="<%=Constants.IDS.BOOK_NAME%>" id="<%=Constants.IDS.BOOK_NAME%>"
+				       onkeyup="callBookAPI(value)"
 				       <%
 					   if (!isVerified) {
 					       out.print(" disabled ");
@@ -99,7 +101,7 @@
 			    <td align="left" style="margin-left: 2%;">
 				<!--onchange='getname([<%=getAllNamesToString(namesList)%>])'-->
 				<select name="<%=Constants.IDS.SEL_NAME%>" id="<%=Constants.IDS.SEL_NAME%>"
-
+					onchange="callNameIdAPI()"
 					<%
 					    if (!isVerified) {
 						out.print(" disabled ");
@@ -139,6 +141,7 @@
 			    <th align="right" class="td-th-large">Issuer Name:</th>
 			    <td align="left" style="margin-left: 2%;">
 				<input type="text" name="<%=Constants.IDS.ISSUER_NAME%>" id="<%=Constants.IDS.ISSUER_NAME%>"
+				       onkeyup="callPersonAPI(value)"
 				       <%
 					   if (!isVerified) {
 					       out.print(" disabled ");
