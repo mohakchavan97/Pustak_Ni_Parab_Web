@@ -8,13 +8,19 @@
 var isSet = false;
 var onlyDigit = /^[0-9]+$/;
 
-var issue_id, name_id, book_name, person_name;
+var issue_id, name_id, book_name, person_name, returnForm, jIssuesList, filterKey, filterValue;
 
 function assignVar() {
     issue_id = document.getElementById("issue_id");
     name_id = document.getElementById("sel_name");
     book_name = document.getElementById("book_name");
     person_name = document.getElementById("issuer_name");
+    returnForm = document.getElementById("hidData");
+}
+
+function setIssues(issuesString) {
+    jIssuesList = JSON.parse(JSON.stringify(issuesString));
+    assignVar();
 }
 
 function enableAllFields() {
@@ -63,6 +69,8 @@ function callIssueAPI() {
     if (onlyDigit.test(valToCheck)) {
 //	    document.getElementById("temp2").value = document.getElementById("temp").value;
 	//call api
+	filterKey = "issue_id";
+	filterValue = valToCheck;
 	callAPI();
     } else {
 	isSet = false;
@@ -102,7 +110,13 @@ function callNameIdAPI() {
 function callAPI() {
     //call api
     console.log("API Called");
+    var i;
     isSet = false;
+    for (i in jIssuesList) {
+	if (jIssuesList[i][filterKey].includes(filterValue)) {
+	    console.log(jIssuesList[i]);
+	}
+    }
 }
 
 function checkPressedCharForIssID(e) {

@@ -14,7 +14,7 @@
     </head>
     <body>
 
-	<div id="issueCard" class="issueCard" style="float: left;">
+	<div id="issueCard_<%=request.getParameter(Constants.IDS.ISSUE_ID)%>" class="issueCard" style="float: left;">
 	    <table class="issueTable">
 		<tr>
 		    <th class="td-th-large" colspan="2" align="left" style="width: 80%;"><%=request.getParameter(Constants.IDS.ISSUE_ID)%></th>

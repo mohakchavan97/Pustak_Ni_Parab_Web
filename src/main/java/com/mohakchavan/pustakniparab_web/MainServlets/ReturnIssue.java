@@ -67,6 +67,8 @@ public class ReturnIssue extends HttpServlet {
 		Logger.getLogger(AddIssue.class.getName()).log(Level.SEVERE, null, ex);
 	    }
 
+	} else if (isForReturn && request.getParameter(Constants.ATTRIBUTE_KEY_NAMES.IS_REQUEST_TO_RETURN_ISSUE).contentEquals(Constants.YES)) {
+	    //enable this code when request is for returing the issue
 	}
 	try {
 	    /* TODO output your page here. You may use following sample code. */

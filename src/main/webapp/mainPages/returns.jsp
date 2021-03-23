@@ -4,6 +4,10 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.google.gson.JsonElement"%>
+<%@page import="com.google.gson.JsonObject"%>
+<%@page import="org.json.simple.JSONObject"%>
+<%@page import="org.json.simple.JSONArray"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.Names"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.Issues"%>
 <%@page import="java.util.List"%>
@@ -18,27 +22,28 @@
 	<link rel="stylesheet" href="./css/returns.css"/>
 	<script type="text/javascript" src="./javascripts/returns.js"></script>
     </head>
-    <body onload="assignVar()">
+
+    <%
+	Boolean isVerified = (Boolean) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED);
+
+	List<Issues> issuesList = null;
+	try {
+	    issuesList = (List<Issues>) request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_ISSUES_FOR_HTML);
+	} catch (Exception ex) {
+	}
+	List<Names> namesList = null;
+	try {
+	    namesList = (List<Names>) request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_NAMES_FOR_HTML);
+	} catch (Exception ex) {
+	}
+    %>
+
+    <body onload='setIssues(<%=getAllIssuesToString(issuesList)%>)'>
 
 	<jsp:include page="./genericContent/header.jsp" flush="true">
             <jsp:param name="userGivenName" value="<%=CurrentUser.getDisplayName()%>"/>
 	    <jsp:param name="userPhoto" value="<%=CurrentUser.getPhotoUrl()%>"/>
         </jsp:include>
-
-	<%
-	    Boolean isVerified = (Boolean) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED);
-
-	    List<Issues> issuesList = null;
-	    try {
-		issuesList = (List<Issues>) request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_ISSUES_FOR_HTML);
-	    } catch (Exception ex) {
-	    }
-	    List<Names> namesList = null;
-	    try {
-		namesList = (List<Names>) request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_NAMES_FOR_HTML);
-	    } catch (Exception ex) {
-	    }
-	%>
 
 
 	<div id="loader" style="display: none;">
@@ -72,7 +77,7 @@
 					       out.print(" disabled ");
 					   }
 				       %>
-				        />
+				       />
 			    </td>
 			</tr>
 			<tr>
@@ -158,30 +163,60 @@
 
 	    <div id="returnResults">
 
-		<%
-		    if (issuesList != null && !issuesList.isEmpty()) {
-			for (Issues issue : issuesList) {
-		%>
+		 <%!
+		     String getAllIssuesToString(List<Issues> issues) {
+			 if (!issues.isEmpty()) {
+			     //String toReturn = "";
+			     //JSONArray jIssueList=new JSONArray();
+			     com.google.gson.JsonArray jIssueList = new com.google.gson.JsonArray();
+			     for (Issues issue : issues) {
+//				 JSONObject jIssue = new JSONObject();
+				 JsonObject jIssue = new JsonObject();
+				 jIssue.addProperty("issue_id", String.valueOf(issue.getIssueNo()));
+				 jIssue.addProperty("book_name", issue.getBookName());
+				 jIssue.addProperty("name_id", issue.getIssuerId());
+				 jIssue.addProperty("person_name", issue.getIssuerName());
+				 jIssueList.add(jIssue);
+//				 toReturn += "[\"" + String.valueOf(issue.getIssueNo()) + "\",\"" + issue.getBookName() + "\",\""
+//					 + issue.getIssuerId() + "\",\"" + issue.getIssuerName() + "\",\""
+//					 + "\"],";
+			     }
+//			     toReturn = toReturn.substring(0, toReturn.length() - 1);
+			     return jIssueList.toString();
+			 }
+			 return null;
+		     }
+		 %>
 
-		<jsp:include page="./genericContent/issueCard.jsp" flush="true">
-		    <jsp:param name="issue_id" value="<%=String.valueOf(issue.getIssueNo())%>"/>
-		    <jsp:param name="book_name" value="<%=issue.getBookName()%>"/>
-		    <jsp:param name="name_id" value="<%=issue.getIssuerId()%>"/>
-		    <jsp:param name="issuer_name" value="<%=issue.getIssuerName()%>"/>
-		    <jsp:param name="issue_date" value="<%=issue.getIssueDate()%>"/>
-		</jsp:include>
+		 <%
+		     if (issuesList != null && !issuesList.isEmpty()) {
+			 for (Issues issue : issuesList) {
+		 %>
 
-		<%
-			}
-		    } else {
-			out.println("<div id=\"errorDiv\" align=\"center\" style=\"margin-top: 13%; margin-bottom: -14.8%; color: red;"
-				+ "font-size: x-large; font-weight: bolder; word-wrap: break-word;\">" + Constants.ERRORS.NO_ISSUES + "</div>");
-		    }
-		%>
+		 <jsp:include page="./genericContent/issueCard.jsp" flush="true">
+		     <jsp:param name="issue_id" value="<%=String.valueOf(issue.getIssueNo())%>"/>
+		     <jsp:param name="book_name" value="<%=issue.getBookName()%>"/>
+		     <jsp:param name="name_id" value="<%=issue.getIssuerId()%>"/>
+		     <jsp:param name="issuer_name" value="<%=issue.getIssuerName()%>"/>
+		     <jsp:param name="issue_date" value="<%=issue.getIssueDate()%>"/>
+		 </jsp:include>
 
+		 <%
+			 }
+		     } else {
+			 out.println("<div id=\"errorDiv\" align=\"center\" style=\"margin-top: 13%; margin-bottom: -14.8%; color: red;"
+				 + "font-size: x-large; font-weight: bolder; word-wrap: break-word;\">" + Constants.ERRORS.NO_ISSUES + "</div>");
+		     }
+		 %>
+
+		 </div>
+
+		<input type="button" value="Submit" class="submitButton"/>
 	    </div>
+	    <div style="display: none;">
+		<form id="hidData" action="ReturnIssue" method="post">
 
-	    <input type="button" value="Submit" class="submitButton"/>
-	</div>
+		</form>
+	    </div>
     </body>
 </html>
