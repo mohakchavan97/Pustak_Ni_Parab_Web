@@ -87,7 +87,7 @@
 			    <th align="right" class="td-th-large">Book Name:</th>
 			    <td align="left" style="margin-left: 2%;">
 				<input type="text" name="<%=Constants.IDS.BOOK_NAME%>" id="<%=Constants.IDS.BOOK_NAME%>"
-				       onkeyup="callBookAPI(value)"
+				       onkeyup="bookInputChanged(value)"
 				       <%
 					   if (!isVerified) {
 					       out.print(" disabled ");
@@ -106,7 +106,7 @@
 			    <td align="left" style="margin-left: 2%;">
 				<!--onchange='getname([<%=getAllNamesToString(namesList)%>])'-->
 				<select name="<%=Constants.IDS.SEL_NAME%>" id="<%=Constants.IDS.SEL_NAME%>"
-					onchange="callNameIdAPI()"
+					onchange="nameIdChanged()"
 					<%
 					    if (!isVerified) {
 						out.print(" disabled ");
@@ -146,7 +146,7 @@
 			    <th align="right" class="td-th-large">Issuer Name:</th>
 			    <td align="left" style="margin-left: 2%;">
 				<input type="text" name="<%=Constants.IDS.ISSUER_NAME%>" id="<%=Constants.IDS.ISSUER_NAME%>"
-				       onkeyup="callPersonAPI(value)"
+				       onkeyup="personInputChanged(value)"
 				       <%
 					   if (!isVerified) {
 					       out.print(" disabled ");
