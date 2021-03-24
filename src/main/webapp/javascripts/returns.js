@@ -150,15 +150,20 @@ function callNameIdAPI() {
 
 function applyFilters() {
     //call api
-    var i;
+    var i, noOfIssues = 0;
     isSet = false;
     for (i in jIssuesList) {
 	if (jIssuesList[i][filterKey].includes(filterValue)) {
-	    console.log(jIssuesList[i]);
 	    document.getElementById("issueCard_" + jIssuesList[i]["issue_id"]).hidden = false;
+	    ++noOfIssues;
 	} else {
 	    document.getElementById("issueCard_" + jIssuesList[i]["issue_id"]).hidden = true;
 	}
+    }
+    if (noOfIssues === 0) {
+	document.getElementById("noIssuesDiv").hidden = false;
+    } else {
+	document.getElementById("noIssuesDiv").hidden = true;
     }
 }
 

@@ -17,7 +17,7 @@
 	<div id="issueCard_<%=request.getParameter(Constants.IDS.ISSUE_ID)%>" class="issueCard" style="float: left;">
 	    <table class="issueTable">
 		<tr>
-		    <th class="td-th-large" colspan="2" align="left" style="width: 80%;"><%=request.getParameter(Constants.IDS.ISSUE_ID)%></th>
+		    <th class="td-th-large" colspan="2" align="left" style="width: 73%;"><%=request.getParameter(Constants.IDS.ISSUE_ID)%></th>
 		    <td rowspan="2" class="td-content-1">
 			<label class="container"><input type="checkbox" name="isIssueChecked" id="isIssueChecked">&nbsp;
 			    <span class="checkMark"></span></label>

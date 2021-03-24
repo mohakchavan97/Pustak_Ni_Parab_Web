@@ -161,62 +161,64 @@
 
 	    <div style="width: 100%; float: right;"><hr/></div>
 
-	    <div id="returnResults">
-
-		 <%!
-		     String getAllIssuesToString(List<Issues> issues) {
-			 if (!issues.isEmpty()) {
-			     //String toReturn = "";
-			     //JSONArray jIssueList=new JSONArray();
-			     com.google.gson.JsonArray jIssueList = new com.google.gson.JsonArray();
-			     for (Issues issue : issues) {
+	    <%!
+		String getAllIssuesToString(List<Issues> issues) {
+		    if (!issues.isEmpty()) {
+			//String toReturn = "";
+			//JSONArray jIssueList=new JSONArray();
+			com.google.gson.JsonArray jIssueList = new com.google.gson.JsonArray();
+			for (Issues issue : issues) {
 //				 JSONObject jIssue = new JSONObject();
-				 JsonObject jIssue = new JsonObject();
-				 jIssue.addProperty("issue_id", String.valueOf(issue.getIssueNo()));
-				 jIssue.addProperty("book_name", issue.getBookName());
-				 jIssue.addProperty("name_id", issue.getIssuerId());
-				 jIssue.addProperty("person_name", issue.getIssuerName());
-				 jIssueList.add(jIssue);
+			    JsonObject jIssue = new JsonObject();
+			    jIssue.addProperty("issue_id", String.valueOf(issue.getIssueNo()));
+			    jIssue.addProperty("book_name", issue.getBookName());
+			    jIssue.addProperty("name_id", issue.getIssuerId());
+			    jIssue.addProperty("person_name", issue.getIssuerName());
+			    jIssueList.add(jIssue);
 //				 toReturn += "[\"" + String.valueOf(issue.getIssueNo()) + "\",\"" + issue.getBookName() + "\",\""
 //					 + issue.getIssuerId() + "\",\"" + issue.getIssuerName() + "\",\""
 //					 + "\"],";
-			     }
+			}
 //			     toReturn = toReturn.substring(0, toReturn.length() - 1);
-			     return jIssueList.toString();
+			return jIssueList.toString();
+		    }
+		    return null;
+		}
+	    %>
+
+	    <div id="returnResults">
+		<div id="noIssuesDiv" style="margin-top: 1%; margin-bottom: 5%; color: red; font-size: x-large; font-weight: bolder;
+		     word-wrap: break-word; float: left; left: 50%; position: relative; transform: translateX(-50%);"
+
+		     <%
+			 if (issuesList == null || issuesList.isEmpty()) {
+			     out.println(">" + Constants.ERRORS.NO_ISSUES + "</div>");
+			 } else {
+			     out.println(" hidden>" + Constants.ERRORS.NO_ISSUES + "</div>");
+			     for (Issues issue : issuesList) {
+		     %>
+
+		     <jsp:include page="./genericContent/issueCard.jsp" flush="true">
+			 <jsp:param name="issue_id" value="<%=String.valueOf(issue.getIssueNo())%>"/>
+			 <jsp:param name="book_name" value="<%=issue.getBookName()%>"/>
+			 <jsp:param name="name_id" value="<%=issue.getIssuerId()%>"/>
+			 <jsp:param name="issuer_name" value="<%=issue.getIssuerName()%>"/>
+			 <jsp:param name="issue_date" value="<%=issue.getIssueDate()%>"/>
+		     </jsp:include>
+
+		     <%
+			     }
 			 }
-			 return null;
-		     }
-		 %>
+		     %>
 
-		 <%
-		     if (issuesList != null && !issuesList.isEmpty()) {
-			 for (Issues issue : issuesList) {
-		 %>
+		     </div>
 
-		 <jsp:include page="./genericContent/issueCard.jsp" flush="true">
-		     <jsp:param name="issue_id" value="<%=String.valueOf(issue.getIssueNo())%>"/>
-		     <jsp:param name="book_name" value="<%=issue.getBookName()%>"/>
-		     <jsp:param name="name_id" value="<%=issue.getIssuerId()%>"/>
-		     <jsp:param name="issuer_name" value="<%=issue.getIssuerName()%>"/>
-		     <jsp:param name="issue_date" value="<%=issue.getIssueDate()%>"/>
-		 </jsp:include>
+		    <input type="button" value="Submit" class="submitButton"/>
+		</div>
+		<div style="display: none;">
+		    <form id="hidData" action="ReturnIssue" method="post">
 
-		 <%
-			 }
-		     } else {
-			 out.println("<div id=\"errorDiv\" align=\"center\" style=\"margin-top: 13%; margin-bottom: -14.8%; color: red;"
-				 + "font-size: x-large; font-weight: bolder; word-wrap: break-word;\">" + Constants.ERRORS.NO_ISSUES + "</div>");
-		     }
-		 %>
-
-		 </div>
-
-		<input type="button" value="Submit" class="submitButton"/>
-	    </div>
-	    <div style="display: none;">
-		<form id="hidData" action="ReturnIssue" method="post">
-
-		</form>
-	    </div>
-    </body>
-</html>
+		    </form>
+		</div>
+		</body>
+		</html>
