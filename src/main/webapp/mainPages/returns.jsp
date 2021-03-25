@@ -213,11 +213,14 @@
 
 		     </div>
 
-		    <input type="button" value="Submit" id="returnsSubmitButton" hidden class="submitButton"/>
+		    <input type="button" value="Submit" id="returnsSubmitButton" hidden class="submitButton" onclick="submitReturnIssues();"/>
 		</div>
 		<div style="display: none;">
 		    <form id="hidData" action="ReturnIssue" method="post">
-
+			<input type="text" hidden id="<%=Constants.ATTRIBUTE_KEY_NAMES.IS_REQUEST_TO_RETURN_ISSUE%>"
+			       name="<%=Constants.ATTRIBUTE_KEY_NAMES.IS_REQUEST_TO_RETURN_ISSUE%>" 
+			       value="<%=Constants.YES%>"/>
+			<input type="text" hidden id="issuesToReturn" name="issuesToReturn"/>
 		    </form>
 		</div>
 		</body>

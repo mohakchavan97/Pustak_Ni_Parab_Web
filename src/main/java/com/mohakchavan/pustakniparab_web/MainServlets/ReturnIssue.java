@@ -24,6 +24,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -69,6 +72,12 @@ public class ReturnIssue extends HttpServlet {
 
 	} else if (isForReturn && request.getParameter(Constants.ATTRIBUTE_KEY_NAMES.IS_REQUEST_TO_RETURN_ISSUE).contentEquals(Constants.YES)) {
 	    //enable this code when request is for returing the issue
+	    JSONParser parser = new JSONParser();
+	    try {
+		JSONArray returningIssues = (JSONArray) parser.parse(request.getParameter("issuesToReturn"));
+	    } catch (ParseException ex) {
+		Logger.getLogger(ReturnIssue.class.getName()).log(Level.SEVERE, null, ex);
+	    }
 	}
 	try {
 	    /* TODO output your page here. You may use following sample code. */

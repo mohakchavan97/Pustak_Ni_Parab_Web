@@ -9,16 +9,15 @@
  */
 
 
-var isSet = false, onlyDigit = /^[0-9]*$/, timeOut = 2000, totalCheckedIssues = 0;
+var isSet = false, onlyDigit = /^[0-9]*$/, timeOut = 2000, totalCheckedIssues = 0, returningIssues = [], checkedIssuesId = [];
 
-var issue_id, name_id, book_name, person_name, returnForm, jIssuesList, filterKey, filterValue;
+var issue_id, name_id, book_name, person_name, jIssuesList, filterKey, filterValue;
 
 function assignVar() {
     issue_id = document.getElementById("issue_id");
     name_id = document.getElementById("sel_name");
     book_name = document.getElementById("book_name");
     person_name = document.getElementById("issuer_name");
-    returnForm = document.getElementById("hidData");
 }
 
 function setIssues(issuesString) {
@@ -184,14 +183,14 @@ function getStringFromEvent(e) {
 function issueCheckedChange(checkedIssue) {
     if (document.getElementById("isIssueChecked_" + checkedIssue).checked) {
 	var jIssue = jIssuesList.find(findIssue);
-	++totalCheckedIssues;
+	checkedIssuesId.push(jIssue["issue_id"]);
     } else {
-	--totalCheckedIssues;
+	checkedIssuesId.splice(jIssuesList.findIndex(findIssue), 1);
     }
 
     var btn = document.getElementById("returnsSubmitButton");
-    if (totalCheckedIssues > 0) {
-	btn.value = "SUBMIT (" + totalCheckedIssues.toString() + ")";
+    if (checkedIssuesId.length > 0) {
+	btn.value = "SUBMIT (" + checkedIssuesId.length.toString() + ")";
 	btn.hidden = false;
     } else {
 	btn.hidden = true;
@@ -200,4 +199,16 @@ function issueCheckedChange(checkedIssue) {
     function findIssue(issue) {
 	return issue["issue_id"] === checkedIssue.toString();
     }
+}
+
+function submitReturnIssues() {
+    checkedIssuesId.forEach(function (issId) {
+	returningIssues.push(jIssuesList.find(findIssue));
+
+	function findIssue(issue) {
+	    return issue["issue_id"] === issId.toString();
+	}
+    });
+    document.getElementById("issuesToReturn").value = JSON.stringify(returningIssues);
+    document.getElementById("hidData").submit();
 }
