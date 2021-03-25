@@ -101,7 +101,14 @@ public class ReturnIssue extends HttpServlet {
 	issuesHelper.getAllIssuesOnce(new BaseHelper.onCompleteRetrieval() {
 	    @Override
 	    public void onComplete(Object data) {
-		List<Issues> issuesList = (List<Issues>) data;
+		List<Issues> issuesList = null;
+		if (data != null) {
+		    for (Issues issue : (List<Issues>) data) {
+			if (issue.getIsReturned().contentEquals(Constants.NO)) {
+			    issuesList.add(issue);
+			}
+		    }
+		}
 		request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_ISSUES_FOR_HTML, issuesList);
 		latch2.countDown();
 	    }
@@ -118,7 +125,10 @@ public class ReturnIssue extends HttpServlet {
 	namesHelper.getAllNamesOnce(new BaseHelper.onCompleteRetrieval() {
 	    @Override
 	    public void onComplete(Object data) {
-		List<Names> namesList = (List<Names>) data;
+		List<Names> namesList = null;
+		if (data != null) {
+		    namesList = (List<Names>) data;
+		}
 //			String allNamesHTML = "";
 //			for (Names name : namesList) {
 //			    allNamesHTML += "<option value=\"" + name.getSer_no() + "\">" + name.getSer_no() + "</option>";

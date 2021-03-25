@@ -104,7 +104,6 @@
 			<tr>
 			    <th align="right" class="td-th-large">Select ID:</th>
 			    <td align="left" style="margin-left: 2%;">
-				<!--onchange='getname([<%=getAllNamesToString(namesList)%>])'-->
 				<select name="<%=Constants.IDS.SEL_NAME%>" id="<%=Constants.IDS.SEL_NAME%>"
 					onchange="nameIdChanged()"
 					<%
