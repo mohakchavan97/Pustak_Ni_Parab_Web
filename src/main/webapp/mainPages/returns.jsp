@@ -4,6 +4,8 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="java.util.TimeZone"%>
+<%@page import="java.util.Calendar"%>
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="org.json.simple.JSONArray"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.Names"%>
@@ -211,15 +213,15 @@
 		    <input type="button" value="Submit" id="returnsSubmitButton" hidden class="submitButton" onclick="submitReturnIssues();"/>
 		</div>
 
-		<div class="loadReturnDateModal" id="loadReturnDateModal">
+		<div class="loadReturnDateModal" id="loadReturnDateModal" style="display: none;">
 		    <table class="returnDateModalContent" id="returnDateModalContent" align="center">
 			<tr>
 			    <td colspan="2" class="returnDateHeader" align="center">Please Select the Return Date</td>
 			</tr>
 			<tr><td colspan="2"><hr/></td></tr>
 			<tr>
-			    <td class="returnDateLabel boldFont" style="width: 30%;" align="right">Date</td>
-			    <td>
+			    <td class="returnDateLabel boldFont" style="width: 30%; margin-right: 1%;" align="right">Date</td>
+			    <td style="padding: 1%;">
 				<input type="hidden" name="<%=Constants.IDS.ISSUE_DATE%>" id="<%=Constants.IDS.ISSUE_DATE%>" required />
 				<select name="issue_day" id="issue_day" class="issr" onchange="setDate()">
 				    <option value="0_0">Date</option>
@@ -267,6 +269,17 @@
 				    %>
 				</select>
 			    </td>
+			</tr>
+			<tr style="color: red; font-size: large; font-weight: bolder; word-wrap: break-word;">
+			    <td align="right">
+				Please select date after
+			    </td>
+			    <td align="left" style="margin-left: 1%;">
+				<p id="afterReturnDate"></p>
+			    </td>
+			</tr>
+			<tr>
+			    <td>OK</td>
 			</tr>
 		    </table>
 		</div>

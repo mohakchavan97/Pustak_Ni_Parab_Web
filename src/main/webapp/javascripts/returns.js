@@ -185,7 +185,7 @@ function issueCheckedChange(checkedIssue) {
 	var jIssue = jIssuesList.find(findIssue);
 	checkedIssuesId.push(jIssue["issue_id"]);
     } else {
-	checkedIssuesId.splice(jIssuesList.findIndex(findIssue), 1);
+	checkedIssuesId.splice(checkedIssuesId.findIndex(findChecked), 1);
     }
 
     var btn = document.getElementById("returnsSubmitButton");
@@ -199,16 +199,58 @@ function issueCheckedChange(checkedIssue) {
     function findIssue(issue) {
 	return issue["issue_id"] === checkedIssue.toString();
     }
+
+    function findChecked(issId) {
+	return issId === checkedIssue.toString();
+    }
 }
 
 function submitReturnIssues() {
+    var dates = [];
     checkedIssuesId.forEach(function (issId) {
-	returningIssues.push(jIssuesList.find(findIssue));
+	var curIssue = jIssuesList.find(findIssue);
+	returningIssues.push(curIssue);
+	if (!dates.includes(curIssue["issue_date"])) {
+	    dates.push(curIssue["issue_date"]);
+	}
 
 	function findIssue(issue) {
 	    return issue["issue_id"] === issId.toString();
 	}
     });
-    document.getElementById("issuesToReturn").value = JSON.stringify(returningIssues);
-    document.getElementById("hidData").submit();
+
+    dates.sort(function (a, b) {
+	return new Date(b) - new Date(a);
+    });
+    document.getElementById("afterReturnDate").innerHTML = dates[0].toString();
+    document.getElementById("loadReturnDateModal").style.display = "block";
+//    document.getElementById("issuesToReturn").value = JSON.stringify(returningIssues);
+//    document.getElementById("hidData").submit();
+}
+
+function get2d(num) {
+    return (num.toString().length < 2 ? "0" + num : num).toString();
+}
+
+function setDate() {
+    var day = document.getElementById("issue_day");
+    var month = document.getElementById("issue_month");
+    var year = document.getElementById("issue_year");
+    var issDate = document.getElementById("issue_date");
+
+    issDate.value = day.options[day.selectedIndex].value + " "
+	    + month.options[month.selectedIndex].value + " " + year.options[year.selectedIndex].value;
+
+    var curDate = new Date(issDate.value);
+    var orgDate = new Date(document.getElementById("afterReturnDate").innerHTML);
+    if (issDate.value.toString().includes("0_0") || isNaN(curDate) || get2d(curDate.getDate()) !== day.options[day.selectedIndex].value) {
+	alert('Select Proper Date');
+    } else if (!((curDate - orgDate) > 0)) {
+	console.log("wrong date seelected");
+    } else {
+	console.log("right date selected");
+    }
+
+
+
 }
