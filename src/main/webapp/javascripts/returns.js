@@ -9,7 +9,7 @@
  */
 
 
-var isSet = false, onlyDigit = /^[0-9]*$/, timeOut = 2000;
+var isSet = false, onlyDigit = /^[0-9]*$/, timeOut = 2000, totalCheckedIssues = 0;
 
 var issue_id, name_id, book_name, person_name, returnForm, jIssuesList, filterKey, filterValue;
 
@@ -179,4 +179,25 @@ function getStringFromEvent(e) {
 	codedKey = e.which;
     }
     return String.fromCharCode(codedKey);
+}
+
+function issueCheckedChange(checkedIssue) {
+    if (document.getElementById("isIssueChecked_" + checkedIssue).checked) {
+	var jIssue = jIssuesList.find(findIssue);
+	++totalCheckedIssues;
+    } else {
+	--totalCheckedIssues;
+    }
+
+    var btn = document.getElementById("returnsSubmitButton");
+    if (totalCheckedIssues > 0) {
+	btn.value = "SUBMIT (" + totalCheckedIssues.toString() + ")";
+	btn.hidden = false;
+    } else {
+	btn.hidden = true;
+    }
+
+    function findIssue(issue) {
+	return issue["issue_id"] === checkedIssue.toString();
+    }
 }

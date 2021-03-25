@@ -213,7 +213,7 @@
 
 		     </div>
 
-		    <input type="button" value="Submit" class="submitButton"/>
+		    <input type="button" value="Submit" id="returnsSubmitButton" hidden class="submitButton"/>
 		</div>
 		<div style="display: none;">
 		    <form id="hidData" action="ReturnIssue" method="post">
