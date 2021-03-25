@@ -60,3 +60,11 @@ select:focus {
 select, input, textarea{
     padding: 1.5% 2%;
 }
+
+.boldFont{
+    font-weight: bold;
+}
+
+.underLined{
+    text-decoration: underline;
+}

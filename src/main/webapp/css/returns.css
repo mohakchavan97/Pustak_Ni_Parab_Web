@@ -54,3 +54,41 @@ select{
 .issueCard:last-child{
     margin-bottom: 7%;
 }
+
+.loadReturnDateModal{
+    display: block;
+    position: fixed;
+    z-index: 20;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.returnDateModalContent{
+    background-color: #fefefe;
+    padding: 20px;
+    border: 2px solid #D81B60;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    width: 30%;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}
+
+.returnDateHeader{
+    font-weight: bold;
+    font-size: larger;
+    padding-top: 5%;
+    padding-bottom: 2%;
+}
+
+.returnDateLabel{
+    font-size: medium;
+    padding: 2% 1%;
+    vertical-align: top;
+}

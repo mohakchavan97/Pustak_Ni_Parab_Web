@@ -55,14 +55,6 @@
 		padding: 2% 1%;
 		vertical-align: top;
 	    }
-
-	    .boldFont{
-		font-weight: bold;
-	    }
-	    
-	    .underLined{
-		text-decoration: underline;
-	    }
 	</style>
     </head>
     <body>

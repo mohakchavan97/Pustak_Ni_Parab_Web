@@ -4,8 +4,6 @@
     Author     : Mohak Chavan
 --%>
 
-<%@page import="com.google.gson.JsonElement"%>
-<%@page import="com.google.gson.JsonObject"%>
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="org.json.simple.JSONArray"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.Names"%>
@@ -163,16 +161,14 @@
 	    <%!
 		String getAllIssuesToString(List<Issues> issues) {
 		    if (!issues.isEmpty()) {
-			//String toReturn = "";
-			//JSONArray jIssueList=new JSONArray();
-			com.google.gson.JsonArray jIssueList = new com.google.gson.JsonArray();
+			JSONArray jIssueList = new JSONArray();
 			for (Issues issue : issues) {
-//				 JSONObject jIssue = new JSONObject();
-			    JsonObject jIssue = new JsonObject();
-			    jIssue.addProperty("issue_id", String.valueOf(issue.getIssueNo()));
-			    jIssue.addProperty("book_name", issue.getBookName());
-			    jIssue.addProperty("name_id", issue.getIssuerId());
-			    jIssue.addProperty("person_name", issue.getIssuerName());
+			    JSONObject jIssue = new JSONObject();
+			    jIssue.put("issue_id", String.valueOf(issue.getIssueNo()));
+			    jIssue.put("book_name", issue.getBookName());
+			    jIssue.put("name_id", issue.getIssuerId());
+			    jIssue.put("person_name", issue.getIssuerName());
+			    jIssue.put("issue_date", issue.getIssueDate());
 			    jIssueList.add(jIssue);
 //				 toReturn += "[\"" + String.valueOf(issue.getIssueNo()) + "\",\"" + issue.getBookName() + "\",\""
 //					 + issue.getIssuerId() + "\",\"" + issue.getIssuerName() + "\",\""
@@ -214,6 +210,67 @@
 
 		    <input type="button" value="Submit" id="returnsSubmitButton" hidden class="submitButton" onclick="submitReturnIssues();"/>
 		</div>
+
+		<div class="loadReturnDateModal" id="loadReturnDateModal">
+		    <table class="returnDateModalContent" id="returnDateModalContent" align="center">
+			<tr>
+			    <td colspan="2" class="returnDateHeader" align="center">Please Select the Return Date</td>
+			</tr>
+			<tr><td colspan="2"><hr/></td></tr>
+			<tr>
+			    <td class="returnDateLabel boldFont" style="width: 30%;" align="right">Date</td>
+			    <td>
+				<input type="hidden" name="<%=Constants.IDS.ISSUE_DATE%>" id="<%=Constants.IDS.ISSUE_DATE%>" required />
+				<select name="issue_day" id="issue_day" class="issr" onchange="setDate()">
+				    <option value="0_0">Date</option>
+
+				    <%!				    String getTwoDigit(int number) {
+					    return String.valueOf(number).length() < 2 ? "0" + String.valueOf(number) : String.valueOf(number);
+					}
+				    %>
+
+				    <%
+					Calendar today = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIME_ZONE));
+					for (int i = 1; i <= 31; i++) {
+					    out.print("<option value=\"" + getTwoDigit(i) + "\"");
+					    if (i == today.get(Calendar.DAY_OF_MONTH)) {
+						out.print(" selected ");
+					    }
+					    out.println(">" + getTwoDigit(i) + "</option>");
+					}
+				    %>
+				</select>
+
+				<select name="issue_month" id="issue_month" class="issr" onchange="setDate()">
+				    <option value="0_0">Month</option>
+				    <%
+					for (int i = 0; i < Constants.ARRAYS.MONTHS.length; i++) {
+					    out.print("<option value=\"" + Constants.ARRAYS.MONTHS[i] + "\"");
+					    if (i == today.get(Calendar.MONTH)) {
+						out.print(" selected ");
+					    }
+					    out.println(">" + Constants.ARRAYS.MONTHS[i] + "</option>");
+					}
+				    %>
+				</select>
+
+				<select name="issue_year" id="issue_year" class="issr" onchange="setDate()">
+				    <option value="0_0">Year</option>
+				    <%
+					for (int i = 2000; i <= 2100; i++) {
+					    out.print("<option value=\"" + i + "\"");
+					    if (i == today.get(Calendar.YEAR)) {
+						out.print(" selected ");
+					    }
+					    out.println(">" + i + "</option>");
+					}
+				    %>
+				</select>
+			    </td>
+			</tr>
+		    </table>
+		</div>
+
 		<div style="display: none;">
 		    <form id="hidData" action="ReturnIssue" method="post">
 			<input type="text" hidden id="<%=Constants.ATTRIBUTE_KEY_NAMES.IS_REQUEST_TO_RETURN_ISSUE%>"

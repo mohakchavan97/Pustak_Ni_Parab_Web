@@ -14,6 +14,7 @@ import com.mohakchavan.pustakniparab_web.Models.Names;
 import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -101,15 +102,15 @@ public class ReturnIssue extends HttpServlet {
 	issuesHelper.getAllIssuesOnce(new BaseHelper.onCompleteRetrieval() {
 	    @Override
 	    public void onComplete(Object data) {
-		List<Issues> issuesList = null;
 		if (data != null) {
+		    List<Issues> issuesList = new ArrayList<>();
 		    for (Issues issue : (List<Issues>) data) {
 			if (issue.getIsReturned().contentEquals(Constants.NO)) {
 			    issuesList.add(issue);
 			}
 		    }
+		    request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_ISSUES_FOR_HTML, issuesList);
 		}
-		request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_ISSUES_FOR_HTML, issuesList);
 		latch2.countDown();
 	    }
 	}, new BaseHelper.onFailure() {
