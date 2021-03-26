@@ -46,7 +46,7 @@
         </jsp:include>
 
 
-	<div id="loader" style="display: none;">
+	<div id="loader">
 	    <jsp:include page="./genericContent/loader.jsp" flush="true"/>
 	</div>
 
@@ -220,7 +220,7 @@
 			</tr>
 			<tr><td colspan="2"><hr/></td></tr>
 			<tr>
-			    <td class="returnDateLabel boldFont" style="width: 30%; margin-right: 1%;" align="right">Date</td>
+			    <td class="returnDateLabel boldFont" style="width: 30%; margin-right: 1%;" align="right">Select Date</td>
 			    <td style="padding: 1%;">
 				<input type="hidden" name="<%=Constants.IDS.ISSUE_DATE%>" id="<%=Constants.IDS.ISSUE_DATE%>" required />
 				<select name="issue_day" id="issue_day" class="issr" onchange="setDate()">
@@ -270,16 +270,24 @@
 				</select>
 			    </td>
 			</tr>
-			<tr style="color: red; font-size: large; font-weight: bolder; word-wrap: break-word;">
-			    <td align="right">
-				Please select date after
-			    </td>
-			    <td align="left" style="margin-left: 1%;">
-				<p id="afterReturnDate"></p>
+			<tr>
+			    <td align="center" colspan="2" style="color: red; font-size: large; font-weight: bolder; word-wrap: break-word;">
+				Please select date which is after from
 			    </td>
 			</tr>
 			<tr>
-			    <td>OK</td>
+			    <td align="center" colspan="2" style="color: red; font-size: large; font-weight: bolder; word-wrap: break-word;">
+				<p id="afterReturnDate" class="" style="margin: 1% auto;"></p>
+			    </td>
+			</tr>
+			<tr>
+			    <td colspan="2">
+				<input type="button" value="Submit" id="returnDateSubmitBtn" class="returnDateBtn"
+				       onclick="submitClicked()"/>
+
+				<input type="button" value="Cancel" id="returnDateCancelBtn" class="returnDateBtn"
+				       onclick="cancelClicked()"/>
+			    </td>
 			</tr>
 		    </table>
 		</div>
