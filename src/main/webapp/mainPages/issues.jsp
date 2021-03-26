@@ -21,7 +21,7 @@
 	<script type="text/javascript" src="./javascripts/issues.js"></script>
 	<link rel="stylesheet" href="./css/issues.css"/>
     </head>
-    <body style="background-color: white;" onload='setDate();'>
+    <body style="background-color: white;" onload='issuesPageLoaded();'>
 
 	<%
 	    Boolean isVerified = (Boolean) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED);
@@ -55,7 +55,7 @@
 	    </jsp:include>
 	</div>
 
-	<div id="loader" style="display: none;">
+	<div id="loader">
 	    <jsp:include page="./genericContent/loader.jsp" flush="true"/>
 	</div>
 

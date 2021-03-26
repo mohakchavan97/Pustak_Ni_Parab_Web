@@ -128,13 +128,14 @@ public class HomePage extends HttpServlet {
 //		    
 //		}
 //	    });
-	    request.getRequestDispatcher("./mainPages/homePage.jsp").forward(request, response);
+	    out.println("<script>"
+		    + "window.onload=function (){"
+		    + "document.location.href=\"Home\";"
+		    + "};</script>");
+//	    request.getRequestDispatcher("./mainPages/homePage.jsp").forward(request, response);
 	    out.println("</body>");
 	    out.println("</html>");
 	} catch (IOException ex) {
-	    Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
-	    System.out.println(ex.toString());
-	} catch (ServletException ex) {
 	    Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
 	    System.out.println(ex.toString());
 	} catch (InterruptedException ex) {

@@ -12,16 +12,21 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home | Pustak Ni Parab</title>
+	<script type="text/javascript">
+	    function hideLoader() {
+		document.getElementById("loader").style.display = "none";
+	    }
+	</script>
     </head>
-    <body style="background-color: white;">
+    <body style="background-color: white;" onload="hideLoader();">
 
-        <jsp:include page="../genericContent/header.jsp" flush="true">
+        <jsp:include page="./genericContent/header.jsp" flush="true">
             <jsp:param name="userGivenName" value="<%=CurrentUser.getDisplayName()%>"/>
 	    <jsp:param name="userPhoto" value="<%=CurrentUser.getPhotoUrl()%>"/>
         </jsp:include>
 
-	<div id="loader" style="display: none;">
-	    <jsp:include page="../genericContent/loader.jsp" flush="true"/>
+	<div id="loader">
+	    <jsp:include page="./genericContent/loader.jsp" flush="true"/>
 	</div>
 
 	<div id="homeContent" style="margin-top: 15%;" align="center">
@@ -42,7 +47,7 @@
 	    <a href="newBooks">New Books</a>
 	    <a href="issues">Issues</a>
 	    <a href="logout">Logout</a>
-	    <input type="button" onclick="document.getElementById('loader').style.display='block';">
+	    <input type="button" onclick="document.getElementById('loader').style.display = 'block';">
         </div>
 
     </body>

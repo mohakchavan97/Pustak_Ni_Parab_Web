@@ -9,6 +9,11 @@ function get2d(num) {
     return (num.toString().length < 2 ? "0" + num : num).toString();
 }
 
+function issuesPageLoaded() {
+    document.getElementById("loader").style.display = "none";
+    setDate();
+}
+
 function setDate() {
 //    var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 //    n = new Date();

@@ -50,7 +50,7 @@
 		}
 	    </script>
 	    <div>
-		<form action="Home" method="post" id="userForm">
+		<form action="LoggedIn" method="post" id="userForm">
 		    <input type="hidden" id="idToken" name="idToken"/>
 		    <input type="hidden" id="accessToken" name="accessToken"/>
 		</form>
