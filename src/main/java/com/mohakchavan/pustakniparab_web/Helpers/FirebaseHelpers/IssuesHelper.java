@@ -15,6 +15,8 @@ import com.mohakchavan.pustakniparab_web.Models.Issues;
 import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -88,6 +90,46 @@ public class IssuesHelper {
 		onFail.onFail(error);
 	    }
 	};
+    }
+
+    public void addReturnIssues(final JSONArray returningIssues, final String returnDate,
+	    final BaseHelper.onCompleteTransaction onCompleteTransaction) {
+	issueReference.runTransaction(new Transaction.Handler() {
+	    @Override
+	    public Transaction.Result doTransaction(MutableData currentData) {
+		if (currentData.getValue() != null) {
+		    for (Object issue : returningIssues) {
+			JSONObject issueToReturn = (JSONObject) issue;
+			if (currentData.hasChild(issueToReturn.get(Constants.IDS.ISSUE_ID).toString())
+				&& currentData.child(issueToReturn.get(Constants.IDS.ISSUE_ID).toString()).getValue() != null) {
+			    Issues curIssue = currentData.child(issueToReturn.get(Constants.IDS.ISSUE_ID).toString()).getValue(Issues.class);
+			    if (curIssue.getIssuerId().contentEquals(issueToReturn.get(Constants.IDS.NAME_ID).toString())
+				    && curIssue.getBookName().contentEquals(issueToReturn.get(Constants.IDS.BOOK_NAME).toString())
+				    && curIssue.getIssueDate().contentEquals(issueToReturn.get(Constants.IDS.ISSUE_DATE).toString())) {
+				curIssue.setIsReturned(Constants.YES);
+				curIssue.setRetDate(returnDate);
+//				currentData.child(issueToReturn.get(Constants.IDS.ISSUE_ID).toString()).setValue(curIssue);
+			    } else {
+				//Some details of issue are wrong. Contact developer
+				return Transaction.abort();
+			    }
+			} else {
+			    //Some error. try again or contact developer
+			    return Transaction.abort();
+			}
+		    }
+		    return Transaction.success(currentData);
+		} else {
+		    //No data in cloud
+		    return Transaction.abort();
+		}
+	    }
+
+	    @Override
+	    public void onComplete(DatabaseError error, boolean committed, DataSnapshot currentData) {
+		onCompleteTransaction.onComplete(committed, currentData);
+	    }
+	});
     }
 
 }

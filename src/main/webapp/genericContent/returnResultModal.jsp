@@ -62,25 +62,48 @@
 	<div class="loadResultModal" id="loadResultModal">
 	    <table class="resultModalContent" id="resultModalContent" align="center">
 		<tr>
-		    <th colspan="2" class="resultHeader">Issue was added successfully.</th>
+		    <th colspan="2" class="resultHeader">
+			<%
+			    if (request.getParameter(Constants.IDS.RESULT_TYPE).toString().contentEquals(Constants.VALUES.ISSUE)) {
+				out.print("Issue was added successfully.");
+			%>
+		    </th>
 		</tr>
 		<tr><td colspan="2"><hr/></td></tr>
 		<tr>
 		    <td class="resultLabel boldFont" align="right" style="width:35%;">Issue ID:</td>
-		    <td class="resultLabel boldFont underLined" align="left"><%=request.getAttribute(Constants.IDS.ISSUE_ID)%></td>
+		    <td class="resultLabel boldFont underLined" align="left"><%=request.getParameter(Constants.IDS.ISSUE_ID)%></td>
 		</tr>
 		<tr>
 		    <td class="resultLabel boldFont" align="right" style="width:35%;">Book Name:</td>
-		    <td class="resultLabel" align="left"><%=request.getAttribute(Constants.IDS.BOOK_NAME)%></td>
+		    <td class="resultLabel" align="left"><%=request.getParameter(Constants.IDS.BOOK_NAME)%></td>
 		</tr>
 		<tr>
 		    <td class="resultLabel boldFont" align="right" style="width:35%;">Person Name:</td>
-		    <td class="resultLabel" align="left"><%=request.getAttribute(Constants.IDS.ISSUER_NAME)%></td>
+		    <td class="resultLabel" align="left"><%=request.getParameter(Constants.IDS.ISSUER_NAME)%></td>
 		</tr>
 		<tr>
 		    <td class="resultLabel boldFont" align="right" style="width:35%;">Issue Date:</td>
-		    <td class="resultLabel" align="left"><%=request.getAttribute(Constants.IDS.ISSUE_DATE)%></td>
+		    <td class="resultLabel" align="left"><%=request.getParameter(Constants.IDS.ISSUE_DATE)%></td>
 		</tr>
+		<%
+		} else if (request.getParameter(Constants.IDS.RESULT_TYPE).toString().contentEquals(Constants.VALUES.RETURNS)) {
+		    out.print("Issues were returned successfully.");
+		%>
+		</th>
+		</tr>
+		<tr><td colspan="2"><hr/></td></tr>
+		<tr>
+		    <td class="resultLabel boldFont" align="right" style="width:35%;">Returned Issues ID:</td>
+		    <td class="resultLabel boldFont underLined" align="left"><%=request.getParameter(Constants.IDS.RETURNED_ISSUES).toString()%></td>
+		</tr>
+		<tr>
+		    <td class="resultLabel boldFont" align="right" style="width:35%;">Returned Date:</td>
+		    <td class="resultLabel" align="left"><%=request.getParameter(Constants.IDS.RETURN_DATE).toString()%></td>
+		</tr>
+		<%
+		    }
+		%>
 		<tr>
 		    <td colspan="2" align="center" style="padding-top: 5%;">
 			<input type="button" value="OK" onclick="closeResultModal();" style="padding: 1% 10%;"/>

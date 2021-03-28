@@ -43,6 +43,7 @@ public final class Constants {
 
 	public static final String IS_CURRENT_USER_VERIFIED = "isCuurentUserVerified";
 	public static final String HAS_ERROR_WITH_DATA = "hasErrorWithData";
+	public static final String HAS_TRNSCTN_ERROR_WITH_DATA = "hasTrnsctnErrorWithData";
 	public static final String ALL_NAMES_FOR_HTML = "allNamesHTML";
 	public static final String ALL_ISSUES_FOR_HTML = "allIssuesHTML";
 	public static final String IS_REQUEST_FOR_ADD_ISSUE = "isForAdd";
@@ -56,6 +57,7 @@ public final class Constants {
 	public static final String TRY_AGAIN = "Please try again.";
 	public static final String NO_ISSUES = "No Issues Found.";
 	public static final String ISSUE_NOT_ADDED = "Issue not added." + SPACE + Constants.ERRORS.SOME_ERROR_FULL;
+	public static final String ISSUE_NOT_RETURNED = "Issues are not returned." + SPACE + Constants.ERRORS.SOME_ERROR_FULL;
 	public static final String NO_NAME_ID = "The selected ID of the name does not exists. " + TRY_AGAIN;
 	public static final String SOME_ERROR_FULL = SOME_ERROR + SPACE + TRY_AGAIN;
     }
@@ -70,10 +72,20 @@ public final class Constants {
 	public static final String ISSUER_NAME = "issuer_name";
 	public static final String ISSUER_ADDRESS = "issuer_address";
 	public static final String ISSUE_DATE = "issue_date";
+	public static final String RETURN_DATE = "return_date";
 	public static final String ISSUE_ID = "issue_id";
 	public static final String NAME_ID = "name_id";
+	public static final String RESULT_TYPE = "result_type";
+	public static final String RETURNED_ISSUES = "returned_issues";
 //	public static final String  = "";
 
+    }
+
+    public static final class VALUES {
+
+	public static final String ISSUE = "issue";
+	public static final String RETURNS = "returns";
+//	public static final String  = "";	
     }
 
     public static final class USER_KEY_NAMES {

@@ -45,7 +45,6 @@
 	    <jsp:param name="userPhoto" value="<%=CurrentUser.getPhotoUrl()%>"/>
         </jsp:include>
 
-
 	<div id="loader">
 	    <jsp:include page="./genericContent/loader.jsp" flush="true"/>
 	</div>
@@ -53,10 +52,20 @@
 	<div id="errorDiv" 
 	     <%
 		 String errorData = "";
+		 boolean hasError = false;
 		 try {
 		     errorData = request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_ERROR_WITH_DATA).toString().trim();
+		     hasError = true;
 		 } catch (Exception ex) {
-		     out.print(" hidden ");
+		     hasError = false;
+		 }
+		 try {
+		     errorData += " " + request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_TRNSCTN_ERROR_WITH_DATA).toString().trim();
+		     hasError = true;
+		 } catch (Exception ex) {
+		     if (!hasError) {
+			 out.print(" hidden ");
+		     }
 		 }
 	     %>
 	     align="center" style="margin-top: 13%; margin-bottom: -14.8%; color: red;
@@ -172,11 +181,11 @@
 			    jIssue.put("person_name", issue.getIssuerName());
 			    jIssue.put("issue_date", issue.getIssueDate());
 			    jIssueList.add(jIssue);
-//				 toReturn += "[\"" + String.valueOf(issue.getIssueNo()) + "\",\"" + issue.getBookName() + "\",\""
-//					 + issue.getIssuerId() + "\",\"" + issue.getIssuerName() + "\",\""
-//					 + "\"],";
+			    //				 toReturn += "[\"" + String.valueOf(issue.getIssueNo()) + "\",\"" + issue.getBookName() + "\",\""
+			    //					 + issue.getIssuerId() + "\",\"" + issue.getIssuerName() + "\",\""
+			    //					 + "\"],";
 			}
-//			     toReturn = toReturn.substring(0, toReturn.length() - 1);
+			//			     toReturn = toReturn.substring(0, toReturn.length() - 1);
 			return jIssueList.toString();
 		    }
 		    return null;
@@ -222,7 +231,6 @@
 			<tr>
 			    <td class="returnDateLabel boldFont" style="width: 30%; margin-right: 1%;" align="right">Select Date</td>
 			    <td style="padding: 1%;">
-				<input type="hidden" name="<%=Constants.IDS.ISSUE_DATE%>" id="<%=Constants.IDS.ISSUE_DATE%>" required />
 				<select name="issue_day" id="issue_day" class="issr" onchange="setDate()">
 				    <option value="0_0">Date</option>
 
@@ -297,8 +305,34 @@
 			<input type="text" hidden id="<%=Constants.ATTRIBUTE_KEY_NAMES.IS_REQUEST_TO_RETURN_ISSUE%>"
 			       name="<%=Constants.ATTRIBUTE_KEY_NAMES.IS_REQUEST_TO_RETURN_ISSUE%>" 
 			       value="<%=Constants.YES%>"/>
+			<input type="hidden" name="<%=Constants.IDS.RETURN_DATE%>" id="<%=Constants.IDS.RETURN_DATE%>" required />
 			<input type="text" hidden id="issuesToReturn" name="issuesToReturn"/>
 		    </form>
 		</div>
+
+		<%
+		    String returnedIssues = "";
+		    try {
+			returnedIssues = request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_TRANSACTION_SUCCESS).toString().trim();
+			if (returnedIssues != null) {
+		%>
+		<div id="returnedResult">
+		    <jsp:include page="./genericContent/returnResultModal.jsp" flush="true">
+			<jsp:param name="result_type" value="<%=Constants.VALUES.RETURNS%>"/>
+			<jsp:param name="returned_issues" value='<%=returnedIssues.split(";")[0]%>'/>
+			<jsp:param name="return_date" value='<%=returnedIssues.split(";")[1]%>'/>
+		    </jsp:include>
+		</div>
+		<%
+			    //		    request.setAttribute(Constants.IDS.RESULT_TYPE, Constants.VALUES.RETURNS);
+			    //		    request.setAttribute(Constants.IDS.RETURNED_ISSUES, returnedIssues.split(";")[0]);
+			    //		    request.setAttribute(Constants.IDS.RETURN_DATE, returnedIssues.split(";")[1]);
+			    //		    request.getRequestDispatcher("./genericContent/returnResultModal.jsp").include(request, response);
+
+			}
+		    } catch (Exception ex) {
+		    }
+		%>
+
 		</body>
 		</html>

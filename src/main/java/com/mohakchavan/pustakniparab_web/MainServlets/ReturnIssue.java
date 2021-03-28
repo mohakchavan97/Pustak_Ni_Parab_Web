@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -43,7 +44,7 @@ public class ReturnIssue extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(final HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
 	response.setContentType("text/html;charset=UTF-8");
 	PrintWriter out = response.getWriter();
@@ -65,7 +66,7 @@ public class ReturnIssue extends HttpServlet {
 	    //Enable this code if request is from homepage.
 	    try {
 
-		redirectToIssuesJSP(request, response, issuesHelper, dispatchToReturnsJSP);
+		redirectToReturnsJSP(request, response, issuesHelper, dispatchToReturnsJSP);
 
 	    } catch (IOException | ServletException | InterruptedException ex) {
 		Logger.getLogger(AddIssue.class.getName()).log(Level.SEVERE, null, ex);
@@ -76,7 +77,33 @@ public class ReturnIssue extends HttpServlet {
 	    JSONParser parser = new JSONParser();
 	    try {
 		JSONArray returningIssues = (JSONArray) parser.parse(request.getParameter("issuesToReturn"));
-	    } catch (ParseException ex) {
+		String returnDate = request.getParameter(Constants.IDS.RETURN_DATE).trim().toUpperCase();
+		String returnedIssues = "";
+		for (Object issue : returningIssues) {
+		    returnedIssues += ((JSONObject) issue).get(Constants.IDS.ISSUE_ID).toString().trim() + ", ";
+		}
+		returnedIssues = returnedIssues.substring(0, returnedIssues.length() - 2);
+		returnedIssues += ";" + returnDate;
+		final String stringToReturn = returnedIssues;
+		final CountDownLatch latch = new CountDownLatch(1);
+		issuesHelper.addReturnIssues(returningIssues, returnDate,
+			new BaseHelper.onCompleteTransaction() {
+		    @Override
+		    public void onComplete(boolean committed, Object data) {
+			if (committed) {
+			    request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_TRANSACTION_SUCCESS, stringToReturn);
+			    latch.countDown();
+
+			} else {
+			    //Some error
+			    request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_TRNSCTN_ERROR_WITH_DATA, Constants.ERRORS.ISSUE_NOT_ADDED);
+			    latch.countDown();
+			}
+		    }
+		});
+		latch.await();
+		redirectToReturnsJSP(request, response, issuesHelper, dispatchToReturnsJSP);
+	    } catch (ParseException | InterruptedException ex) {
 		Logger.getLogger(ReturnIssue.class.getName()).log(Level.SEVERE, null, ex);
 	    }
 	}
@@ -95,7 +122,7 @@ public class ReturnIssue extends HttpServlet {
 	}
     }
 
-    private void redirectToIssuesJSP(final HttpServletRequest request, HttpServletResponse response, IssuesHelper issuesHelper,
+    private void redirectToReturnsJSP(final HttpServletRequest request, HttpServletResponse response, IssuesHelper issuesHelper,
 	    RequestDispatcher dispatchToReturnsJSP) throws ServletException, IOException, InterruptedException {
 	final CountDownLatch latch2 = new CountDownLatch(2);
 

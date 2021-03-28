@@ -244,7 +244,7 @@ function setDate() {
     var day = document.getElementById("issue_day");
     var month = document.getElementById("issue_month");
     var year = document.getElementById("issue_year");
-    var issDate = document.getElementById("issue_date");
+    var issDate = document.getElementById("return_date");
     var afterDate = document.getElementById("afterReturnDate");
 
     issDate.value = day.options[day.selectedIndex].value + " "

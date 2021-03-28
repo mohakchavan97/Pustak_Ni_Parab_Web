@@ -31,21 +31,6 @@
 		namesList = (List<Names>) request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_NAMES_FOR_HTML);
 	    } catch (Exception ex) {
 	    }
-
-	    Issues addedIssue = null;
-	    try {
-		addedIssue = (Issues) request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_TRANSACTION_SUCCESS);
-		if (addedIssue != null) {
-		    out.println("<div id=\"returnedResult\">");
-		    request.setAttribute(Constants.IDS.ISSUE_ID, String.valueOf(addedIssue.getIssueNo()));
-		    request.setAttribute(Constants.IDS.BOOK_NAME, addedIssue.getBookName());
-		    request.setAttribute(Constants.IDS.ISSUER_NAME, addedIssue.getIssuerName());
-		    request.setAttribute(Constants.IDS.ISSUE_DATE, addedIssue.getIssueDate());
-		    request.getRequestDispatcher("./genericContent/returnResultModal.jsp").include(request, response);
-		    out.println("</div>");
-		}
-	    } catch (Exception ex) {
-	    }
 	%>
 
 	<div id="header">
@@ -62,10 +47,20 @@
 	<div id="errorDiv" 
 	     <%
 		 String errorData = "";
+		 boolean hasError = false;
 		 try {
 		     errorData = request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_ERROR_WITH_DATA).toString().trim();
+		     hasError = true;
 		 } catch (Exception ex) {
-		     out.print(" hidden ");
+		     hasError = false;
+		 }
+		 try {
+		     errorData += " " + request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_TRNSCTN_ERROR_WITH_DATA).toString().trim();
+		     hasError = true;
+		 } catch (Exception ex) {
+		     if (!hasError) {
+			 out.print(" hidden ");
+		     }
 		 }
 	     %>
 	     align="center" style="margin-top: 13%; margin-bottom: -14.8%; color: red;
@@ -318,6 +313,26 @@
                 </table>
             </form>
         </div>
+
+	<%	Issues addedIssue = null;
+	    try {
+		addedIssue = (Issues) request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_TRANSACTION_SUCCESS);
+		if (addedIssue != null) {
+	%>
+	<div id="returnedResult">
+	    <jsp:include page="./genericContent/returnResultModal.jsp" flush="true">
+		<jsp:param name="result_type" value="<%= Constants.VALUES.ISSUE%>"/>
+		<jsp:param name="issue_id" value="<%= String.valueOf(addedIssue.getIssueNo())%>"/>
+		<jsp:param name="book_name"  value="<%=addedIssue.getBookName()%>"/>
+		<jsp:param name="issuer_name" value="<%= addedIssue.getIssuerName()%>"/>
+		<jsp:param name="issue_date" value="<%=addedIssue.getIssueDate()%>"/>
+	    </jsp:include>
+	</div>
+	<%
+		}
+	    } catch (Exception ex) {
+	    }
+	%>
 
     </body>
 </html>
