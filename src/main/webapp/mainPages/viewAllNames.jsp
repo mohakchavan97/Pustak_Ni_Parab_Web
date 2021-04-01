@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>View ALL Names</title>
+        <title>View ALL Names | Pustak Ni Parab</title>
 	<link rel="stylesheet" href="./css/viewAllNames.css"/>
     </head>
     <body style="background-color: #f5f5f5;">

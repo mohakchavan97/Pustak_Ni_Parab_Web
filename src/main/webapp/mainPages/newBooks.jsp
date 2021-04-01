@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add New Books</title>
+        <title>Add New Books | Pustak Ni Parab</title>
 	<script type="text/javascript" src="./javascripts/newBooks.js"></script>
 	<link rel="stylesheet" href="./css/newBooks.css"/>
     </head>

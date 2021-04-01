@@ -18,7 +18,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Returns</title>
+        <title>Returns | Pustak Ni Parab</title>
 	<link rel="stylesheet" href="./css/returns.css"/>
 	<script type="text/javascript" src="./javascripts/returns.js"></script>
     </head>

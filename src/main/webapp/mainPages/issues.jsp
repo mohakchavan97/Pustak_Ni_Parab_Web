@@ -17,7 +17,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Issues</title>
+        <title>Add New Issue | Pustak Ni Parab</title>
 	<script type="text/javascript" src="./javascripts/issues.js"></script>
 	<link rel="stylesheet" href="./css/issues.css"/>
     </head>
