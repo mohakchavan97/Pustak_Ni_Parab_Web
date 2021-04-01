@@ -6,7 +6,7 @@
 
 
 function validation() {
-    var mob = document.getElementById('cont_no');
+    var mob = document.getElementById('issuer_contact');
     var filter_mob = /^[6-9]+\d{9}/;
 
     if ((mob.value.length) > 0) {
@@ -20,6 +20,7 @@ function validation() {
     return true;
 }
 
-function viewall() {
-    location.href = "./Names_Backend_2";
+function pageLoaded() {
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("issuer_first_name").focus();
 }

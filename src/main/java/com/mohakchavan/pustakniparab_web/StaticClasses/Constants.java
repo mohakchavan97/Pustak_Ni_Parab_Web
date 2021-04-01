@@ -77,6 +77,11 @@ public final class Constants {
 	public static final String NAME_ID = "name_id";
 	public static final String RESULT_TYPE = "result_type";
 	public static final String RETURNED_ISSUES = "returned_issues";
+	public static final String ISSUER_FNAME = "issuer_first_name";
+	public static final String ISSUER_LNAME = "issuer_last_name";
+	public static final String BLK_FLT = "issuer_block_flat";
+	public static final String STRT_NAME = "issuer_street_name";
+	public static final String LOCAL_AREA = "issuer_locality_area";
 //	public static final String  = "";
 
     }
