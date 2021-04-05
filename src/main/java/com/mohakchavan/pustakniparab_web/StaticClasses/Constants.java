@@ -56,6 +56,7 @@ public final class Constants {
 	public static final String SOME_ERROR = "Some Error Occurred.";
 	public static final String TRY_AGAIN = "Please try again.";
 	public static final String NO_ISSUES = "No Issues Found.";
+	public static final String NO_NAMES = "No Names Found.";
 	public static final String ISSUE_NOT_ADDED = "Issue not added." + SPACE + Constants.ERRORS.SOME_ERROR_FULL;
 	public static final String ISSUE_NOT_RETURNED = "Issues are not returned." + SPACE + Constants.ERRORS.SOME_ERROR_FULL;
 	public static final String NO_NAME_ID = "The selected ID of the name does not exists. " + TRY_AGAIN;

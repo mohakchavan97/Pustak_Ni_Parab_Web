@@ -4,6 +4,7 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,14 +16,14 @@
 	<div id="nameCard" style="float: left;">
 	    <table class="cardTable">
 		<tr>
-		    <th rowspan="3" class="spanClass">22</th>
-		    <td align="left" class="td-content">First LastName</td>
+		    <th rowspan="3" class="spanClass"><%=request.getParameter(Constants.IDS.NAME_ID)%></th>
+		    <td align="left" class="td-content"><%=request.getParameter(Constants.IDS.ISSUER_NAME)%></td>
 		</tr>
 		<tr>
-		    <td align="left" class="td-content">This will be the long address. It will continue for much more lines of address. Please fit this inside the box.</td>
+		    <td align="left" class="td-content"><%=request.getParameter(Constants.IDS.ISSUER_ADDRESS)%></td>
 		</tr>
 		<tr>
-		    <td align="left" class="td-content" style="border-bottom: 0px;">0987654321</td>
+		    <td align="left" class="td-content" style="border-bottom: 0px;"><%=request.getParameter(Constants.IDS.ISSUER_CONTACT).length() > 0 ? request.getParameter(Constants.IDS.ISSUER_CONTACT) : "-"%></td>
 		</tr>
 	    </table>
 	</div>
