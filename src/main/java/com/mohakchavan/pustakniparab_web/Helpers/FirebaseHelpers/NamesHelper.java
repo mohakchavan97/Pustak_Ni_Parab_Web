@@ -85,8 +85,8 @@ public class NamesHelper {
 			++currentTotalNames;
 			if (!currentData.hasChild(String.valueOf(currentTotalNames))) {
 			    newPersonDetails.setSer_no(currentTotalNames);
-			    currentData.child(String.valueOf(currentTotalNames)).setValue(newPersonDetails);
-			    currentData.child(Constants.FIREBASE.DATABASE.TOTAL_NAMES).setValue(currentTotalNames);
+//			    currentData.child(String.valueOf(currentTotalNames)).setValue(newPersonDetails);
+//			    currentData.child(Constants.FIREBASE.DATABASE.TOTAL_NAMES).setValue(currentTotalNames);
 			    return Transaction.success(currentData);
 			} else {
 			    //Error: User id is already present. Contact developer

@@ -318,7 +318,7 @@
 		%>
 		<div id="returnedResult">
 		    <jsp:include page="./genericContent/returnResultModal.jsp" flush="true">
-			<jsp:param name="result_type" value="<%=Constants.VALUES.RETURNS%>"/>
+			<jsp:param name="result_type" value="<%=Constants.VALUES.returns%>"/>
 			<jsp:param name="returned_issues" value='<%=returnedIssues.split(";")[0]%>'/>
 			<jsp:param name="return_date" value='<%=returnedIssues.split(";")[1]%>'/>
 		    </jsp:include>

@@ -64,8 +64,11 @@
 		<tr>
 		    <th colspan="2" class="resultHeader">
 			<%
-			    if (request.getParameter(Constants.IDS.RESULT_TYPE).toString().contentEquals(Constants.VALUES.ISSUE)) {
-				out.print("Issue was added successfully.");
+			    switch (Constants.VALUES.valueOf(request.getParameter(Constants.IDS.RESULT_TYPE).toString())) {
+				case issue:
+
+//			    if (request.getParameter(Constants.IDS.RESULT_TYPE).toString().contentEquals(Constants.VALUES.ISSUE)) {
+				    out.print("Issue was added successfully.");
 			%>
 		    </th>
 		</tr>
@@ -87,8 +90,10 @@
 		    <td class="resultLabel" align="left"><%=request.getParameter(Constants.IDS.ISSUE_DATE)%></td>
 		</tr>
 		<%
-		} else if (request.getParameter(Constants.IDS.RESULT_TYPE).toString().contentEquals(Constants.VALUES.RETURNS)) {
-		    out.print("Issues were returned successfully.");
+			break;
+		    case returns:
+//		} else if (request.getParameter(Constants.IDS.RESULT_TYPE).toString().contentEquals(Constants.VALUES.RETURNS)) {
+			out.print("Issues were returned successfully.");
 		%>
 		</th>
 		</tr>
@@ -102,6 +107,32 @@
 		    <td class="resultLabel" align="left"><%=request.getParameter(Constants.IDS.RETURN_DATE).toString()%></td>
 		</tr>
 		<%
+			break;
+		    case name:
+			out.print("Details of person were added uccessfully.");
+		%>
+		</th>
+		</tr>
+		<tr><td colspan="2"><hr/></td></tr>
+		<tr>
+		    <td class="resultLabel boldFont" align="right" style="width:35%;">Assigned Name ID:</td>
+		    <td class="resultLabel boldFont underLined" align="left"><%=request.getParameter(Constants.IDS.NAME_ID).toString()%></td>
+		</tr>
+		<tr>
+		    <td class="resultLabel boldFont" align="right" style="width:35%;">Full Name:</td>
+		    <td class="resultLabel" align="left"><%=request.getParameter(Constants.IDS.ISSUER_NAME).toString()%></td>
+		</tr>
+		<tr>
+		    <td class="resultLabel boldFont" align="right" style="width:35%;">Address:</td>
+		    <td class="resultLabel" align="left"><%=request.getParameter(Constants.IDS.ISSUER_ADDRESS).toString()%></td>
+		</tr>
+		<tr>
+		    <td class="resultLabel boldFont" align="right" style="width:35%;">Contact No.:</td>
+		    <td class="resultLabel" align="left"><%=request.getParameter(Constants.IDS.ISSUER_CONTACT).toString()%></td>
+		</tr>
+
+		<%
+			    break;
 		    }
 		%>
 		<tr>

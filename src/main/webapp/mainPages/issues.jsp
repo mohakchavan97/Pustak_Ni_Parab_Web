@@ -321,7 +321,7 @@
 	%>
 	<div id="returnedResult">
 	    <jsp:include page="./genericContent/returnResultModal.jsp" flush="true">
-		<jsp:param name="result_type" value="<%= Constants.VALUES.ISSUE%>"/>
+		<jsp:param name="result_type" value="<%= Constants.VALUES.issue%>"/>
 		<jsp:param name="issue_id" value="<%= String.valueOf(addedIssue.getIssueNo())%>"/>
 		<jsp:param name="book_name"  value="<%=addedIssue.getBookName()%>"/>
 		<jsp:param name="issuer_name" value="<%= addedIssue.getIssuerName()%>"/>

@@ -4,6 +4,7 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.Models.Names"%>
 <%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.CurrentUser"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -118,15 +119,26 @@
             </form>
         </div>
 
+	<%
+	    Names addedName = null;
+	    try {
+		addedName = (Names) request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_TRANSACTION_SUCCESS);
+		if (addedName != null) {
+	%>
 	<div id="returnedResult">
-	    <%--<jsp:include page="./genericContent/returnResultModal.jsp" flush="true">--%>
-		<%--<jsp:param name="result_type" value="<%= Constants.VALUES.ISSUE%>"/>--%>
-		<%--<jsp:param name="issue_id" value="<%= String.valueOf(addedIssue.getIssueNo())%>"/>--%>
-		<%--<jsp:param name="book_name"  value="<%=addedIssue.getBookName()%>"/>--%>
-		<%--<jsp:param name="issuer_name" value="<%= addedIssue.getIssuerName()%>"/>--%>
-		<%--<jsp:param name="issue_date" value="<%=addedIssue.getIssueDate()%>"/>--%>
-	    <%--</jsp:include>--%>
+	    <jsp:include page="./genericContent/returnResultModal.jsp" flush="true">
+		<jsp:param name="result_type" value="<%=Constants.VALUES.name%>"/>
+		<jsp:param name="name_id" value="<%=String.valueOf(addedName.getSer_no())%>"/>
+		<jsp:param name="issuer_name" value="<%=addedName.returnFullName()%>"/>
+		<jsp:param name="issuer_address" value="<%=addedName.returnFullAddress()%>"/>
+		<jsp:param name="issuer_contact" value="<%=addedName.getContact()%>"/>
+	    </jsp:include>
 	</div>
+	<%
+		}
+	    } catch (Exception ex) {
+	    }
+	%>
 
     </body>
 </html>

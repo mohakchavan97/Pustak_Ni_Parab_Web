@@ -87,11 +87,13 @@ public final class Constants {
 
     }
 
-    public static final class VALUES {
+    public static enum VALUES {
+	issue, returns, name;
 
-	public static final String ISSUE = "issue";
-	public static final String RETURNS = "returns";
-//	public static final String  = "";	
+//	public static final String ISSUE = "issue";
+//	public static final String RETURNS = "returns";
+//	public static final String NAME = "name";	
+//	public static final String  = "";
     }
 
     public static final class USER_KEY_NAMES {
