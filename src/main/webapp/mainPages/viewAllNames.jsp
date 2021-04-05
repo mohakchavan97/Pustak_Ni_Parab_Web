@@ -14,32 +14,32 @@
 	<link rel="stylesheet" href="./css/viewAllNames.css"/>
     </head>
     <body style="background-color: #f5f5f5;">
-	
+
 	<jsp:include page="./genericContent/header.jsp" flush="true">
             <jsp:param name="userGivenName" value="<%=CurrentUser.getDisplayName()%>"/>
 	    <jsp:param name="userPhoto" value="<%=CurrentUser.getPhotoUrl()%>"/>
         </jsp:include>
-	
+
         <div id="allNameCards" align="center" style="margin-top: 10%;">
-	    <jsp:include page="../genericContent/nameCard.jsp" flush="true"></jsp:include>
-	    
-	    <jsp:include page="../genericContent/nameCard.jsp" flush="true"></jsp:include>
-	    
-	    <jsp:include page="../genericContent/nameCard.jsp" flush="true"></jsp:include>
-	    
-	    <jsp:include page="../genericContent/nameCard.jsp" flush="true"></jsp:include>
-	    
-	    <jsp:include page="../genericContent/nameCard.jsp" flush="true"></jsp:include>
-	    
-	    <jsp:include page="../genericContent/nameCard.jsp" flush="true"></jsp:include>
-	    
-	    <jsp:include page="../genericContent/nameCard.jsp" flush="true"></jsp:include>
-	    
-	    <jsp:include page="../genericContent/nameCard.jsp" flush="true"></jsp:include>
-	    
-	    <jsp:include page="../genericContent/nameCard.jsp" flush="true"></jsp:include>
-	    
-	    <jsp:include page="../genericContent/nameCard.jsp" flush="true"></jsp:include>
+	    <jsp:include page="./genericContent/nameCard.jsp" flush="true"></jsp:include>
+
+	    <jsp:include page="./genericContent/nameCard.jsp" flush="true"></jsp:include>
+
+	    <jsp:include page="./genericContent/nameCard.jsp" flush="true"></jsp:include>
+
+	    <jsp:include page="./genericContent/nameCard.jsp" flush="true"></jsp:include>
+
+	    <jsp:include page="./genericContent/nameCard.jsp" flush="true"></jsp:include>
+
+	    <jsp:include page="./genericContent/nameCard.jsp" flush="true"></jsp:include>
+
+	    <jsp:include page="./genericContent/nameCard.jsp" flush="true"></jsp:include>
+
+	    <jsp:include page="./genericContent/nameCard.jsp" flush="true"></jsp:include>
+
+	    <jsp:include page="./genericContent/nameCard.jsp" flush="true"></jsp:include>
+
+	    <jsp:include page="./genericContent/nameCard.jsp" flush="true"></jsp:include>
 	</div>
     </body>
 </html>

@@ -54,6 +54,10 @@
         <servlet-name>NewName</servlet-name>
         <servlet-class>com.mohakchavan.pustakniparab_web.MainServlets.NewName</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AllNames</servlet-name>
+        <servlet-class>com.mohakchavan.pustakniparab_web.MainServlets.AllNames</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserSignedIn</servlet-name>
         <url-pattern>/UserSignedIn</url-pattern>
@@ -105,6 +109,10 @@
     <servlet-mapping>
         <servlet-name>NewName</servlet-name>
         <url-pattern>/NewName</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AllNames</servlet-name>
+        <url-pattern>/AllNames</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
