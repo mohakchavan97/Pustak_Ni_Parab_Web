@@ -60,7 +60,7 @@
     </servlet>
     <servlet>
         <servlet-name>AddBooks</servlet-name>
-        <servlet-class>com.mohakchavan.pustakniparab_web.MainServlets.NewBooks</servlet-class>
+        <servlet-class>com.mohakchavan.pustakniparab_web.MainServlets.AddBooks</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserSignedIn</servlet-name>

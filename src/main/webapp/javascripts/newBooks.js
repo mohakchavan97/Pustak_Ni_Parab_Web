@@ -8,6 +8,7 @@ function pageLoaded() {
     document.getElementById("loader").style.display = "none";
     setDate();
     langChanged();
+    document.getElementById("donor_name").focus();
 }
 
 function validation() {

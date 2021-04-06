@@ -62,6 +62,7 @@ public final class Constants {
 	public static final String NO_NAME_ID = "The selected ID of the name does not exists. " + TRY_AGAIN;
 	public static final String SOME_ERROR_FULL = SOME_ERROR + SPACE + TRY_AGAIN;
 	public static final String NAME_NOT_ADDED = "The details of the person were not added." + SPACE + Constants.ERRORS.SOME_ERROR_FULL;
+	public static final String BOOKS_NOT_ADDED = "The details of the new books were not added." + SPACE + Constants.ERRORS.SOME_ERROR_FULL;
     }
 
     public static final class IDS {
