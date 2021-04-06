@@ -33,7 +33,7 @@ function validation() {
 	alert('Select Proper Date');
 	return false;
     }
-
+    document.getElementById("loader").style.display = "block";
     return true;
 }
 

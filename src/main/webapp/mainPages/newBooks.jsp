@@ -51,7 +51,7 @@
 	     font-size: x-large; font-weight: bolder; word-wrap: break-word;"><%=errorData.toString()%></div>
 
 	<div id="newBooksContent" align="center" style="margin-top: 15%;">
-            <form id="newBooks" method="post" onsubmit="return validation();">
+            <form id="newBooks" method="post" onsubmit="return validation();" action="AddBooks">
                 <table style="margin-top: 1%;" cellpadding="3%">
                     <tr>
                         <th align="right" class="td-th-large">Person Name:</th>

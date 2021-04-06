@@ -19,7 +19,7 @@
         <servlet-class>com.mohakchavan.pustakniparab_web.MainServlets.Logout</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>NewBooks</servlet-name>
+        <servlet-name>NewBooksJSP</servlet-name>
         <jsp-file>/mainPages/newBooks.jsp</jsp-file>
     </servlet>
     <servlet>
@@ -58,6 +58,10 @@
         <servlet-name>AllNames</servlet-name>
         <servlet-class>com.mohakchavan.pustakniparab_web.MainServlets.AllNames</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddBooks</servlet-name>
+        <servlet-class>com.mohakchavan.pustakniparab_web.MainServlets.NewBooks</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserSignedIn</servlet-name>
         <url-pattern>/UserSignedIn</url-pattern>
@@ -71,7 +75,7 @@
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>NewBooks</servlet-name>
+        <servlet-name>NewBooksJSP</servlet-name>
         <url-pattern>/newBooks</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
@@ -113,6 +117,10 @@
     <servlet-mapping>
         <servlet-name>AllNames</servlet-name>
         <url-pattern>/AllNames</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddBooks</servlet-name>
+        <url-pattern>/AddBooks</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

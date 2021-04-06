@@ -17,6 +17,7 @@ function validation() {
 	    return false;
 	}
     }
+    document.getElementById("loader").style.display = "block";
     return true;
 }
 
