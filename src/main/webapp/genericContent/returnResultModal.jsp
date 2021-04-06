@@ -109,7 +109,7 @@
 		<%
 			break;
 		    case name:
-			out.print("Details of person were added uccessfully.");
+			out.print("Details of person were added successfully.");
 		%>
 		</th>
 		</tr>
@@ -131,6 +131,30 @@
 		    <td class="resultLabel" align="left"><%=request.getParameter(Constants.IDS.ISSUER_CONTACT).toString()%></td>
 		</tr>
 
+		<%
+			break;
+		    case newBooks:
+			out.print("Details of new books were added successfully.");
+		%>
+		</th>
+		</tr>
+		<tr><td colspan="2"><hr/></td></tr>
+		<tr>
+		    <td class="resultLabel boldFont" align="right" style="width:35%;">Record ID:</td>
+		    <td class="resultLabel boldFont underLined" align="left"><%=request.getParameter(Constants.IDS.NEW_BOOK_ID).toString()%></td>
+		</tr>
+		<tr>
+		    <td class="resultLabel boldFont" align="right" style="width:35%;">Person Name:</td>
+		    <td class="resultLabel" align="left"><%=request.getParameter(Constants.IDS.DONOR_NAME).toString()%></td>
+		</tr>
+		<tr>
+		    <td class="resultLabel boldFont" align="right" style="width:35%;">Total Books:</td>
+		    <td class="resultLabel" align="left"><%=request.getParameter(Constants.IDS.TOTAL_BOOKS).toString()%></td>
+		</tr>
+		<tr>
+		    <td class="resultLabel boldFont" align="right" style="width:35%;">Books Language:</td>
+		    <td class="resultLabel" align="left"><%=request.getParameter(Constants.IDS.BOOKS_LANGUAGE).toString()%></td>
+		</tr>
 		<%
 			    break;
 		    }

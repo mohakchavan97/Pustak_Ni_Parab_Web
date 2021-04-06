@@ -78,6 +78,7 @@ public final class Constants {
 	public static final String RETURN_DATE = "return_date";
 	public static final String ISSUE_ID = "issue_id";
 	public static final String NAME_ID = "name_id";
+	public static final String NEW_BOOK_ID = "new_book_id";
 	public static final String RESULT_TYPE = "result_type";
 	public static final String RETURNED_ISSUES = "returned_issues";
 	public static final String ISSUER_FNAME = "issuer_first_name";
@@ -95,7 +96,7 @@ public final class Constants {
     }
 
     public static enum VALUES {
-	issue, returns, name;
+	issue, returns, name, newBooks;
 
 //	public static final String ISSUE = "issue";
 //	public static final String RETURNS = "returns";

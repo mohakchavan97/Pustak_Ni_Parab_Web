@@ -4,6 +4,7 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.Models.NewBooks"%>
 <%@page import="java.util.TimeZone"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
@@ -160,6 +161,26 @@
 		</table>
 	    </form>
 	</div>
+
+	<%	    NewBooks addedBooks = null;
+	    try {
+		addedBooks = (NewBooks) request.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_TRANSACTION_SUCCESS);
+		if (addedBooks != null) {
+	%>
+	<div id="returnedResult">
+	    <jsp:include page="./genericContent/returnResultModal.jsp" flush="true">
+		<jsp:param name="result_type" value="<%= Constants.VALUES.newBooks%>"/>
+		<jsp:param name="new_book_id" value="<%= String.valueOf(addedBooks.getNewBookId())%>"/>
+		<jsp:param name="donor_name"  value="<%=addedBooks.getPersonName()%>"/>
+		<jsp:param name="total_books" value="<%= addedBooks.getTotalBooks()%>"/>
+		<jsp:param name="books_language" value="<%=addedBooks.getLanguage()%>"/>
+	    </jsp:include>
+	</div>
+	<%
+		}
+	    } catch (Exception ex) {
+	    }
+	%>
 
     </body>
 </html>
