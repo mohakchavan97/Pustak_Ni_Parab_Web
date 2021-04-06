@@ -84,6 +84,11 @@ public final class Constants {
 	public static final String BLK_FLT = "issuer_block_flat";
 	public static final String STRT_NAME = "issuer_street_name";
 	public static final String LOCAL_AREA = "issuer_locality_area";
+	public static final String NEW_BOOK_DATE = "new_book_date";
+	public static final String DONOR_NAME = "donor_name";
+	public static final String TOTAL_BOOKS = "total_books";
+	public static final String BOOKS_LANGUAGE = "books_language";
+	public static final String SEL_LANG = "sel_lang";
 //	public static final String  = "";
 
     }
