@@ -96,7 +96,7 @@ public class ReturnIssue extends HttpServlet {
 
 			} else {
 			    //Some error
-			    request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_TRNSCTN_ERROR_WITH_DATA, Constants.ERRORS.ISSUE_NOT_ADDED);
+			    request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_TRNSCTN_ERROR_WITH_DATA, Constants.ERRORS.ISSUE_NOT_RETURNED);
 			    latch.countDown();
 			}
 		    }
