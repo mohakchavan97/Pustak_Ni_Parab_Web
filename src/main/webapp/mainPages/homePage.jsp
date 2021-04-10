@@ -52,7 +52,7 @@
 		    out.println(session.getId() + "<br/>" + session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED));
 		%>
 		<br/><br/>
-		<img src=<%out.print("\"./charts/" + session.getId() + "_demoChart.jpeg\"");%> alt="alt"/>
+		<img src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;"/>
 	    </p>
 	    <a href="newBooks">New Books</a>
 	    <a href="issues">Issues</a>

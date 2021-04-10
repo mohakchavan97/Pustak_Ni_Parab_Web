@@ -11,7 +11,7 @@
     </servlet>
     <servlet>
         <description>Login page for Pustak Ni Parab.</description>
-        <servlet-name>LoginPage</servlet-name>
+        <servlet-name>LoginPageJSP</servlet-name>
         <jsp-file>/mainPages/loginPage.jsp</jsp-file>
     </servlet>
     <servlet>
@@ -23,19 +23,19 @@
         <jsp-file>/mainPages/newBooks.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>Issues</servlet-name>
+        <servlet-name>IssuesJSP</servlet-name>
         <jsp-file>/mainPages/issues.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>AddName</servlet-name>
+        <servlet-name>AddNameJSP</servlet-name>
         <jsp-file>/mainPages/addNames.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>Returns</servlet-name>
+        <servlet-name>ReturnsJSP</servlet-name>
         <jsp-file>/mainPages/returns.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>ViewAllNames</servlet-name>
+        <servlet-name>ViewAllNamesJSP</servlet-name>
         <jsp-file>/mainPages/viewAllNames.jsp</jsp-file>
     </servlet>
     <servlet>
@@ -48,7 +48,7 @@
     </servlet>
     <servlet>
         <servlet-name>HomePage</servlet-name>
-        <jsp-file>/mainPages/homePage.jsp</jsp-file>
+        <servlet-class>com.mohakchavan.pustakniparab_web.MainServlets.HomePage</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>NewName</servlet-name>
@@ -62,36 +62,36 @@
         <servlet-name>AddBooks</servlet-name>
         <servlet-class>com.mohakchavan.pustakniparab_web.MainServlets.AddBooks</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HomePageJSP</servlet-name>
+        <jsp-file>/mainPages/homePage.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserSignedIn</servlet-name>
         <url-pattern>/UserSignedIn</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LoginPage</servlet-name>
+        <servlet-name>LoginPageJSP</servlet-name>
         <url-pattern>/login</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Logout</servlet-name>
-        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>NewBooksJSP</servlet-name>
         <url-pattern>/newBooks</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Issues</servlet-name>
+        <servlet-name>IssuesJSP</servlet-name>
         <url-pattern>/issues</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AddName</servlet-name>
+        <servlet-name>AddNameJSP</servlet-name>
         <url-pattern>/addName</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Returns</servlet-name>
+        <servlet-name>ReturnsJSP</servlet-name>
         <url-pattern>/returns</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ViewAllNames</servlet-name>
+        <servlet-name>ViewAllNamesJSP</servlet-name>
         <url-pattern>/viewAllNames</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
@@ -122,13 +122,21 @@
         <servlet-name>LogUserIn</servlet-name>
         <url-pattern>/LogUserIn</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomePageJSP</servlet-name>
+        <url-pattern>/homePage</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
 	    30
 	</session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>mainPages/loginPage.jsp</welcome-file>
+	<welcome-file>login</welcome-file>
         <!--<welcome-file>mainPages/issues.jsp</welcome-file>-->
     </welcome-file-list>
 </web-app>
