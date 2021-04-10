@@ -4,8 +4,8 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.Models.CurrentUser2"%>
 <%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
-<%@page import="com.mohakchavan.pustakniparab_web.Models.CurrentUser"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -75,17 +75,20 @@
                         <h1 align="center" style="color: white;">Pustak Ni Parab</h1>
                     </th>
 		    <%
-			if (!CurrentUser.getDisplayName().isEmpty() && CurrentUser.getDisplayName() != null) {
+			session = request.getSession(false);
+			if (session != null) {
+			    CurrentUser2 currentUser = (CurrentUser2) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.USER_SESSION_DATA);
+			    if (!currentUser.getDisplayName().isEmpty() && currentUser.getDisplayName() != null) {
 		    %>
                     <th style="width: 6%;">
-                        <h4 align="right" style="color: white;"><%=request.getParameter("userGivenName")%></h4>
+                        <h4 align="right" style="color: white;"><%=currentUser.getDisplayName()%></h4>
                     </th>
                     <td style="width: 4%; padding-right: 2%;">
                         <div style="border: 2px solid #ffffff; border-radius: 50%; width: 50px; height: 50px;
 			     background-color: white; margin-left: 5%; overflow: hidden;">
                             <!--src="../icons/ic_user.svg"-->
 			    <img style="width: 100%; height: 100%; object-fit: cover;"
-				 src="<%=request.getParameter("userPhoto")%>"
+				 src="<%=currentUser.getPhotoUrl()%>"
 				 alt="User"/>
                         </div>
                     </td>
@@ -107,6 +110,7 @@
 	    You are not a verified user. Please verify yourself.
 	</div>
 	<%
+		}
 	    }
 	%>
     </body>

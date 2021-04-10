@@ -7,7 +7,6 @@ package com.mohakchavan.pustakniparab_web.MainServlets;
 
 import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.BaseAuthenticator;
 import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.BaseHelper;
-import com.mohakchavan.pustakniparab_web.Models.CurrentUser;
 import com.mohakchavan.pustakniparab_web.Models.CurrentUser2;
 import com.mohakchavan.pustakniparab_web.Models.VerifiedUsers;
 import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
@@ -57,8 +56,8 @@ public class LogUserIn extends HttpServlet {
 	    final HttpSession session = request.getSession(true);
 
 	    BaseAuthenticator baseAuthenticator = new BaseAuthenticator(context);
-	    CurrentUser2 user = baseAuthenticator.authenticateUserAndInitializeFirebase(idToken);
-	    session.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.USER_SESSION_DATA, user);
+	    final CurrentUser2 currentUser = baseAuthenticator.authenticateUserAndInitializeFirebase(idToken);
+	    session.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.USER_SESSION_DATA, currentUser);
 
 	    final CountDownLatch latch = new CountDownLatch(1);
 	    BaseHelper baseHelper = new BaseHelper();
@@ -68,7 +67,7 @@ public class LogUserIn extends HttpServlet {
 		public void onComplete(Object data) {
 		    List<VerifiedUsers> users = (List<VerifiedUsers>) data;
 		    for (VerifiedUsers user : users) {
-			if (user.getUserUid().equals(CurrentUser.getuId())) {
+			if (user.getUserUid().equals(currentUser.getuId())) {
 			    //add session for verified user
 			    session.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED, true);
 			}
