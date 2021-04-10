@@ -4,8 +4,8 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.Models.CurrentUser2"%>
 <%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
-<%@page import="com.mohakchavan.pustakniparab_web.Models.CurrentUser"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -22,12 +22,11 @@
 
 	<%
 	    try {
-		if (!CurrentUser.isUserSet()) {
+		session = request.getSession(false);
+		if (session == null) {
 		    request.getRequestDispatcher("login").forward(request, response);
-		}
-	    } catch (Exception ex) {
-		request.getRequestDispatcher("login").forward(request, response);
-	    }
+		} else if (session != null) {
+		    CurrentUser2 currentUser = (CurrentUser2) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.USER_SESSION_DATA);
 	%>
 
         <jsp:include page="./genericContent/header.jsp" flush="true"/>
@@ -39,9 +38,9 @@
 	<div id="homeContent" style="margin-top: 15%;" align="center">
 	    <h1>Pustak Ni Parab Home Page</h1>
 	    <p><%
-		out.print(CurrentUser.getuId());
+		out.print(currentUser.getuId());
 		out.print("<br/>");
-		out.print(CurrentUser.getProvider());
+		out.print(currentUser.getProvider());
 		%></p>
 	    <br/>
 	    <p style="padding: 5%;">
@@ -56,6 +55,13 @@
 	    <a href="logout">Logout</a>
 	    <input type="button" onclick="document.getElementById('loader').style.display = 'block';">
         </div>
+
+	<%
+		}
+	    } catch (Exception ex) {
+		request.getRequestDispatcher("login").forward(request, response);
+	    }
+	%>
 
     </body>
 </html>
