@@ -112,15 +112,13 @@ public class BaseAuthenticator {
 	    JSONObject json = (JSONObject) new JSONParser().parse(new InputStreamReader(new FileInputStream(file)));
 	    optionsBuilder = FirebaseOptions.builder();
 	    optionsBuilder.setCredentials(GoogleCredentials.fromStream(new FileInputStream(file)));
-	    Map<String, Object> auth = new HashMap<String, Object>();
+	    Map<String, Object> auth = new HashMap<>();
 	    auth.put(Constants.FIREBASE.AUTHORIZATION.UID, json.get("client_id"));
 	    optionsBuilder.setDatabaseAuthVariableOverride(auth);
 	    optionsBuilder.setDatabaseUrl(Constants.FIREBASE.DATABASE.URL);
 	} catch (FileNotFoundException ex) {
 	    Logger.getLogger(BaseAuthenticator.class.getName()).log(Level.SEVERE, null, ex);
-	} catch (IOException ex) {
-	    Logger.getLogger(BaseAuthenticator.class.getName()).log(Level.SEVERE, null, ex);
-	} catch (ParseException ex) {
+	} catch (IOException | ParseException ex) {
 	    Logger.getLogger(BaseAuthenticator.class.getName()).log(Level.SEVERE, null, ex);
 	}
     }

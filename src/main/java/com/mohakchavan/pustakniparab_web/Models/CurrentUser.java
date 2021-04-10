@@ -51,11 +51,17 @@ public class CurrentUser {
 	return getCurrentUser().getProvider();
     }
 
+    public static boolean isUserSet() {
+	return getCurrentUser().isUserSet();
+    }
+
     private static class User {
 
-	String uId, displayName, email, photoUrl, provider;
+	private String uId, displayName, email, photoUrl, provider;
+	private boolean isUserSet;
 
 	private User() {
+	    isUserSet = false;
 	}
 
 	private void setUser(String uId, String displayName, String email, String photoUrl, String provider) {
@@ -64,6 +70,11 @@ public class CurrentUser {
 	    this.email = email;
 	    this.photoUrl = photoUrl;
 	    this.provider = provider;
+	    isUserSet = true;
+	}
+
+	public boolean isUserSet() {
+	    return isUserSet;
 	}
 
 	private String getuId() {

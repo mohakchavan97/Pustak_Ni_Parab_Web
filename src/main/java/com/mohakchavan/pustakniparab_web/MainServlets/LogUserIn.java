@@ -34,7 +34,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
  *
  * @author Mohak Chavan
  */
-public class HomePage extends HttpServlet {
+public class LogUserIn extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
@@ -136,10 +136,10 @@ public class HomePage extends HttpServlet {
 	    out.println("</body>");
 	    out.println("</html>");
 	} catch (IOException ex) {
-	    Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
+	    Logger.getLogger(LogUserIn.class.getName()).log(Level.SEVERE, null, ex);
 	    System.out.println(ex.toString());
 	} catch (InterruptedException ex) {
-	    Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
+	    Logger.getLogger(LogUserIn.class.getName()).log(Level.SEVERE, null, ex);
 	} finally {
 	    out.close();
 	}

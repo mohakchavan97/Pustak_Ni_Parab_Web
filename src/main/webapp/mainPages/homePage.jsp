@@ -20,6 +20,16 @@
     </head>
     <body style="background-color: white;" onload="hideLoader();">
 
+	<%
+	    try {
+		if (!CurrentUser.isUserSet()) {
+		    request.getRequestDispatcher("login").forward(request, response);
+		}
+	    } catch (Exception ex) {
+		request.getRequestDispatcher("login").forward(request, response);
+	    }
+	%>
+
         <jsp:include page="./genericContent/header.jsp" flush="true">
             <jsp:param name="userGivenName" value="<%=CurrentUser.getDisplayName()%>"/>
 	    <jsp:param name="userPhoto" value="<%=CurrentUser.getPhotoUrl()%>"/>

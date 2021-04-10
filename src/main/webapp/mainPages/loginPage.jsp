@@ -30,7 +30,7 @@
         </div>
 
 	<div id="loader" style="display: none;">
-	    <jsp:include page="../genericContent/loader.jsp" flush="true"></jsp:include>
+	    <jsp:include page="./genericContent/loader.jsp" flush="true"></jsp:include>
 	</div>
 
 	<div id="loginContent" style="margin-top: 15%;" align="center">
@@ -50,7 +50,7 @@
 		}
 	    </script>
 	    <div>
-		<form action="LoggedIn" method="post" id="userForm">
+		<form action="LogUserIn" method="post" id="userForm">
 		    <input type="hidden" id="idToken" name="idToken"/>
 		    <input type="hidden" id="accessToken" name="accessToken"/>
 		</form>

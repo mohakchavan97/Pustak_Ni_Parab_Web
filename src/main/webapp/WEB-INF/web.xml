@@ -6,8 +6,8 @@
         <servlet-class>com.mohakchavan.pustakniparab_web.UserSignedIn</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LoggedIn</servlet-name>
-        <servlet-class>com.mohakchavan.pustakniparab_web.MainServlets.HomePage</servlet-class>
+        <servlet-name>LogUserIn</servlet-name>
+        <servlet-class>com.mohakchavan.pustakniparab_web.MainServlets.LogUserIn</servlet-class>
     </servlet>
     <servlet>
         <description>Login page for Pustak Ni Parab.</description>
@@ -103,10 +103,6 @@
         <url-pattern>/ReturnIssue</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LoggedIn</servlet-name>
-        <url-pattern>/LoggedIn</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
         <url-pattern>/Home</url-pattern>
     </servlet-mapping>
@@ -121,6 +117,10 @@
     <servlet-mapping>
         <servlet-name>AddBooks</servlet-name>
         <url-pattern>/AddBooks</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogUserIn</servlet-name>
+        <url-pattern>/LogUserIn</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
