@@ -8,7 +8,6 @@
 <%@page import="java.util.TimeZone"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
-<%@page import="com.mohakchavan.pustakniparab_web.Models.CurrentUser"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,10 +19,7 @@
     </head>
     <body style="background-color: white;" onload="pageLoaded();">
 
-        <jsp:include page="./genericContent/header.jsp" flush="true">
-            <jsp:param name="userGivenName" value="<%=CurrentUser.getDisplayName()%>"/>
-	    <jsp:param name="userPhoto" value="<%=CurrentUser.getPhotoUrl()%>"/>
-        </jsp:include>
+        <jsp:include page="./genericContent/header.jsp" flush="true"/>
 
 	<div id="loader">
 	    <jsp:include page="./genericContent/loader.jsp" flush="true"/>
