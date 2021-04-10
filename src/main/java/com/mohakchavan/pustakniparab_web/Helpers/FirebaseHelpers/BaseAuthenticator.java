@@ -13,6 +13,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.mohakchavan.pustakniparab_web.Models.CurrentUser;
+import com.mohakchavan.pustakniparab_web.Models.CurrentUser2;
 import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
 import java.io.File;
 import java.io.FileInputStream;
@@ -50,12 +51,15 @@ public class BaseAuthenticator {
 	return firebaseApp;
     }
 
-    public void authenticateUserAndInitializeFirebase(String idToken) {
-	authenticateUser(idToken);
-	initializeFirebaseApp();
+    public CurrentUser2 authenticateUserAndInitializeFirebase(String idToken) {
+	CurrentUser2 user = authenticateUser(idToken);
+	if (user != null) {
+	    initializeFirebaseApp();
+	}
+	return user;
     }
 
-    private void authenticateUser(String idToken) {
+    private CurrentUser2 authenticateUser(String idToken) {
 	try {
 	    final GoogleIdToken.Payload payload = getUserPayload(idToken);
 
@@ -74,10 +78,18 @@ public class BaseAuthenticator {
 		    payload.get("picture").toString(),
 		    payload.getIssuer());
 
+	    return new CurrentUser2(
+		    payload.getSubject(),
+		    payload.get("name").toString(),
+		    payload.getEmail(),
+		    payload.get("picture").toString(),
+		    payload.getIssuer());
+
 	} catch (Exception ex) {
 	    Logger.getLogger(BaseAuthenticator.class.getName()).log(Level.SEVERE, null, ex);
 	    System.out.println(ex.toString());
 	}
+	return null;
     }
 
     private GoogleIdToken.Payload getUserPayload(String userIdToken) throws Exception {

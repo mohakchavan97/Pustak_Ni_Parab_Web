@@ -8,6 +8,7 @@ package com.mohakchavan.pustakniparab_web.MainServlets;
 import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.BaseAuthenticator;
 import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.BaseHelper;
 import com.mohakchavan.pustakniparab_web.Models.CurrentUser;
+import com.mohakchavan.pustakniparab_web.Models.CurrentUser2;
 import com.mohakchavan.pustakniparab_web.Models.VerifiedUsers;
 import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
 import java.io.IOException;
@@ -56,7 +57,8 @@ public class LogUserIn extends HttpServlet {
 	    final HttpSession session = request.getSession(true);
 
 	    BaseAuthenticator baseAuthenticator = new BaseAuthenticator(context);
-	    baseAuthenticator.authenticateUserAndInitializeFirebase(idToken);
+	    CurrentUser2 user = baseAuthenticator.authenticateUserAndInitializeFirebase(idToken);
+	    session.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.USER_SESSION_DATA, user);
 
 	    final CountDownLatch latch = new CountDownLatch(1);
 	    BaseHelper baseHelper = new BaseHelper();
