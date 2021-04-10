@@ -147,7 +147,7 @@ function nameIdChanged() {
 
 function callNameIdAPI() {
     var valToCheck = name_id.options[name_id.selectedIndex].value.toString();
-    filterKey = "book_name";
+    filterKey = "name_id";
     if (valToCheck === "0_0") {
 	filterValue = "";
     } else {

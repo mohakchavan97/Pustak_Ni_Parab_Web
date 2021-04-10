@@ -12,7 +12,6 @@
 <%@page import="com.mohakchavan.pustakniparab_web.Models.Issues"%>
 <%@page import="java.util.List"%>
 <%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
-<%@page import="com.mohakchavan.pustakniparab_web.Models.CurrentUser"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -40,10 +39,7 @@
 
     <body onload='setIssues(<%=getAllIssuesToString(issuesList)%>)'>
 
-	<jsp:include page="./genericContent/header.jsp" flush="true">
-            <jsp:param name="userGivenName" value="<%=CurrentUser.getDisplayName()%>"/>
-	    <jsp:param name="userPhoto" value="<%=CurrentUser.getPhotoUrl()%>"/>
-        </jsp:include>
+	<jsp:include page="./genericContent/header.jsp" flush="true"/>
 
 	<div id="loader">
 	    <jsp:include page="./genericContent/loader.jsp" flush="true"/>
