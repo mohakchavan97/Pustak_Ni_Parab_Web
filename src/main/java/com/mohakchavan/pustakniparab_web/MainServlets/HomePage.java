@@ -7,14 +7,10 @@ package com.mohakchavan.pustakniparab_web.MainServlets;
 
 import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.BaseHelper;
 import com.mohakchavan.pustakniparab_web.Models.BaseData;
-import com.mohakchavan.pustakniparab_web.Models.CurrentUser;
-import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,6 +42,7 @@ public class HomePage extends HttpServlet {
     private ServletContext context;
 
     /*//region Scheduler for BaseData Retrieval
+    //info This technique is not posiible when user details are stored in session.
     private Timer timer;
     private class ScheduleBaseData extends TimerTask {
 

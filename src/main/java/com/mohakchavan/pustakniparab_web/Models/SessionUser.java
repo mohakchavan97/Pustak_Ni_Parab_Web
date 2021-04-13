@@ -9,11 +9,11 @@ package com.mohakchavan.pustakniparab_web.Models;
  *
  * @author Mohak Chavan
  */
-public class CurrentUser2 {
+public class SessionUser {
 
     private final String uId, displayName, email, photoUrl, provider;
 
-    public CurrentUser2(String userId, String displayName, String userEmail, String photoUrl, String provider) {
+    public SessionUser(String userId, String displayName, String userEmail, String photoUrl, String provider) {
 	this.uId = userId;
 	this.displayName = displayName;
 	this.email = userEmail;
