@@ -24,7 +24,7 @@
 	    try {
 		session = request.getSession(false);
 		if (session == null) {
-		    request.getRequestDispatcher("login").forward(request, response);
+		    request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
 		} else if (session != null) {
 		    CurrentUser2 currentUser = (CurrentUser2) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.USER_SESSION_DATA);
 	%>
@@ -59,7 +59,7 @@
 	<%
 		}
 	    } catch (Exception ex) {
-		request.getRequestDispatcher("login").forward(request, response);
+		request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
 	    }
 	%>
 

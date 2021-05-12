@@ -4,6 +4,7 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -109,15 +110,20 @@
 
 	<div class="loadDrawerModal openEffect loadModalAnime" id="loadDrawerModal">
 	    <table class="drawerModalContent openEffect drawerModalAnime" id="drawerModalContent">
+		<tr style="cursor: pointer;" onclick="location.href = './<%=Constants.PATHS.SERVLET.HOME%>';">
+		    <td class="drawerImg"><img src="./icons/ic_home_24dp.svg" alt="ic_home" align="center" style="vertical-align: middle;"/></td>
+		    <td class="drawerLabel">Home</td>
+		</tr>
+		<tr><td colspan="2"><hr/></td></tr>
 		<tr>
 		    <td class="drawerHeader">Issues</td>
 		</tr>
 		<tr><td colspan="2"><hr/></td></tr>
-		<tr style="cursor: pointer;" onclick="location.href = './AddIssue';">
+		<tr style="cursor: pointer;" onclick="location.href = './<%=Constants.PATHS.SERVLET.ADD_ISSUE%>';">
 		    <td class="drawerImg"><img src="./icons/ic_issues.svg" alt="ic_issues" align="center" style="vertical-align: middle;"/></td>
 		    <td class="drawerLabel">Add New Issue</td>
 		</tr>
-		<tr style="cursor: pointer;" onclick="location.href = './ReturnIssue';">
+		<tr style="cursor: pointer;" onclick="location.href = './<%=Constants.PATHS.SERVLET.RETURN_ISSUE%>';">
 		    <td class="drawerImg"><img src="./icons/ic_returns.svg" alt="ic_returns" align="center" style="vertical-align: middle;"/></td>
 		    <td class="drawerLabel">Returns</td>
 		</tr>
@@ -126,18 +132,23 @@
 		    <td class="drawerHeader">Names</td>
 		</tr>
 		<tr><td colspan="2"><hr/></td></tr>
-		<tr style="cursor: pointer;" onclick="location.href = './addName';">
+		<tr style="cursor: pointer;" onclick="location.href = './<%=Constants.PATHS.JSP.ADD_NAME%>';">
 		    <td class="drawerImg"><img src="./icons/ic_add_name.svg" alt="ic_add_name" align="center" style="vertical-align: middle;"/></td>
 		    <td class="drawerLabel">Add New Person</td>
 		</tr>
-		<tr style="cursor: pointer;" onclick="location.href = './AllNames';">
+		<tr style="cursor: pointer;" onclick="location.href = './<%=Constants.PATHS.SERVLET.ALL_NAMES%>';">
 		    <td class="drawerImg"><img src="./icons/ic_all_names.svg" alt="ic_viewAll" align="center" style="vertical-align: middle;"/></td>
 		    <td class="drawerLabel">View All Names</td>
 		</tr>
 		<tr><td colspan="2"><hr/></td></tr>
-		<tr style="cursor: pointer;" onclick="location.href = './newBooks';">
+		<tr style="cursor: pointer;" onclick="location.href = './<%=Constants.PATHS.JSP.NEW_BOOKS%>';">
 		    <td class="drawerImg"><img src="./icons/ic_add_book_24px.svg" alt="ic_add_book" align="center" style="vertical-align: middle;"/></td>
 		    <td class="drawerLabel">Add New Books</td>
+		</tr>
+		<tr><td colspan="2"><hr/></td></tr>
+		<tr style="cursor: pointer;" onclick="location.href = './<%=Constants.PATHS.SERVLET.LOGOUT%>';">
+		    <td class="drawerImg"><img src="./icons/ic_logout_24dp.svg" alt="ic_logout" align="center" style="vertical-align: middle;"/></td>
+		    <td class="drawerLabel">Logout</td>
 		</tr>
 	    </table>
 	</div>

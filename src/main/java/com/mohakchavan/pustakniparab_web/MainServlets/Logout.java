@@ -5,6 +5,7 @@
  */
 package com.mohakchavan.pustakniparab_web.MainServlets;
 
+import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -47,7 +48,7 @@ public class Logout extends HttpServlet {
 	    if (session != null) {
 		session.invalidate();
 	    }
-	    request.getRequestDispatcher("/login").forward(request, response);
+	    request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
 
 	    out.println("</body>");
 	    out.println("</html>");

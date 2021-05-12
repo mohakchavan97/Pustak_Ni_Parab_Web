@@ -14,6 +14,24 @@ public final class Constants {
     public static final class PATHS {
 
 	public static final String SERVICE_ACCOUNT_PATH = "/staticContent/AccountSecrets/serviceAccount.json";
+
+	public static final class JSP {
+
+	    public static final String LOGIN = "login";
+	    public static final String ADD_NAME = "addName";
+	    public static final String NEW_BOOKS = "newBooks";
+//	    public static final String  = "";
+	}
+
+	public static final class SERVLET {
+
+	    public static final String HOME = "Home";
+	    public static final String ADD_ISSUE = "AddIssue";
+	    public static final String RETURN_ISSUE = "ReturnIssue";
+	    public static final String ALL_NAMES = "AllNames";
+	    public static final String LOGOUT = "Logout";
+//	    public static final String  = "";
+	}
     }
 
     public static final class FIREBASE {
