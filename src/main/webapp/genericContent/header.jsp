@@ -4,7 +4,7 @@
     Author     : Mohak Chavan
 --%>
 
-<%@page import="com.mohakchavan.pustakniparab_web.Models.CurrentUser2"%>
+<%@page import="com.mohakchavan.pustakniparab_web.Models.SessionUser"%>
 <%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -77,8 +77,8 @@
 		    <%
 			session = request.getSession(false);
 			if (session != null) {
-			    CurrentUser2 currentUser = (CurrentUser2) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.USER_SESSION_DATA);
-			    if (!currentUser.getDisplayName().isEmpty() && currentUser.getDisplayName() != null) {
+			    SessionUser currentUser = (SessionUser) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.USER_SESSION_DATA);
+			    if (currentUser != null && !currentUser.getDisplayName().isEmpty() && currentUser.getDisplayName() != null) {
 		    %>
                     <th style="width: 6%;">
                         <h4 align="right" style="color: white;"><%=currentUser.getDisplayName()%></h4>
@@ -104,7 +104,8 @@
 	    </div>
 
 	<%
-	    if (!(Boolean) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED)) {
+	    if (session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED) != null
+		    && !((Boolean) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED))) {
 	%>
 	<div id="notVerifiedUser" align="center" style="margin-top: 10%; color: red; font-size: x-large; font-weight: bolder; margin-bottom: -11.8%;">
 	    You are not a verified user. Please verify yourself.

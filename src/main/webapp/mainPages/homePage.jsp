@@ -4,7 +4,7 @@
     Author     : Mohak Chavan
 --%>
 
-<%@page import="com.mohakchavan.pustakniparab_web.Models.CurrentUser2"%>
+<%@page import="com.mohakchavan.pustakniparab_web.Models.SessionUser"%>
 <%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -26,7 +26,10 @@
 		if (session == null) {
 		    request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
 		} else if (session != null) {
-		    CurrentUser2 currentUser = (CurrentUser2) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.USER_SESSION_DATA);
+		    SessionUser currentUser = (SessionUser) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.USER_SESSION_DATA);
+		    if (currentUser == null) {
+			request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
+		    } else if (currentUser != null) {
 	%>
 
         <jsp:include page="./genericContent/header.jsp" flush="true"/>
@@ -57,6 +60,7 @@
         </div>
 
 	<%
+		    }
 		}
 	    } catch (Exception ex) {
 		request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
