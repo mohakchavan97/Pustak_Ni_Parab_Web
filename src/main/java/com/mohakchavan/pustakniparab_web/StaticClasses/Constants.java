@@ -60,7 +60,7 @@ public final class Constants {
     public static final class ATTRIBUTE_KEY_NAMES {
 
 	public static final String USER_SESSION_DATA = "userDataStoredInSession";
-	public static final String IS_CURRENT_USER_VERIFIED = "isCuurentUserVerified";
+	public static final String IS_CURRENT_USER_VERIFIED = "isCurrentUserVerified";
 	public static final String HAS_ERROR_WITH_DATA = "hasErrorWithData";
 	public static final String HAS_TRNSCTN_ERROR_WITH_DATA = "hasTrnsctnErrorWithData";
 	public static final String ALL_NAMES_FOR_HTML = "allNamesHTML";
