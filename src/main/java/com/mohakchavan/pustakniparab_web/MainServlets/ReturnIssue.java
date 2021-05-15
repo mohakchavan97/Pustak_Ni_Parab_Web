@@ -12,11 +12,13 @@ import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.NamesHelper;
 import com.mohakchavan.pustakniparab_web.Models.Issues;
 import com.mohakchavan.pustakniparab_web.Models.Names;
 import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
+import com.mohakchavan.pustakniparab_web.StaticClasses.SessionHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,6 +52,11 @@ public class ReturnIssue extends HttpServlet {
 	PrintWriter out = response.getWriter();
 	RequestDispatcher dispatchToReturnsJSP = request.getRequestDispatcher("returns");
 
+	Map sessionMap = SessionHelper.checkSessionAndGetCurrentUser(request);
+	if (!sessionMap.containsKey(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID) || !((Boolean) sessionMap.get(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID))) {
+	    request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
+	}
+
 	boolean isForReturn = false;
 	Enumeration params = request.getParameterNames();
 	while (params.hasMoreElements()) {
@@ -63,7 +70,7 @@ public class ReturnIssue extends HttpServlet {
 	IssuesHelper issuesHelper = new IssuesHelper();
 
 	if (!isForReturn) {
-	    //Enable this code if request is from homepage.
+	    //Enable this code if request is from homepage. (i.e.: By default, enable this code.)
 	    try {
 
 		redirectToReturnsJSP(request, response, issuesHelper, dispatchToReturnsJSP);

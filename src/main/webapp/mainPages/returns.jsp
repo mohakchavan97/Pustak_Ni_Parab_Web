@@ -4,6 +4,8 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.SessionHelper"%>
+<%@page import="java.util.Map"%>
 <%@page import="java.util.TimeZone"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="org.json.simple.JSONObject"%>
@@ -23,6 +25,11 @@
     </head>
 
     <%
+	Map sessionMap = SessionHelper.checkSessionAndGetCurrentUser(request);
+	if (!sessionMap.containsKey(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID) || !((Boolean) sessionMap.get(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID))) {
+	    request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
+	}
+	
 	Boolean isVerified = (Boolean) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED);
 
 	List<Issues> issuesList = null;
