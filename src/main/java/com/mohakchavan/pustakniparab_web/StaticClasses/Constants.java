@@ -68,6 +68,9 @@ public final class Constants {
 	public static final String IS_REQUEST_FOR_ADD_ISSUE = "isForAdd";
 	public static final String IS_REQUEST_TO_RETURN_ISSUE = "isForReturn";
 	public static final String IS_TRANSACTION_SUCCESS = "isSuccessfull";
+
+	public static final String IS_SESSION_VALID = "isSessionValidWithUserData";
+	public static final String CURRENT_USER = "currentUser";
     }
 
     public static final class ERRORS {

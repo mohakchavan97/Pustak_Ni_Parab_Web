@@ -4,6 +4,8 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.SessionHelper"%>
+<%@page import="java.util.Map"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.SessionUser"%>
 <%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -22,14 +24,10 @@
 
 	<%
 	    try {
-		session = request.getSession(false);
-		if (session == null) {
-		    request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
-		} else if (session != null) {
-		    SessionUser currentUser = (SessionUser) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.USER_SESSION_DATA);
-		    if (currentUser == null) {
-			request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
-		    } else if (currentUser != null) {
+		SessionUser currentUser;
+		Map map = SessionHelper.checkSessionAndGetCurrentUser(request);
+		if (map.containsKey(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID) && ((Boolean) map.get(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID))) {
+		    currentUser = (SessionUser) map.get(Constants.ATTRIBUTE_KEY_NAMES.CURRENT_USER);
 	%>
 
         <jsp:include page="./genericContent/header.jsp" flush="true"/>
@@ -60,7 +58,8 @@
         </div>
 
 	<%
-		    }
+		} else {
+		    request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
 		}
 	    } catch (Exception ex) {
 		request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
