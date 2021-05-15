@@ -4,13 +4,17 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="java.util.Calendar"%>
+<%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
+<%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.SessionHelper"%>
+<%@page import="java.util.Map"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.Issues"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.Names"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.TimeZone"%>
-<%@page import="java.util.Calendar"%>
-<%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
+<%@page import="javax.servlet.*"%>
+<%@page import="javax.servlet.http.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -23,6 +27,11 @@
     <body style="background-color: white;" onload='issuesPageLoaded();'>
 
 	<%
+	    Map sessionMap = SessionHelper.checkSessionAndGetCurrentUser(request);
+	    if (!sessionMap.containsKey(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID) || !((Boolean) sessionMap.get(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID))) {
+		request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
+	    }
+
 	    Boolean isVerified = (Boolean) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED);
 
 	    List<Names> namesList = null;
