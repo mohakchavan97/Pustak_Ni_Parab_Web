@@ -4,6 +4,8 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.SessionHelper"%>
+<%@page import="java.util.Map"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.Names"%>
 <%@page import="java.util.List"%>
 <%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
@@ -20,6 +22,14 @@
 	    }
 	</script>
     </head>
+
+    <%
+	Map sessionMap = SessionHelper.checkSessionAndGetCurrentUser(request);
+	if (!sessionMap.containsKey(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID) || !((Boolean) sessionMap.get(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID))) {
+	    request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
+	}
+    %>
+
     <body style="background-color: #f5f5f5;" onload="pageLoaded();">
 
 	<jsp:include page="./genericContent/header.jsp" flush="true"/>
