@@ -4,6 +4,8 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.SessionHelper"%>
+<%@page import="java.util.Map"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.NewBooks"%>
 <%@page import="java.util.TimeZone"%>
 <%@page import="java.util.Calendar"%>
@@ -17,6 +19,14 @@
 	<script type="text/javascript" src="./javascripts/newBooks.js"></script>
 	<link rel="stylesheet" href="./css/newBooks.css"/>
     </head>
+
+    <%
+	Map sessionMap = SessionHelper.checkSessionAndGetCurrentUser(request);
+	if (!sessionMap.containsKey(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID) || !((Boolean) sessionMap.get(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID))) {
+	    request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
+	}
+    %>
+
     <body style="background-color: white;" onload="pageLoaded();">
 
         <jsp:include page="./genericContent/header.jsp" flush="true"/>
