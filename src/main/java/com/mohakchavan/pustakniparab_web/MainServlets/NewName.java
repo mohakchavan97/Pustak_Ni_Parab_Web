@@ -9,8 +9,10 @@ import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.BaseHelper;
 import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.NamesHelper;
 import com.mohakchavan.pustakniparab_web.Models.Names;
 import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
+import com.mohakchavan.pustakniparab_web.StaticClasses.SessionHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,6 +41,12 @@ public class NewName extends HttpServlet {
 	response.setContentType("text/html;charset=UTF-8");
 	PrintWriter out = response.getWriter();
 	RequestDispatcher dispatchToAddNameJSP = request.getRequestDispatcher("addName");
+
+	Map sessionMap = SessionHelper.checkSessionAndGetCurrentUser(request);
+	if (!sessionMap.containsKey(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID) || !((Boolean) sessionMap.get(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID))) {
+	    request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
+	}
+
 	try {
 	    /* TODO output your page here. You may use following sample code. */
 	    out.println("<!DOCTYPE html>");
