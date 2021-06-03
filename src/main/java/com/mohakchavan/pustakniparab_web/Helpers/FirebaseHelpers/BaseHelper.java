@@ -17,6 +17,7 @@ import com.mohakchavan.pustakniparab_web.Models.NewBooks;
 import com.mohakchavan.pustakniparab_web.Models.VerifiedUsers;
 import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -119,6 +120,12 @@ public class BaseHelper {
 		onFailure.onFail(error);
 	    }
 	});
+    }
+
+    public void updateDataChangedTimeStampAsync() {
+	baseReference.child(Constants.FIREBASE.DATABASE.TIMESTAMPS)
+		.child(Constants.FIREBASE.DATABASE.DATA_CHANGED_TIMESTAMP)
+		.setValueAsync(new Date().getTime());
     }
 
     public interface onCompleteTransaction {

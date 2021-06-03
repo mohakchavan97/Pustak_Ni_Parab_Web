@@ -26,9 +26,11 @@ public class IssuesHelper {
 
     private final DatabaseReference issueReference;
     private ValueEventListener allIssuesListener;
+    private final BaseHelper baseHelper;
 
     public IssuesHelper() {
-	issueReference = new BaseHelper().getBaseReference().child(Constants.FIREBASE.DATABASE.ISSUES);
+	baseHelper = new BaseHelper();
+	issueReference = baseHelper.getBaseReference().child(Constants.FIREBASE.DATABASE.ISSUES);
     }
 
     public void addNewIssue(final Issues newIssueDetails, final BaseHelper.onCompleteTransaction onCompleteTransaction) {
@@ -44,6 +46,7 @@ public class IssuesHelper {
 			    newIssueDetails.setIssueNo(currentTotal);
 //			    currentData.child(String.valueOf(currentTotal)).setValue(newIssueDetails);
 //			    currentData.child(Constants.FIREBASE.DATABASE.TOTAL_RECORDS).setValue(currentTotal);
+			    baseHelper.updateDataChangedTimeStampAsync();
 			    return Transaction.success(currentData);
 			} else {
 			    //Error for issue already present

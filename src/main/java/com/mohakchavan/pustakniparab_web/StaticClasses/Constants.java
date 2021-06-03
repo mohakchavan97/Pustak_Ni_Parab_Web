@@ -49,6 +49,9 @@ public final class Constants {
 	    public static final String TOTAL_NAMES = "currentTotalNamesRecorded";
 	    public static final String TOTAL_NEW_BOOKS = "currentTotalNewBooksRecorded";
 	    public static final String ACCOUNT_TYPE = "accountType";
+	    public static final String TIMESTAMPS = "TimeStamps";
+	    public static final String IMAGES_CREATED_TIMESTAMP = "imagesCreatedTimeStamp";
+	    public static final String DATA_CHANGED_TIMESTAMP = "dataChangedTimeStamp";
 	}
 
 	public static final class AUTHORIZATION {
