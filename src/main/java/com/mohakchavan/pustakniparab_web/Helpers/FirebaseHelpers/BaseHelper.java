@@ -128,6 +128,12 @@ public class BaseHelper {
 		.setValueAsync(new Date().getTime());
     }
 
+    public void updateImagesCreatedTimeStampAsync() {
+	baseReference.child(Constants.FIREBASE.DATABASE.TIMESTAMPS)
+		.child(Constants.FIREBASE.DATABASE.IMAGES_CREATED_TIMESTAMP)
+		.setValueAsync(new Date().getTime());
+    }
+
     public interface onCompleteTransaction {
 
 	void onComplete(boolean committed, Object data);
