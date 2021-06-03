@@ -20,9 +20,11 @@ import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
 public class NewBooksHelper {
 
     private final DatabaseReference newBooksReference;
+    private final BaseHelper baseHelper;
 
     public NewBooksHelper() {
-	newBooksReference = new BaseHelper().getBaseReference().child(Constants.FIREBASE.DATABASE.NEW_BOOKS);
+	baseHelper = new BaseHelper();
+	newBooksReference = baseHelper.getBaseReference().child(Constants.FIREBASE.DATABASE.NEW_BOOKS);
     }
 
     public void addNewRecord(final NewBooks newBooks, final BaseHelper.onCompleteTransaction onCompleteTransaction) {
@@ -37,6 +39,7 @@ public class NewBooksHelper {
 			    newBooks.setNewBookId(currentTotal);
 //                                currentData.child(String.valueOf(currentTotal)).setValue(newBooks);
 //                                currentData.child(Constants.FIREBASE.DATABASE.TOTAL_NEW_BOOKS).setValue(currentTotal);
+			    baseHelper.updateDataChangedTimeStampAsync();
 			    return Transaction.success(currentData);
 			} else {
 			    // Error "The record is already present. Please try again."

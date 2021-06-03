@@ -24,9 +24,11 @@ public class NamesHelper {
 
     private final DatabaseReference namesReference;
     private ValueEventListener allNamesListener;
+    private final BaseHelper baseHelper;
 
     public NamesHelper() {
-	namesReference = new BaseHelper().getBaseReference().child(Constants.FIREBASE.DATABASE.NAMES);
+	baseHelper = new BaseHelper();
+	namesReference = baseHelper.getBaseReference().child(Constants.FIREBASE.DATABASE.NAMES);
     }
 
     private void setAllNamesListener(final BaseHelper.onCompleteRetrieval onCompleteRetrieval, final BaseHelper.onFailure onFail) {
@@ -87,6 +89,7 @@ public class NamesHelper {
 			    newPersonDetails.setSer_no(currentTotalNames);
 //			    currentData.child(String.valueOf(currentTotalNames)).setValue(newPersonDetails);
 //			    currentData.child(Constants.FIREBASE.DATABASE.TOTAL_NAMES).setValue(currentTotalNames);
+			    baseHelper.updateDataChangedTimeStampAsync();
 			    return Transaction.success(currentData);
 			} else {
 			    //Error: User id is already present. Contact developer

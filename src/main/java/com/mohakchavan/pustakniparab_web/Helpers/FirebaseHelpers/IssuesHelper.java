@@ -121,6 +121,7 @@ public class IssuesHelper {
 			    return Transaction.abort();
 			}
 		    }
+		    baseHelper.updateDataChangedTimeStampAsync();
 		    return Transaction.success(currentData);
 		} else {
 		    //No data in cloud
