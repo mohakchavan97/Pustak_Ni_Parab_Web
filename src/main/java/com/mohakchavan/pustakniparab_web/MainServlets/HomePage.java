@@ -7,6 +7,7 @@ package com.mohakchavan.pustakniparab_web.MainServlets;
 
 import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.BaseHelper;
 import com.mohakchavan.pustakniparab_web.Models.BaseData;
+import com.mohakchavan.pustakniparab_web.Models.TimeStamps;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
@@ -102,7 +103,7 @@ public class HomePage extends HttpServlet {
 	    out.println("<body>");
 //	    out.println("<h1>Servlet HomePage at " + request.getContextPath() + "</h1>");
 
-	    getBaseDataAndSetCharts();
+	    getImageDataConditionally();
 	    dispatchToHomeJSP.forward(request, response);
 
 	    out.println("</body>");
@@ -110,33 +111,31 @@ public class HomePage extends HttpServlet {
 	}
     }
 
-    private void getBaseDataAndSetCharts() {
-	BaseHelper baseHelper = new BaseHelper();
+    private void getImageDataConditionally() {
+	final BaseHelper baseHelper = new BaseHelper();
 	final CountDownLatch latch = new CountDownLatch(1);
-	baseHelper.getAllBaseData(new BaseHelper.onCompleteRetrieval() {
+	baseHelper.getImagesAndDataTimeStamps(new BaseHelper.onCompleteRetrieval() {
 	    @Override
 	    public void onComplete(Object data) {
-		BaseData baseData = (BaseData) data;
-		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		dataset.addValue(1.0, "A", "A");
-		dataset.addValue(2.0, "A", "B");
-		dataset.addValue(3.0, "A", "C");
-		dataset.addValue(4.0, "A", "D");
-		JFreeChart chart = ChartFactory.createBarChart("Demo Chart", "X-axisLabel", "Y-axisLabel", dataset, PlotOrientation.VERTICAL, true, true, false);
-		chart.setBackgroundPaint(Color.yellow);
-		File demoFile = new File(context.getRealPath("/charts/demoChart.jpeg"));
-		try {
-		    if (!demoFile.exists()) {
-			demoFile.createNewFile();
+		if (data != null) {
+		    if (!((TimeStamps) data).areImagesUpdated()) {
+			baseHelper.getAllBaseData(new BaseHelper.onCompleteRetrieval() {
+			    @Override
+			    public void onComplete(Object data) {
+				setChartsUsingBaseData((BaseData) data);
+				latch.countDown();
+			    }
+			}, new BaseHelper.onFailure() {
+			    @Override
+			    public void onFail(Object data) {
+				Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, data);
+				latch.countDown();
+			    }
+			});
 		    } else {
-			demoFile.delete();
-			demoFile.createNewFile();
+			latch.countDown();
 		    }
-		    ChartUtils.saveChartAsJPEG(demoFile, chart, 640, 480);
-		} catch (IOException ex) {
-		    Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		latch.countDown();
 	    }
 	}, new BaseHelper.onFailure() {
 	    @Override
@@ -150,6 +149,29 @@ public class HomePage extends HttpServlet {
 	} catch (InterruptedException ex) {
 	    Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
 	}
+    }
+
+    private void setChartsUsingBaseData(BaseData baseData) {
+	DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+	dataset.addValue(1.0, "A", "A");
+	dataset.addValue(2.0, "A", "B");
+	dataset.addValue(3.0, "A", "C");
+	dataset.addValue(4.0, "A", "D");
+	JFreeChart chart = ChartFactory.createBarChart("Demo Chart", "X-axisLabel", "Y-axisLabel", dataset, PlotOrientation.VERTICAL, true, true, false);
+	chart.setBackgroundPaint(Color.yellow);
+	File demoFile = new File(context.getRealPath("/charts/demoChart.jpeg"));
+	try {
+	    if (!demoFile.exists()) {
+		demoFile.createNewFile();
+	    } else {
+		demoFile.delete();
+		demoFile.createNewFile();
+	    }
+	    ChartUtils.saveChartAsJPEG(demoFile, chart, 640, 480);
+	} catch (IOException ex) {
+	    Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
+	}
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

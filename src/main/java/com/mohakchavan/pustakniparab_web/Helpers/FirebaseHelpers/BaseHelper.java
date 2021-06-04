@@ -14,6 +14,7 @@ import com.mohakchavan.pustakniparab_web.Models.BaseData;
 import com.mohakchavan.pustakniparab_web.Models.Issues;
 import com.mohakchavan.pustakniparab_web.Models.Names;
 import com.mohakchavan.pustakniparab_web.Models.NewBooks;
+import com.mohakchavan.pustakniparab_web.Models.TimeStamps;
 import com.mohakchavan.pustakniparab_web.Models.VerifiedUsers;
 import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
 import java.util.ArrayList;
@@ -112,6 +113,7 @@ public class BaseHelper {
 			    break;
 		    }
 		}
+		updateImagesCreatedTimeStampAsync();
 		onCompleteRetrieval.onComplete(baseData);
 	    }
 
@@ -128,7 +130,26 @@ public class BaseHelper {
 		.setValueAsync(new Date().getTime());
     }
 
-    public void updateImagesCreatedTimeStampAsync() {
+    public void getImagesAndDataTimeStamps(final onCompleteRetrieval onCompleteRetrieval, final onFailure onFailure) {
+	baseReference.child(Constants.FIREBASE.DATABASE.TIMESTAMPS)
+		.addListenerForSingleValueEvent(new ValueEventListener() {
+		    @Override
+		    public void onDataChange(DataSnapshot snapshot) {
+			TimeStamps timeStamps = null;
+			if (snapshot.hasChildren() && snapshot.getValue().toString() != null && !snapshot.getValue().toString().isEmpty()) {
+			    timeStamps = snapshot.getValue(TimeStamps.class);
+			}
+			onCompleteRetrieval.onComplete(timeStamps);
+		    }
+
+		    @Override
+		    public void onCancelled(DatabaseError error) {
+			onFailure.onFail(error);
+		    }
+		});
+    }
+
+    private void updateImagesCreatedTimeStampAsync() {
 	baseReference.child(Constants.FIREBASE.DATABASE.TIMESTAMPS)
 		.child(Constants.FIREBASE.DATABASE.IMAGES_CREATED_TIMESTAMP)
 		.setValueAsync(new Date().getTime());
