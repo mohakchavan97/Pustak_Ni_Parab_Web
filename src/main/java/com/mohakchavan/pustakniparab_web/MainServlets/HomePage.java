@@ -7,11 +7,21 @@ package com.mohakchavan.pustakniparab_web.MainServlets;
 
 import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.BaseHelper;
 import com.mohakchavan.pustakniparab_web.Models.BaseData;
+import com.mohakchavan.pustakniparab_web.Models.Issues;
+import com.mohakchavan.pustakniparab_web.Models.NewBooks;
 import com.mohakchavan.pustakniparab_web.Models.TimeStamps;
+import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -152,6 +162,59 @@ public class HomePage extends HttpServlet {
     }
 
     private void setChartsUsingBaseData(BaseData baseData) {
+	try {
+	    Date localDate = Calendar.getInstance(TimeZone.getTimeZone(Constants.INDIAN_STANDARD_TIME)).getTime();
+	    final SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH);
+	    final SimpleDateFormat monthYearFormat = new SimpleDateFormat("MMM yyyy", Locale.ENGLISH);
+	    int currMonthIssues = 0, currMonthBooks = 0, notReturned = 0, totalReturned = 0;
+	    HashMap<String, Integer> monthIssues = new HashMap<>();
+	    HashMap<String, Integer> monthNewBooks = new HashMap<>();
+	    HashMap<String, Integer> monthReturns = new HashMap<>();
+	    for (Issues issue : baseData.getIssuesList()) {
+		Date issDate = formatter.parse(issue.getIssueDate());
+//		if (DateFormat.format("MMM yyyy", issDate).toString().contentEquals(DateFormat.format("MMM yyyy", localDate))) {
+		if (monthYearFormat.format(issDate).contentEquals(monthYearFormat.format(localDate))) {
+		    ++currMonthIssues;
+		}
+		String currMonYear = monthYearFormat.format(issDate);
+		if (monthIssues.containsKey(currMonYear)) {
+		    monthIssues.put(currMonYear, monthIssues.get(currMonYear).intValue() + 1);
+		} else {
+		    monthIssues.put(currMonYear, 1);
+		}
+		if (issue.getIsReturned().contentEquals(Constants.YES) && issue.getRetDate() != null && !issue.getRetDate().isEmpty()) {
+		    Date retDate = formatter.parse(issue.getRetDate());
+		    String retMonthYear = monthYearFormat.format(retDate);
+		    if (monthReturns.containsKey(retMonthYear)) {
+			monthReturns.put(retMonthYear, monthReturns.get(retMonthYear).intValue() + 1);
+		    } else {
+			monthReturns.put(retMonthYear, 1);
+		    }
+		}
+		if (issue.getIsReturned().contentEquals(Constants.NO)) {
+		    ++notReturned;
+		}
+		if (issue.getIsReturned().contentEquals(Constants.YES) && issue.getRetDate() != null && !issue.getRetDate().isEmpty()) {
+		    ++totalReturned;
+		}
+	    }
+	    for (NewBooks book : baseData.getNewBooksList()) {
+		Date bookDate = formatter.parse(book.getRegisteredDate());
+		if (monthYearFormat.format(bookDate).contentEquals(monthYearFormat.format(localDate))) {
+		    currMonthBooks += Integer.parseInt(book.getTotalBooks());
+		}
+		String currMonYear = monthYearFormat.format(bookDate);
+		if (monthNewBooks.containsKey(currMonYear)) {
+		    monthNewBooks.put(currMonYear, (monthNewBooks.get(currMonYear).intValue() + Integer.parseInt(book.getTotalBooks())));
+		} else {
+		    monthNewBooks.put(currMonYear, Integer.parseInt(book.getTotalBooks()));
+		}
+	    }
+
+	} catch (ParseException ex) {
+	    Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
+	}
+
 	DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 	dataset.addValue(1.0, "A", "A");
 	dataset.addValue(2.0, "A", "B");
