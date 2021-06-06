@@ -14,6 +14,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home | Pustak Ni Parab</title>
+	<link rel="stylesheet" href="./css/homePage.css"/>
 	<script type="text/javascript">
 	    function hideLoader() {
 		document.getElementById("loader").style.display = "none";
@@ -48,14 +49,37 @@
 		<%
 		    out.println(session.getId() + "<br/>" + session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED));
 		%>
-		<br/><br/>
-		<img src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;"/>
-	    </p>
-	    <a href="newBooks">New Books</a>
-	    <a href="issues">Issues</a>
-	    <a href="logout">Logout</a>
-	    <input type="button" onclick="document.getElementById('loader').style.display = 'block';">
-        </div>
+		<br/><br/></p>
+
+	    <div id="dashboardImages" class="dashboardImages">
+	    <!--Use this div for showing all the dashboard items-->
+
+		<jsp:include page="./genericContent/dashboardCard.jsp" flush="true"/>
+		<jsp:include page="./genericContent/dashboardCard.jsp" flush="true"/>
+
+		<div class="no-float-items"><!--Use this div inside of previous div for showing one item only in a row-->
+		    <jsp:include page="./genericContent/dashboardCard.jsp" flush="true"/>
+		</div>
+
+<!--		<img class="dashbrdImages" src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>
+<img class="dashbrdImages" src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>
+<img class="dashbrdImages" src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>
+<img class="dashbrdImages" src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>
+<img class="dashbrdImages" src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>
+<img class="dashbrdImages" src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>
+<img class="dashbrdImages" src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>
+<img class="dashbrdImages" src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>-->
+	    </div>
+
+
+	    <br/>
+	    <div style="display: none;">
+		<a href="newBooks">New Books</a>
+		<a href="issues">Issues</a>
+		<a href="logout">Logout</a>
+		<input type="button" onclick="document.getElementById('loader').style.display = 'block';">
+	    </div>
+	</div>
 
 	<%
 		} else {

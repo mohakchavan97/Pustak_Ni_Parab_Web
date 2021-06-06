@@ -1,0 +1,40 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 6 Jun, 2021, 4:01:44 PM
+    Author     : Mohak Chavan
+*/
+
+@import "base.css";
+
+:root{
+    --green: #008577;
+}
+
+.dashCard{
+    width: 10%;
+    border-radius: 5px;
+    background-color: #008577;
+    background-image: linear-gradient(315deg, #00574B, var(--green));
+    box-shadow: 1px 2px 9px 1px grey;
+    margin: 1%;
+    border: 2px solid var(--green);
+    text-transform: uppercase;
+}
+
+.bold-white{
+    font-weight: bold;
+    color: white;
+}
+
+.cardFooter{
+    font-size: larger;
+}
+
+.cardHeader{
+    font-size: xx-large;
+    margin: 10%;
+}
