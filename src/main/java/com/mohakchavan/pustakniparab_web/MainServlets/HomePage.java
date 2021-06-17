@@ -16,7 +16,9 @@ import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -33,7 +35,6 @@ import java.util.TimeZone;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -47,10 +48,10 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.StandardBarPainter;
-import org.jfree.chart.ui.Align;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -229,14 +230,22 @@ public class HomePage extends HttpServlet {
 	    }
 	}
 
-	List<DashBoard> dasboardList = new ArrayList<>();
-	dasboardList.add(new DashBoard(false, new TopBottomData[]{new TopBottomData(currMonthIssues,
+	List<DashBoard> dashboardList = new ArrayList<>();
+	dashboardList.add(new DashBoard(false, new TopBottomData[]{new TopBottomData(currMonthIssues,
 	    new StringBuilder().append(monthYearFormat.format(localDate).split(" ")[0]).append(" ").append("Javak").toString()),
 	    new TopBottomData(currMonthBooks,
 	    new StringBuilder().append(monthYearFormat.format(localDate).split(" ")[0]).append(" ").append("Aavak").toString())
 	}));
-	dasboardList.add(new DashBoard(true, getImageLinkFromHashMap(monthIssues, "Monthly Javak")));
-
+	dashboardList.add(new DashBoard(true, getImageLinkFromHashMap(monthIssues, "Monthly Javak")));
+	dashboardList.add(new DashBoard(true, getImageLinkFromHashMap(monthNewBooks, "Monthly Aavak")));
+	dashboardList.add(new DashBoard(false, new TopBottomData[]{new TopBottomData(baseData.getIssuesList().size(), "Total Javak"),
+	    new TopBottomData(baseData.getTotalNewBooks(), "Total Aavak")}));
+	dashboardList.add(new DashBoard(false, new TopBottomData[]{new TopBottomData(notReturned, "Total Not Returned"),
+	    new TopBottomData(Math.round(((double) totalReturned / (double) baseData.getIssuesList().size()) * 100), "Return Ratio (%)")}));
+	dashboardList.add(new DashBoard(true, getImageLinkFromHashMap(monthReturns, "Monthly Returns")));
+//	request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_DASHBOARD_DATA, dashboardList);
+	//Instead of passing the data in request, write this data to file and access that file while diplaying data.
+	writeDashboardDataToDataFile(dashboardList);
     }
 
     private String getImageLinkFromHashMap(HashMap<String, Integer> hashMap, String bottomLabel) {
@@ -254,17 +263,19 @@ public class HomePage extends HttpServlet {
 	    }
 	});
 	DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-	for (int i = keys.size() - 1, j = keys.size() <= 5 ? keys.size() : 5; i >= keys.size() - 5 && i >= 0 && j > 0; i--, j--) {
+//	for (int i = keys.size() - 1, j = keys.size() <= 5 ? keys.size() : 5; i >= keys.size() - 5 && i >= 0 && j > 0; i--, j--) {
+	for (int i = keys.size() <= 5 ? 0 : keys.size() - 5; i < keys.size(); i++) {
 	    dataset.addValue(hashMap.get(keys.get(i)), "A", keys.get(i));
 	}
 
 	try {
 	    JFreeChart chart = ChartFactory.createBarChart(bottomLabel, "", "", dataset, PlotOrientation.VERTICAL, true, true, false);
 
-	    chart.setBackgroundImage(ImageIO.read(new File(getServletContext().getRealPath("/images/dashboard_background.png"))));
-	    chart.setBackgroundImageAlignment(Align.FIT_HORIZONTAL);
-	    chart.setBackgroundImageAlignment(Align.FIT_VERTICAL);
-	    chart.setBackgroundImageAlpha(0.85f);
+	    chart.setBackgroundPaint(new Color(0, 0, 0, 0));
+//	    chart.setBackgroundImage(ImageIO.read(new File(getServletContext().getRealPath("/images/dashboard_background.png"))));
+//	    chart.setBackgroundImageAlignment(Align.FIT_HORIZONTAL);
+//	    chart.setBackgroundImageAlignment(Align.FIT_VERTICAL);
+//	    chart.setBackgroundImageAlpha(0.85f);
 	    chart.getTitle().setPaint(Color.WHITE);
 	    chart.getTitle().setPosition(RectangleEdge.BOTTOM);
 	    chart.getLegend().setVisible(false);
@@ -295,7 +306,8 @@ public class HomePage extends HttpServlet {
 	    ((BarRenderer) chart.getCategoryPlot().getRenderer()).setMaximumBarWidth(0.10);
 	    chart.getCategoryPlot().getRenderer().setSeriesPaint(0, Color.WHITE);
 
-	    File demoFile = new File(context.getRealPath("/charts/demoChart.jpeg"));
+	    String filePath = "/charts/" + bottomLabel.replace(" ", "_") + ".jpeg";
+	    File demoFile = new File(context.getRealPath(filePath));
 
 	    if (!demoFile.exists()) {
 		demoFile.createNewFile();
@@ -304,6 +316,8 @@ public class HomePage extends HttpServlet {
 		demoFile.createNewFile();
 	    }
 	    ChartUtils.saveChartAsJPEG(demoFile, chart, 640, 480);
+//	    return demoFile.getAbsolutePath();
+	    return "." + filePath;
 	} catch (IOException ex) {
 	    Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
 	}
@@ -328,6 +342,24 @@ public class HomePage extends HttpServlet {
 	} catch (IOException ex) {
 	    Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
 	}*/
+    }
+
+    private void writeDashboardDataToDataFile(List<DashBoard> dashboardList) throws IOException {
+	File dashDataFile = new File(context.getRealPath(Constants.PATHS.DASHBOARD_DATA_PATH));
+	if (!dashDataFile.exists()) {
+	    dashDataFile.createNewFile();
+	} else {
+	    dashDataFile.delete();
+	    dashDataFile.createNewFile();
+	}
+	BufferedWriter writer = new BufferedWriter(new FileWriter(dashDataFile));
+	JSONObject jsonData = new JSONObject();
+	for (int i = 0; i < dashboardList.size(); i++) {
+	    jsonData.put(i, dashboardList.get(i).toString());
+	}
+	jsonData.writeJSONString(writer);
+	writer.close();
+	dashDataFile.setReadOnly();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -5,6 +5,11 @@
  */
 package com.mohakchavan.pustakniparab_web.Models.DashBoard;
 
+import java.util.Arrays;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 /**
  *
  * @author Mohak Chavan
@@ -35,7 +40,24 @@ public class DashBoard {
 	}
     }
 
-    public boolean isIsImage() {
+    public DashBoard(String dashDataString) throws ParseException, Exception {
+	JSONObject json = (JSONObject) new JSONParser().parse(dashDataString);
+	isImage = (boolean) json.get("isImage");
+	if (isImage) {
+	    imageHREF = (String) json.get("imageHREF");
+	} else {
+	    json = (JSONObject) new JSONParser().parse((String) json.get("topBottomData"));
+	    if (json.size() > 2) {
+		throw new Exception("The length of topBottomData cannot be greater than 2.");
+	    } else {
+		topBottomData = new TopBottomData[json.size()];
+		topBottomData[0] = new TopBottomData(json.get("0").toString());
+		topBottomData[1] = new TopBottomData(json.get("1").toString());
+	    }
+	}
+    }
+
+    public boolean isImage() {
 	return isImage;
     }
 
@@ -49,6 +71,22 @@ public class DashBoard {
 
     public void setImageHREF(String imageHREF) {
 	this.imageHREF = imageHREF;
+    }
+
+    @Override
+    public String toString() {
+	JSONObject toReturn = new JSONObject();
+	toReturn.put("isImage", isImage);
+	if (isImage) {
+	    toReturn.put("imageHREF", imageHREF);
+	} else {
+	    JSONObject json = new JSONObject();
+	    for (int i = 0; i < topBottomData.length; i++) {
+		json.put(i, topBottomData[i].toString());
+	    }
+	    toReturn.put("topBottomData", json.toString());
+	}
+	return toReturn.toString();
     }
 
 }

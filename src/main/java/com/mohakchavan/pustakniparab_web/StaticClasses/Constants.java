@@ -14,6 +14,7 @@ public final class Constants {
     public static final class PATHS {
 
 	public static final String SERVICE_ACCOUNT_PATH = "/staticContent/AccountSecrets/serviceAccount.json";
+	public static final String DASHBOARD_DATA_PATH = "/restrictedContent/dashboardData";
 
 	public static final class JSP {
 

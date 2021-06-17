@@ -5,6 +5,10 @@
  */
 package com.mohakchavan.pustakniparab_web.Models.DashBoard;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 /**
  *
  * @author Mohak Chavan
@@ -17,6 +21,12 @@ public class TopBottomData {
     public TopBottomData(long topData, String bottomData) {
 	this.topData = topData;
 	this.bottomData = bottomData;
+    }
+
+    public TopBottomData(String topBottomDataString) throws ParseException {
+	JSONObject json = (JSONObject) new JSONParser().parse(topBottomDataString);
+	topData = (long) json.get("topData");
+	bottomData = (String) json.get("bottomData");
     }
 
     public long getTopData() {
@@ -33,6 +43,14 @@ public class TopBottomData {
 
     public void setBottomData(String bottomData) {
 	this.bottomData = bottomData;
+    }
+
+    @Override
+    public String toString() {
+	JSONObject json = new JSONObject();
+	json.put("topData", topData);
+	json.put("bottomData", bottomData);
+	return json.toString();
     }
 
 }
