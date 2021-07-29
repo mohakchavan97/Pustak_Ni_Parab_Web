@@ -6,6 +6,7 @@
 package com.mohakchavan.pustakniparab_web.Models.DashBoard;
 
 import java.util.Arrays;
+import java.util.List;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -71,6 +72,10 @@ public class DashBoard {
 
     public void setImageHREF(String imageHREF) {
 	this.imageHREF = imageHREF;
+    }
+
+    public List<TopBottomData> getTopBottomData() {
+	return Arrays.asList(topBottomData);
     }
 
     @Override

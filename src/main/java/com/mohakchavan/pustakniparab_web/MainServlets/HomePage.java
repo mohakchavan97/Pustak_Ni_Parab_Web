@@ -239,16 +239,16 @@ public class HomePage extends HttpServlet {
 
 	List<DashBoard> dashboardList = new ArrayList<>();
 	dashboardList.add(new DashBoard(false, new TopBottomData[]{new TopBottomData(currMonthIssues,
-	    new StringBuilder().append(monthYearFormat.format(localDate).split(" ")[0]).append(" ").append("Javak").toString()),
+	    new StringBuilder().append(monthYearFormat.format(localDate).split(" ")[0]).append("<br/>").append("Javak").toString()),
 	    new TopBottomData(currMonthBooks,
-	    new StringBuilder().append(monthYearFormat.format(localDate).split(" ")[0]).append(" ").append("Aavak").toString())
+	    new StringBuilder().append(monthYearFormat.format(localDate).split(" ")[0]).append("<br/>").append("Aavak").toString())
 	}));
 	dashboardList.add(new DashBoard(true, getImageLinkFromHashMap(monthIssues, "Monthly Javak")));
 	dashboardList.add(new DashBoard(true, getImageLinkFromHashMap(monthNewBooks, "Monthly Aavak")));
-	dashboardList.add(new DashBoard(false, new TopBottomData[]{new TopBottomData(baseData.getIssuesList().size(), "Total Javak"),
-	    new TopBottomData(baseData.getTotalNewBooks(), "Total Aavak")}));
-	dashboardList.add(new DashBoard(false, new TopBottomData[]{new TopBottomData(notReturned, "Total Not Returned"),
-	    new TopBottomData(Math.round(((double) totalReturned / (double) baseData.getIssuesList().size()) * 100), "Return Ratio (%)")}));
+	dashboardList.add(new DashBoard(false, new TopBottomData[]{new TopBottomData(baseData.getIssuesList().size(), "Total<br/>Javak"),
+	    new TopBottomData(baseData.getTotalNewBooks(), "Total<br/>Aavak")}));
+	dashboardList.add(new DashBoard(false, new TopBottomData[]{new TopBottomData(notReturned, "Total Not<br/>Returned"),
+	    new TopBottomData(Math.round(((double) totalReturned / (double) baseData.getIssuesList().size()) * 100), "Return<br/>Ratio (%)")}));
 	dashboardList.add(new DashBoard(true, getImageLinkFromHashMap(monthReturns, "Monthly Returns")));
 //	request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_DASHBOARD_DATA, dashboardList);
 	//Instead of passing the data in request, write this data to file and access that file while diplaying data.
@@ -285,6 +285,7 @@ public class HomePage extends HttpServlet {
 	    chart.setBackgroundImageAlpha(0.85f);
 	    chart.getTitle().setPaint(Color.WHITE);
 	    chart.getTitle().setPosition(RectangleEdge.BOTTOM);
+	    chart.getTitle().setPadding(20, 0, 5, 0);
 	    chart.getLegend().setVisible(false);
 	    chart.setPadding(new RectangleInsets(20, 20, 20, 20));
 	    chart.getPlot().setBackgroundAlpha(0.0F);

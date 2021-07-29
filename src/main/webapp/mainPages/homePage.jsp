@@ -4,6 +4,7 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.Models.DashBoard.TopBottomData"%>
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="org.json.simple.parser.JSONParser"%>
 <%@page import="java.io.FileReader"%>
@@ -59,7 +60,7 @@
 		%>
 		<br/><br/></p>
 
-	    <div id="dashboardImages" class="dashboardImages">
+	    <div id="dashboardImages" class="dashboardImages" style="flex-direction: column;">
 		<!--Use this div for showing all the dashboard items-->
 
 		<%--<jsp:include page="./genericContent/dashboardCard.jsp" flush="true"/>--%>
@@ -94,7 +95,22 @@
 		    </jsp:include>
 		</div>
 
-		<%			    }
+		<%
+		} else {
+		    out.println("<div id=\"dashboardImages\" class=\"dashboardImages\" >");
+		    for (TopBottomData data : dashBoard.getTopBottomData()) {
+		%>
+
+		<jsp:include page="./genericContent/dashboardCard.jsp" flush="true">
+		    <jsp:param name="is_image_data" value="false"/>
+		    <jsp:param name="topData" value="<%=String.valueOf(data.getTopData())%>"/>
+		    <jsp:param name="bottomData" value="<%=data.getBottomData()%>"/>
+		</jsp:include>
+
+		<%
+					}
+					out.println("</div>");
+				    }
 				}
 			    }
 			} catch (Exception ex) {
