@@ -13,9 +13,14 @@ import com.mohakchavan.pustakniparab_web.Models.Issues;
 import com.mohakchavan.pustakniparab_web.Models.NewBooks;
 import com.mohakchavan.pustakniparab_web.Models.TimeStamps;
 import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -35,6 +40,7 @@ import java.util.TimeZone;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -48,6 +54,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.StandardBarPainter;
+import org.jfree.chart.ui.Align;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -271,16 +278,16 @@ public class HomePage extends HttpServlet {
 	try {
 	    JFreeChart chart = ChartFactory.createBarChart(bottomLabel, "", "", dataset, PlotOrientation.VERTICAL, true, true, false);
 
-	    chart.setBackgroundPaint(new Color(0, 0, 0, 0));
-//	    chart.setBackgroundImage(ImageIO.read(new File(getServletContext().getRealPath("/images/dashboard_background.png"))));
-//	    chart.setBackgroundImageAlignment(Align.FIT_HORIZONTAL);
-//	    chart.setBackgroundImageAlignment(Align.FIT_VERTICAL);
-//	    chart.setBackgroundImageAlpha(0.85f);
+//	    chart.setBackgroundPaint(new Color(0.0F, 0.0F, 0.0F, 1.0F));
+	    chart.setBackgroundImage(ImageIO.read(new File(getServletContext().getRealPath("/images/dashboard_background.png"))));
+	    chart.setBackgroundImageAlignment(Align.FIT_HORIZONTAL);
+	    chart.setBackgroundImageAlignment(Align.FIT_VERTICAL);
+	    chart.setBackgroundImageAlpha(0.85f);
 	    chart.getTitle().setPaint(Color.WHITE);
 	    chart.getTitle().setPosition(RectangleEdge.BOTTOM);
 	    chart.getLegend().setVisible(false);
 	    chart.setPadding(new RectangleInsets(20, 20, 20, 20));
-	    chart.getPlot().setBackgroundAlpha(0);
+	    chart.getPlot().setBackgroundAlpha(0.0F);
 
 	    chart.getPlot().setOutlineVisible(false);
 	    chart.setBorderVisible(false);
@@ -306,7 +313,7 @@ public class HomePage extends HttpServlet {
 	    ((BarRenderer) chart.getCategoryPlot().getRenderer()).setMaximumBarWidth(0.10);
 	    chart.getCategoryPlot().getRenderer().setSeriesPaint(0, Color.WHITE);
 
-	    String filePath = "/charts/" + bottomLabel.replace(" ", "_") + ".jpeg";
+	    String filePath = "/charts/" + bottomLabel.replace(" ", "_") + ".png";
 	    File demoFile = new File(context.getRealPath(filePath));
 
 	    if (!demoFile.exists()) {
@@ -315,7 +322,27 @@ public class HomePage extends HttpServlet {
 		demoFile.delete();
 		demoFile.createNewFile();
 	    }
-	    ChartUtils.saveChartAsJPEG(demoFile, chart, 640, 480);
+	    ChartUtils.saveChartAsPNG(demoFile, chart, 640, 480);
+
+	    BufferedImage orgImage = ImageIO.read(demoFile);
+	    int width = orgImage.getWidth();
+	    int height = orgImage.getHeight();
+	    int divider = 36;
+
+	    BufferedImage bImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+	    Graphics2D graphics2D = bImage.createGraphics();
+	    graphics2D.setComposite(AlphaComposite.Src);
+//	    RenderingHints hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+//	    hints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+	    graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	    graphics2D.setColor(Color.WHITE);
+	    graphics2D.fill(new RoundRectangle2D.Float(0, 0, width, height, width / divider, height / divider));
+//	    graphics2D.setClip(new RoundRectangle2D.Double(0, 0, width, height, width / 16, height / 16));
+	    graphics2D.setComposite(AlphaComposite.SrcAtop);
+	    graphics2D.drawImage(orgImage, 0, 0, null);
+	    graphics2D.dispose();
+	    ImageIO.write(bImage, "png", demoFile);
+
 //	    return demoFile.getAbsolutePath();
 	    return "." + filePath;
 	} catch (IOException ex) {

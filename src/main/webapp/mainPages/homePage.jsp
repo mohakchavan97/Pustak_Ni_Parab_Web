@@ -4,6 +4,13 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="org.json.simple.JSONObject"%>
+<%@page import="org.json.simple.parser.JSONParser"%>
+<%@page import="java.io.FileReader"%>
+<%@page import="java.io.BufferedReader"%>
+<%@page import="java.io.File"%>
+<%@page import="com.mohakchavan.pustakniparab_web.Models.DashBoard.DashBoard"%>
+<%@page import="java.util.List"%>
 <%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.SessionHelper"%>
 <%@page import="java.util.Map"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.SessionUser"%>
@@ -44,6 +51,7 @@
 		out.print("<br/>");
 		out.print(currentUser.getProvider());
 		%></p>
+	    <img src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>
 	    <br/>
 	    <p style="padding: 5%;">
 		<%
@@ -52,14 +60,49 @@
 		<br/><br/></p>
 
 	    <div id="dashboardImages" class="dashboardImages">
-	    <!--Use this div for showing all the dashboard items-->
+		<!--Use this div for showing all the dashboard items-->
 
-		<jsp:include page="./genericContent/dashboardCard.jsp" flush="true"/>
-		<jsp:include page="./genericContent/dashboardCard.jsp" flush="true"/>
+		<%--<jsp:include page="./genericContent/dashboardCard.jsp" flush="true"/>--%>
+		<%--<jsp:include page="./genericContent/dashboardCard.jsp" flush="true"/>--%>
+
+		<%
+		    File dashDataFile = new File(getServletContext().getRealPath(Constants.PATHS.DASHBOARD_DATA_PATH));
+		    if (dashDataFile.exists()) {
+			BufferedReader reader = new BufferedReader(new FileReader(dashDataFile));
+			String lines = "", str;
+			while ((str = reader.readLine()) != null) {
+			    lines += str;
+			}
+			reader.close();
+			JSONParser parser = new JSONParser();
+			try {
+			    JSONObject jsonDashData = (JSONObject) parser.parse(lines);
+
+//			    if (dashboardList != null && dashboardList.size() > 0) {
+			    if (jsonDashData != null && jsonDashData.size() > 0) {
+				for (int i = 0; i < jsonDashData.size(); i++) {
+				    DashBoard dashBoard = new DashBoard(jsonDashData.get("" + i).toString());
+				    if (dashBoard.isImage()) {
+//				    if ((Boolean) json.get("isImage")) {
+
+		%>
 
 		<div class="no-float-items"><!--Use this div inside of previous div for showing one item only in a row-->
-		    <jsp:include page="./genericContent/dashboardCard.jsp" flush="true"/>
+		    <jsp:include page="./genericContent/dashboardCard.jsp" flush="true">
+			<jsp:param name="is_image_data" value="true"/>
+			<jsp:param name="image_link" value="<%=dashBoard.getImageHREF()%>"/>
+		    </jsp:include>
 		</div>
+
+		<%			    }
+				}
+			    }
+			} catch (Exception ex) {
+			    System.out.println(ex.getMessage());
+			    out.println(Constants.ERRORS.SOME_ERROR_FULL);
+			}
+		    }
+		%>
 
 <!--		<img class="dashbrdImages" src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>
 <img class="dashbrdImages" src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>
