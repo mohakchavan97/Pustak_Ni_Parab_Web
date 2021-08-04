@@ -48,7 +48,7 @@
 		background-color: white; /*toggle switch off colour*/
 		-webkit-transition: .4s;
 		transition: .4s;
-		box-shadow: 1px 1px 1px grey;
+		box-shadow: 0px 1px 2px grey;
 	    }
 
 	    input:checked + .slider {
@@ -77,8 +77,10 @@
 	</style>
     </head>
     <body>
-        <div><!-- Rounded switch div -->
-	    <label class="switch">
+        <div>
+	    <%=request.getParameter("text")%>
+	    <!-- Rounded switch div -->
+	    <label class="switch" style="margin-left: 5%;">
 		<input type="checkbox">
 		<span class="slider round"></span>
 	    </label>
