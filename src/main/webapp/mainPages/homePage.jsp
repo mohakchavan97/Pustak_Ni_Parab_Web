@@ -46,25 +46,10 @@
 	</div>
 
 	<div id="homeContent" style="margin-top: 15%;" align="center">
-	    <h1>Pustak Ni Parab Home Page</h1>
-	    <p><%
-		out.print(currentUser.getuId());
-		out.print("<br/>");
-		out.print(currentUser.getProvider());
-		%></p>
-	    <img src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>
-	    <br/>
-	    <p style="padding: 5%;">
-		<%
-		    out.println(session.getId() + "<br/>" + session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED));
-		%>
-		<br/><br/></p>
+	    <h1>Welcome, <%out.print(currentUser.getDisplayName());%></h1>
 
-	    <div id="dashboardImages" class="dashboardImages" style="flex-direction: column;">
+	    <div id="dashboardImages" class="dashboardImages" style="flex-direction: column; padding-bottom: 2%;">
 		<!--Use this div for showing all the dashboard items-->
-
-		<%--<jsp:include page="./genericContent/dashboardCard.jsp" flush="true"/>--%>
-		<%--<jsp:include page="./genericContent/dashboardCard.jsp" flush="true"/>--%>
 
 		<%
 		    File dashDataFile = new File(getServletContext().getRealPath(Constants.PATHS.DASHBOARD_DATA_PATH));
@@ -120,24 +105,8 @@
 		    }
 		%>
 
-<!--		<img class="dashbrdImages" src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>
-<img class="dashbrdImages" src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>
-<img class="dashbrdImages" src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>
-<img class="dashbrdImages" src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>
-<img class="dashbrdImages" src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>
-<img class="dashbrdImages" src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>
-<img class="dashbrdImages" src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>
-<img class="dashbrdImages" src=<%out.print("\"./charts/demoChart.jpeg\"");%> alt="alt" style="width: 30%; height: auto;" align="center"/>-->
 	    </div>
 
-
-	    <br/>
-	    <div style="display: none;">
-		<a href="newBooks">New Books</a>
-		<a href="issues">Issues</a>
-		<a href="logout">Logout</a>
-		<input type="button" onclick="document.getElementById('loader').style.display = 'block';">
-	    </div>
 	</div>
 
 	<%
