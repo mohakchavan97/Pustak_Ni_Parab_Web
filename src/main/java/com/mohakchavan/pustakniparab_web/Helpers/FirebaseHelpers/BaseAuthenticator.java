@@ -8,7 +8,7 @@ package com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.json.gson.GsonFactory;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -85,8 +85,8 @@ public class BaseAuthenticator {
     }
 
     private GoogleIdToken.Payload getUserPayload(String userIdToken) throws Exception {
-	JacksonFactory jacksonFactory = new JacksonFactory();
-	GoogleIdTokenVerifier tokenVerifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), jacksonFactory)
+	GsonFactory gsonFactory = new GsonFactory();
+	GoogleIdTokenVerifier tokenVerifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), gsonFactory)
 		.setAudience(Collections.singletonList(Constants.GOOGLE_CLIENT_ID)).build();
 	GoogleIdToken googleIdToken = tokenVerifier.verify(userIdToken);
 
