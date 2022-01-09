@@ -28,8 +28,8 @@ public class IssuesHelper {
     private ValueEventListener allIssuesListener;
     private final BaseHelper baseHelper;
 
-    public IssuesHelper() {
-	baseHelper = new BaseHelper();
+    public IssuesHelper(boolean developerMode) {
+	baseHelper = new BaseHelper(developerMode);
 	issueReference = baseHelper.getBaseReference().child(Constants.FIREBASE.DATABASE.ISSUES);
     }
 

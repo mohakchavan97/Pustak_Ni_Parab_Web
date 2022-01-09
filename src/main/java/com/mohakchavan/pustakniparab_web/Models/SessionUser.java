@@ -11,7 +11,8 @@ package com.mohakchavan.pustakniparab_web.Models;
  */
 public class SessionUser {
 
-    private final String uId, displayName, email, photoUrl, provider;
+    private String uId, displayName, email, photoUrl, provider, authUID;
+    private boolean isDeveloper;
 
     public SessionUser(String userId, String displayName, String userEmail, String photoUrl, String provider) {
 	this.uId = userId;
@@ -19,6 +20,8 @@ public class SessionUser {
 	this.email = userEmail;
 	this.photoUrl = photoUrl;
 	this.provider = provider;
+	this.authUID = null;
+	this.isDeveloper = false;
     }
 
     public String getuId() {
@@ -39,5 +42,21 @@ public class SessionUser {
 
     public String getProvider() {
 	return provider;
+    }
+
+    public String getAuthUID() {
+	return authUID;
+    }
+
+    public void setAuthUID(String authUID) {
+	this.authUID = authUID;
+    }
+
+    public boolean isDeveloper() {
+	return isDeveloper;
+    }
+
+    public void setIsDeveloper(boolean isDeveloper) {
+	this.isDeveloper = isDeveloper;
     }
 }

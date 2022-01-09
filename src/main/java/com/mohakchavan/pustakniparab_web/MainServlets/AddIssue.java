@@ -12,7 +12,7 @@ import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.NamesHelper;
 import com.mohakchavan.pustakniparab_web.Models.Issues;
 import com.mohakchavan.pustakniparab_web.Models.Names;
 import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
-import com.mohakchavan.pustakniparab_web.StaticClasses.SessionHelper;
+import com.mohakchavan.pustakniparab_web.Helpers.SessionHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
@@ -55,7 +55,8 @@ public class AddIssue extends HttpServlet {
 	out.println("<body>");
 //	    out.println("<h1>Servlet AddIssue at " + request.getContextPath() + "</h1>");
 
-	Map sessionMap = SessionHelper.checkSessionAndGetCurrentUser(request);
+	SessionHelper sessionHelper = new SessionHelper(request);
+	Map sessionMap = sessionHelper.checkSessionAndGetCurrentUser();
 	if (!sessionMap.containsKey(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID) || !((Boolean) sessionMap.get(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID))) {
 	    request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
 	}
@@ -70,7 +71,7 @@ public class AddIssue extends HttpServlet {
 		isForAdd = false;
 	    }
 	}
-	NamesHelper namesHelper = new NamesHelper();
+	NamesHelper namesHelper = new NamesHelper(sessionHelper.isDeveloperMode());
 
 	if (!isForAdd) {
 	    //Enable this code if request is from homepage. (i.e.: By default, enable this code.)
@@ -139,6 +140,7 @@ public class AddIssue extends HttpServlet {
     private void verifyNameAndAddIssue(final HttpServletRequest request, final HttpServletResponse response, NamesHelper namesHelper,
 	    final Issues newIssue, RequestDispatcher dispatchToIssuesJSP) throws InterruptedException, ServletException, IOException {
 	final CountDownLatch latch = new CountDownLatch(1);
+	final SessionHelper sessionHelper = new SessionHelper(request);
 	//For Verifying the name from cloud
 	namesHelper.getNameDetails(newIssue.getIssuerId(), new BaseHelper.onCompleteRetrieval() {
 	    @Override
@@ -149,7 +151,7 @@ public class AddIssue extends HttpServlet {
 			    && newIssue.getIssuerAddr().contentEquals(name.returnFullAddress().toUpperCase())
 			    && newIssue.getIssuerCont().contentEquals(name.getContact().toUpperCase())) {
 
-			IssuesHelper issuesHelper = new IssuesHelper();
+			IssuesHelper issuesHelper = new IssuesHelper(sessionHelper.isDeveloperMode());
 			issuesHelper.addNewIssue(newIssue, new BaseHelper.onCompleteTransaction() {
 			    @Override
 			    public void onComplete(boolean committed, Object data) {

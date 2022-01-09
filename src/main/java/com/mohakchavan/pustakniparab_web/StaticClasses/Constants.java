@@ -75,6 +75,7 @@ public final class Constants {
 
 	public static final String IS_SESSION_VALID = "isSessionValidWithUserData";
 	public static final String CURRENT_USER = "currentUser";
+	public static final String IS_DEVELOPER_MODE = "isDeveloperMode";
     }
 
     public static final class ERRORS {

@@ -11,8 +11,10 @@ import com.mohakchavan.pustakniparab_web.Models.DashBoard.DashBoard;
 import com.mohakchavan.pustakniparab_web.Models.DashBoard.TopBottomData;
 import com.mohakchavan.pustakniparab_web.Models.Issues;
 import com.mohakchavan.pustakniparab_web.Models.NewBooks;
+import com.mohakchavan.pustakniparab_web.Models.SessionUser;
 import com.mohakchavan.pustakniparab_web.Models.TimeStamps;
 import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
+import com.mohakchavan.pustakniparab_web.Helpers.SessionHelper;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -135,7 +137,20 @@ public class HomePage extends HttpServlet {
 	    out.println("<body>");
 //	    out.println("<h1>Servlet HomePage at " + request.getContextPath() + "</h1>");
 
-	    getImageDataConditionally();
+	    SessionHelper sessionHelper = new SessionHelper(request);
+	    SessionUser currentUser = sessionHelper.getSessionUser();
+	    if (currentUser != null && currentUser.isDeveloper()) {
+		String isDeveloperMode = request.getParameter("isDeveloperMode").trim();
+		if (isDeveloperMode != null && isDeveloperMode.equalsIgnoreCase("true")) {
+		    sessionHelper.setDeveloperMode(true);
+		} else {
+		    sessionHelper.setDeveloperMode(false);
+		}
+	    } else {
+		sessionHelper.setDeveloperMode(false);
+	    }
+	    
+	    getImageDataConditionally(sessionHelper.isDeveloperMode());
 	    dispatchToHomeJSP.forward(request, response);
 
 	    out.println("</body>");
@@ -143,8 +158,8 @@ public class HomePage extends HttpServlet {
 	}
     }
 
-    private void getImageDataConditionally() {
-	final BaseHelper baseHelper = new BaseHelper();
+    private void getImageDataConditionally(boolean developerMode) {
+	final BaseHelper baseHelper = new BaseHelper(developerMode);
 	final CountDownLatch latch = new CountDownLatch(1);
 	baseHelper.getImagesAndDataTimeStamps(new BaseHelper.onCompleteRetrieval() {
 	    @Override

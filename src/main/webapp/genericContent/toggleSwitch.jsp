@@ -4,11 +4,31 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="com.mohakchavan.pustakniparab_web.Helpers.SessionHelper"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<script type="text/javascript">
+	    function onToggleClicked(isDeveloperMode) {
+		console.log(isDeveloperMode);
+		document.getElementById("loader").style.display = "block";
+		var form = document.createElement("form");
+		form.setAttribute("method", "post");
+		form.setAttribute("action", "Home");
+
+		var devMode = document.createElement("input");
+		devMode.setAttribute("type", "text");
+		devMode.setAttribute("value", isDeveloperMode.toString());
+		devMode.setAttribute("name", "isDeveloperMode");
+		devMode.setAttribute("id", "isDeveloperMode");
+
+		form.appendChild(devMode);
+		document.body.appendChild(form);
+		form.submit();
+	    }
+	</script>
         <style type="text/css">
 	    /* The switch - the box around the slider */
 	    .switch {
@@ -81,7 +101,14 @@
 	    <%=request.getParameter("text")%>
 	    <!-- Rounded switch div -->
 	    <label class="switch" style="margin-left: 5%;">
-		<input type="checkbox">
+		<input type="checkbox" 
+		       <%
+			   boolean isDeveloperMode = new SessionHelper(request).isDeveloperMode();
+			   if (isDeveloperMode) {
+			       out.print(" checked ");
+			   }
+		       %>
+		       onchange="onToggleClicked(<%=!isDeveloperMode%>)">
 		<span class="slider round"></span>
 	    </label>
 	</div>

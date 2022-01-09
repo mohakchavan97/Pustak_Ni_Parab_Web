@@ -9,7 +9,7 @@ import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.BaseHelper;
 import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.NewBooksHelper;
 import com.mohakchavan.pustakniparab_web.Models.NewBooks;
 import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
-import com.mohakchavan.pustakniparab_web.StaticClasses.SessionHelper;
+import com.mohakchavan.pustakniparab_web.Helpers.SessionHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
@@ -42,7 +42,8 @@ public class AddBooks extends HttpServlet {
 	PrintWriter out = response.getWriter();
 	RequestDispatcher dispatchToNewBooksJSP = request.getRequestDispatcher("newBooks");
 
-	Map sessionMap = SessionHelper.checkSessionAndGetCurrentUser(request);
+	SessionHelper sessionHelper = new SessionHelper(request);
+	Map sessionMap = sessionHelper.checkSessionAndGetCurrentUser();
 	if (!sessionMap.containsKey(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID) || !((Boolean) sessionMap.get(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID))) {
 	    request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
 	}
@@ -64,7 +65,7 @@ public class AddBooks extends HttpServlet {
 	    donationDate = request.getParameter(Constants.IDS.NEW_BOOK_DATE).trim().toUpperCase();
 
 	    NewBooks newBooks = new NewBooks(donorName, totBooks, bookLang, donationDate);
-	    NewBooksHelper newBooksHelper = new NewBooksHelper();
+	    NewBooksHelper newBooksHelper = new NewBooksHelper(sessionHelper.isDeveloperMode());
 	    final CountDownLatch latch = new CountDownLatch(1);
 	    newBooksHelper.addNewRecord(newBooks, new BaseHelper.onCompleteTransaction() {
 		@Override

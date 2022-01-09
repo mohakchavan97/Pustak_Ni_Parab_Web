@@ -26,8 +26,8 @@ public class NamesHelper {
     private ValueEventListener allNamesListener;
     private final BaseHelper baseHelper;
 
-    public NamesHelper() {
-	baseHelper = new BaseHelper();
+    public NamesHelper(boolean developerMode) {
+	baseHelper = new BaseHelper(developerMode);
 	namesReference = baseHelper.getBaseReference().child(Constants.FIREBASE.DATABASE.NAMES);
     }
 

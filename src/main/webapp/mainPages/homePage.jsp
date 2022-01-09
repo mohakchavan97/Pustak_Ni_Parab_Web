@@ -12,7 +12,7 @@
 <%@page import="java.io.File"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.DashBoard.DashBoard"%>
 <%@page import="java.util.List"%>
-<%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.SessionHelper"%>
+<%@page import="com.mohakchavan.pustakniparab_web.Helpers.SessionHelper"%>
 <%@page import="java.util.Map"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.SessionUser"%>
 <%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
@@ -34,7 +34,7 @@
 	<%
 	    try {
 		SessionUser currentUser;
-		Map map = SessionHelper.checkSessionAndGetCurrentUser(request);
+		Map map = new SessionHelper(request).checkSessionAndGetCurrentUser();
 		if (map.containsKey(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID) && ((Boolean) map.get(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID))) {
 		    currentUser = (SessionUser) map.get(Constants.ATTRIBUTE_KEY_NAMES.CURRENT_USER);
 	%>

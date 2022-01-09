@@ -52,15 +52,18 @@ public class LogUserIn extends HttpServlet {
 
 	    String idToken = request.getParameter("idToken").trim();
 	    String accessToken = request.getParameter("accessToken").trim();
+	    String firebaseAuthId = request.getParameter("firebaseAuthId").trim();
 	    ServletContext context = request.getServletContext();
 	    final HttpSession session = request.getSession(true);
 
 	    BaseAuthenticator baseAuthenticator = new BaseAuthenticator(context);
 	    final SessionUser currentUser = baseAuthenticator.authenticateUserAndInitializeFirebase(idToken);
-	    session.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.USER_SESSION_DATA, currentUser);
+	    if (firebaseAuthId != null && !firebaseAuthId.isEmpty()) {
+		currentUser.setAuthUID(firebaseAuthId);
+	    }
 
 	    final CountDownLatch latch = new CountDownLatch(1);
-	    BaseHelper baseHelper = new BaseHelper();
+	    BaseHelper baseHelper = new BaseHelper(false);
 	    baseHelper.getAllVerifiedUsers(
 		    new BaseHelper.onCompleteRetrieval() {
 		@Override
@@ -70,6 +73,7 @@ public class LogUserIn extends HttpServlet {
 			if (user.getUserUid().equals(currentUser.getuId())) {
 			    //add session for verified user
 			    session.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED, true);
+			    currentUser.setIsDeveloper(user.isDeveloper());
 			}
 		    }
 		    latch.countDown();
@@ -83,6 +87,7 @@ public class LogUserIn extends HttpServlet {
 		}
 	    });
 	    latch.await();
+	    session.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.USER_SESSION_DATA, currentUser);
 
 	    out.println("<script>"
 		    + "window.onload=function (){"

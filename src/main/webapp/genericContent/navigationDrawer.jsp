@@ -150,12 +150,20 @@
 		    <td class="drawerImg"><img src="./icons/ic_logout_24dp.svg" alt="ic_logout" align="center" style="vertical-align: middle;"/></td>
 		    <td class="drawerLabel">Logout</td>
 		</tr>
+		<%
+		    String toShowToggle = request.getParameter("toShowToggle");
+		    if (toShowToggle != null && toShowToggle.equalsIgnoreCase("true")) {
+		    //if (true) {
+		%>
 		<tr style="cursor: pointer;">
 		    <td class="drawerImg"><img src="./icons/ic_developer_24dp.svg" alt="ic_logout" align="center" style="vertical-align: middle;"/></td>
 		    <td class="drawerLabel"><jsp:include page="toggleSwitch.jsp" flush="true">
 			    <jsp:param name="text" value="Developer Mode"></jsp:param>
 			</jsp:include></td>
 		</tr>
+		<%
+		    }
+		%>
 	    </table>
 	</div>
 
