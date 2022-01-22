@@ -4,6 +4,10 @@
     Author     : Mohak Chavan
 --%>
 
+<%@page import="java.util.Map"%>
+<%@page import="com.mohakchavan.pustakniparab_web.Helpers.SessionHelper"%>
+<%@page import="com.mohakchavan.pustakniparab_web.Models.SessionUser"%>
+<%@page import="org.json.simple.JSONObject"%>
 <%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -105,6 +109,28 @@
 		white-space: nowrap;
 	    }
 	</style>
+	<script type="text/javascript">
+	    function copyUserInfo() {
+	    <%
+		SessionUser user;
+		Map map = new SessionHelper(request).checkSessionAndGetCurrentUser();
+		if (map.containsKey(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID) && ((Boolean) map.get(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID))) {
+		    user = (SessionUser) map.get(Constants.ATTRIBUTE_KEY_NAMES.CURRENT_USER);
+		    JSONObject userInfo = new JSONObject();
+		    userInfo.put("userName", user.getDisplayName());
+		    userInfo.put("userEmail", user.getEmail());
+		    userInfo.put("userUid", user.getAuthUID());
+		    userInfo.put("providerUserUid", user.getProviderUid());
+		    userInfo.put("userPhoto", user.getPhotoUrl());
+		    out.println("var userInfo = " + userInfo.toString() + ";");
+		    out.println("navigator.clipboard.writeText(JSON.stringify(userInfo));");
+		    out.println("window.alert(\"User details copied to clipboard.\");");
+		} else {
+		    out.println("window.alert(\"Some Error Occured. Please try again.\");");
+		}
+	    %>
+	    }
+	</script>
     </head>
     <body>
 
@@ -146,6 +172,14 @@
 		    <td class="drawerLabel">Add New Books</td>
 		</tr>
 		<tr><td colspan="2"><hr/></td></tr>
+		<tr>
+		    <td class="drawerHeader">User</td>
+		</tr>
+		<tr><td colspan="2"><hr/></td></tr>
+		<tr style="cursor: pointer;" onclick="copyUserInfo()">
+		    <td class="drawerImg"><img src="./icons/ic_user.svg" alt="ic_user" align="center" style="vertical-align: middle;"/></td>
+		    <td class="drawerLabel">User Details</td>
+		</tr>
 		<tr style="cursor: pointer;" onclick="location.href = './<%=Constants.PATHS.SERVLET.LOGOUT%>';">
 		    <td class="drawerImg"><img src="./icons/ic_logout_24dp.svg" alt="ic_logout" align="center" style="vertical-align: middle;"/></td>
 		    <td class="drawerLabel">Logout</td>
@@ -153,10 +187,10 @@
 		<%
 		    String toShowToggle = request.getParameter("toShowToggle");
 		    if (toShowToggle != null && toShowToggle.equalsIgnoreCase("true")) {
-		    //if (true) {
+			//if (true) {
 		%>
-		<tr style="cursor: pointer;">
-		    <td class="drawerImg"><img src="./icons/ic_developer_24dp.svg" alt="ic_logout" align="center" style="vertical-align: middle;"/></td>
+		<tr style="cursor: default;">
+		    <td class="drawerImg"><img src="./icons/ic_developer_24dp.svg" alt="ic_developer" align="center" style="vertical-align: middle;"/></td>
 		    <td class="drawerLabel"><jsp:include page="toggleSwitch.jsp" flush="true">
 			    <jsp:param name="text" value="Developer Mode"></jsp:param>
 			</jsp:include></td>

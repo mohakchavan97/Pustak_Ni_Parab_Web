@@ -11,11 +11,11 @@ package com.mohakchavan.pustakniparab_web.Models;
  */
 public class SessionUser {
 
-    private String uId, displayName, email, photoUrl, provider, authUID;
+    private String providerUid, displayName, email, photoUrl, provider, authUID;
     private boolean isDeveloper;
 
-    public SessionUser(String userId, String displayName, String userEmail, String photoUrl, String provider) {
-	this.uId = userId;
+    public SessionUser(String providerUserId, String displayName, String userEmail, String photoUrl, String provider) {
+	this.providerUid = providerUserId;
 	this.displayName = displayName;
 	this.email = userEmail;
 	this.photoUrl = photoUrl;
@@ -24,8 +24,8 @@ public class SessionUser {
 	this.isDeveloper = false;
     }
 
-    public String getuId() {
-	return uId;
+    public String getProviderUid() {
+	return providerUid;
     }
 
     public String getDisplayName() {

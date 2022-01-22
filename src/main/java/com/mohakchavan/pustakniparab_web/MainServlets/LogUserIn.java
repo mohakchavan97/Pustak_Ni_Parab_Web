@@ -70,10 +70,11 @@ public class LogUserIn extends HttpServlet {
 		public void onComplete(Object data) {
 		    List<VerifiedUsers> users = (List<VerifiedUsers>) data;
 		    for (VerifiedUsers user : users) {
-			if (user.getUserUid().equals(currentUser.getuId())) {
+			if (user.getUserUid().equals(currentUser.getAuthUID())) {
 			    //add session for verified user
 			    session.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED, true);
 			    currentUser.setIsDeveloper(user.isDeveloper());
+			    break;
 			}
 		    }
 		    latch.countDown();

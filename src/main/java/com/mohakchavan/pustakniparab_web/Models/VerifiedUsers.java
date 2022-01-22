@@ -70,6 +70,10 @@ public class VerifiedUsers {
 	return isDeveloper != null && isDeveloper.equalsIgnoreCase("true");
     }
 
+    public String getIsDeveloper() {
+	return isDeveloper;
+    }
+
     public void setIsDeveloper(String isDeveloper) {
 	this.isDeveloper = isDeveloper;
     }

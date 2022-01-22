@@ -52,7 +52,10 @@
 		<!--Use this div for showing all the dashboard items-->
 
 		<%
-		    File dashDataFile = new File(getServletContext().getRealPath(Constants.PATHS.DASHBOARD_DATA_PATH));
+		    File dashDataFile = new File(getServletContext().getRealPath(
+			    Constants.PATHS.RESTRICTED_DATA_PATH
+			    + "/" + (new SessionHelper(request).isDeveloperMode() ? Constants.FIREBASE.DATABASE.TESTDATA : Constants.FIREBASE.DATABASE.BASEPOINT)
+			    + Constants.PATHS.DASHBOARD_DATA_PATH));
 		    if (dashDataFile.exists()) {
 			BufferedReader reader = new BufferedReader(new FileReader(dashDataFile));
 			String lines = "", str;

@@ -140,8 +140,8 @@ public class HomePage extends HttpServlet {
 	    SessionHelper sessionHelper = new SessionHelper(request);
 	    SessionUser currentUser = sessionHelper.getSessionUser();
 	    if (currentUser != null && currentUser.isDeveloper()) {
-		String isDeveloperMode = request.getParameter("isDeveloperMode").trim();
-		if (isDeveloperMode != null && isDeveloperMode.equalsIgnoreCase("true")) {
+		String isDeveloperMode = request.getParameter("isDeveloperMode");
+		if (isDeveloperMode != null && isDeveloperMode.trim().equalsIgnoreCase("true")) {
 		    sessionHelper.setDeveloperMode(true);
 		} else {
 		    sessionHelper.setDeveloperMode(false);
@@ -149,7 +149,7 @@ public class HomePage extends HttpServlet {
 	    } else {
 		sessionHelper.setDeveloperMode(false);
 	    }
-	    
+
 	    getImageDataConditionally(sessionHelper.isDeveloperMode());
 	    dispatchToHomeJSP.forward(request, response);
 
@@ -158,7 +158,7 @@ public class HomePage extends HttpServlet {
 	}
     }
 
-    private void getImageDataConditionally(boolean developerMode) {
+    private void getImageDataConditionally(final boolean developerMode) {
 	final BaseHelper baseHelper = new BaseHelper(developerMode);
 	final CountDownLatch latch = new CountDownLatch(1);
 	baseHelper.getImagesAndDataTimeStamps(new BaseHelper.onCompleteRetrieval() {
@@ -170,7 +170,7 @@ public class HomePage extends HttpServlet {
 			    @Override
 			    public void onComplete(Object data) {
 				try {
-				    setChartsUsingBaseData((BaseData) data);
+				    setChartsUsingBaseData((BaseData) data, developerMode);
 				} catch (Exception ex) {
 				    Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
 				}
@@ -202,7 +202,7 @@ public class HomePage extends HttpServlet {
 	}
     }
 
-    private void setChartsUsingBaseData(BaseData baseData) throws ParseException, Exception {
+    private void setChartsUsingBaseData(BaseData baseData, boolean developerMode) throws ParseException, Exception {
 
 	Date localDate = Calendar.getInstance(TimeZone.getTimeZone(Constants.INDIAN_STANDARD_TIME)).getTime();
 	final SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH);
@@ -258,19 +258,19 @@ public class HomePage extends HttpServlet {
 	    new TopBottomData(currMonthBooks,
 	    new StringBuilder().append(monthYearFormat.format(localDate).split(" ")[0]).append("<br/>").append("Aavak").toString())
 	}));
-	dashboardList.add(new DashBoard(true, getImageLinkFromHashMap(monthIssues, "Monthly Javak")));
-	dashboardList.add(new DashBoard(true, getImageLinkFromHashMap(monthNewBooks, "Monthly Aavak")));
+	dashboardList.add(new DashBoard(true, getImageLinkFromHashMap(monthIssues, "Monthly Javak", developerMode)));
+	dashboardList.add(new DashBoard(true, getImageLinkFromHashMap(monthNewBooks, "Monthly Aavak", developerMode)));
 	dashboardList.add(new DashBoard(false, new TopBottomData[]{new TopBottomData(baseData.getIssuesList().size(), "Total<br/>Javak"),
 	    new TopBottomData(baseData.getTotalNewBooks(), "Total<br/>Aavak")}));
 	dashboardList.add(new DashBoard(false, new TopBottomData[]{new TopBottomData(notReturned, "Total Not<br/>Returned"),
 	    new TopBottomData(Math.round(((double) totalReturned / (double) baseData.getIssuesList().size()) * 100), "Return<br/>Ratio (%)")}));
-	dashboardList.add(new DashBoard(true, getImageLinkFromHashMap(monthReturns, "Monthly Returns")));
+	dashboardList.add(new DashBoard(true, getImageLinkFromHashMap(monthReturns, "Monthly Returns", developerMode)));
 //	request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_DASHBOARD_DATA, dashboardList);
 	//Instead of passing the data in request, write this data to file and access that file while diplaying data.
-	writeDashboardDataToDataFile(dashboardList);
+	writeDashboardDataToDataFile(dashboardList, developerMode);
     }
 
-    private String getImageLinkFromHashMap(HashMap<String, Integer> hashMap, String bottomLabel) {
+    private String getImageLinkFromHashMap(HashMap<String, Integer> hashMap, String bottomLabel, boolean developerMode) {
 	List<String> keys = new ArrayList<>(hashMap.keySet());
 	Collections.sort(keys, new Comparator<String>() {
 	    final SimpleDateFormat formatter = new SimpleDateFormat("MMM yyyy", Locale.ENGLISH);
@@ -329,10 +329,13 @@ public class HomePage extends HttpServlet {
 	    ((BarRenderer) chart.getCategoryPlot().getRenderer()).setMaximumBarWidth(0.10);
 	    chart.getCategoryPlot().getRenderer().setSeriesPaint(0, Color.WHITE);
 
-	    String filePath = "/charts/" + bottomLabel.replace(" ", "_") + ".png";
+	    String folderPath = "/charts/"
+		    + (developerMode ? Constants.FIREBASE.DATABASE.TESTDATA : Constants.FIREBASE.DATABASE.BASEPOINT);
+	    String filePath = folderPath + "/" + bottomLabel.replace(" ", "_") + ".png";
 	    File demoFile = new File(context.getRealPath(filePath));
 
 	    if (!demoFile.exists()) {
+		new File(context.getRealPath(folderPath)).mkdirs();
 		demoFile.createNewFile();
 	    } else {
 		demoFile.delete();
@@ -387,9 +390,12 @@ public class HomePage extends HttpServlet {
 	}*/
     }
 
-    private void writeDashboardDataToDataFile(List<DashBoard> dashboardList) throws IOException {
-	File dashDataFile = new File(context.getRealPath(Constants.PATHS.DASHBOARD_DATA_PATH));
+    private void writeDashboardDataToDataFile(List<DashBoard> dashboardList, boolean developerMode) throws IOException {
+	String folderPath = Constants.PATHS.RESTRICTED_DATA_PATH
+		+ "/" + (developerMode ? Constants.FIREBASE.DATABASE.TESTDATA : Constants.FIREBASE.DATABASE.BASEPOINT);
+	File dashDataFile = new File(context.getRealPath(folderPath + Constants.PATHS.DASHBOARD_DATA_PATH));
 	if (!dashDataFile.exists()) {
+	    new File(context.getRealPath(folderPath)).mkdirs();
 	    dashDataFile.createNewFile();
 	} else {
 	    dashDataFile.delete();
