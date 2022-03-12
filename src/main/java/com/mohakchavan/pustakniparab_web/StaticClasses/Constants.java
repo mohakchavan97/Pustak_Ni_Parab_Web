@@ -22,6 +22,7 @@ public final class Constants {
 	    public static final String LOGIN = "login";
 	    public static final String ADD_NAME = "addName";
 	    public static final String NEW_BOOKS = "newBooks";
+	    public static final String VIEW_ALL_ISSUES = "viewAllIssues";
 //	    public static final String  = "";
 	}
 
@@ -29,6 +30,7 @@ public final class Constants {
 
 	    public static final String HOME = "Home";
 	    public static final String ADD_ISSUE = "AddIssue";
+	    public static final String ALL_ISSUES = "AllIssues";
 	    public static final String RETURN_ISSUE = "ReturnIssue";
 	    public static final String ALL_NAMES = "AllNames";
 	    public static final String LOGOUT = "Logout";
