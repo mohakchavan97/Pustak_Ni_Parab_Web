@@ -16,6 +16,8 @@ import com.mohakchavan.pustakniparab_web.Helpers.SessionHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
@@ -144,6 +146,12 @@ public class ReturnIssue extends HttpServlet {
 			    issuesList.add(issue);
 			}
 		    }
+		    Collections.sort(issuesList, new Comparator<Issues>() {
+			@Override
+			public int compare(Issues o1, Issues o2) {
+			    return (int) (o2.getIssueNo() - o1.getIssueNo());
+			}
+		    });
 		    request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_ISSUES_FOR_HTML, issuesList);
 		}
 		latch2.countDown();
