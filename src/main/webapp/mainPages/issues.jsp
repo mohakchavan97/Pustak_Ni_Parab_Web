@@ -6,7 +6,7 @@
 
 <%@page import="java.util.Calendar"%>
 <%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
-<%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.SessionHelper"%>
+<%@page import="com.mohakchavan.pustakniparab_web.Helpers.SessionHelper"%>
 <%@page import="java.util.Map"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.Issues"%>
 <%@page import="java.util.ArrayList"%>
@@ -27,7 +27,7 @@
     <body style="background-color: white;" onload='issuesPageLoaded();'>
 
 	<%
-	    Map sessionMap = SessionHelper.checkSessionAndGetCurrentUser(request);
+	    Map sessionMap = new SessionHelper(request).checkSessionAndGetCurrentUser();
 	    if (!sessionMap.containsKey(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID) || !((Boolean) sessionMap.get(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID))) {
 		request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
 	    }

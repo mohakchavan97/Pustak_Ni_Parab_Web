@@ -10,7 +10,7 @@ import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.BaseHelper;
 import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.NamesHelper;
 import com.mohakchavan.pustakniparab_web.Models.Names;
 import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
-import com.mohakchavan.pustakniparab_web.StaticClasses.SessionHelper;
+import com.mohakchavan.pustakniparab_web.Helpers.SessionHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -44,11 +44,12 @@ public class AllNames extends HttpServlet {
 	PrintWriter out = response.getWriter();
 	RequestDispatcher dispatchToAllNamesJSP = request.getRequestDispatcher("viewAllNames");
 
-	Map sessionMap = SessionHelper.checkSessionAndGetCurrentUser(request);
+	SessionHelper sessionHelper = new SessionHelper(request);
+	Map sessionMap = sessionHelper.checkSessionAndGetCurrentUser();
 	if (!sessionMap.containsKey(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID) || !((Boolean) sessionMap.get(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID))) {
 	    request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
 	}
-	
+
 	try {
 	    /* TODO output your page here. You may use following sample code. */
 	    out.println("<!DOCTYPE html>");
@@ -60,7 +61,7 @@ public class AllNames extends HttpServlet {
 //	    out.println("<h1>Servlet AllNames at " + request.getContextPath() + "</h1>");
 
 	    final CountDownLatch latch = new CountDownLatch(1);
-	    NamesHelper namesHelper = new NamesHelper();
+	    NamesHelper namesHelper = new NamesHelper(sessionHelper.isDeveloperMode());
 
 	    namesHelper.getAllNamesOnce(new BaseHelper.onCompleteRetrieval() {
 		@Override

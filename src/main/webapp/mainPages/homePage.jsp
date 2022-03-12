@@ -12,7 +12,7 @@
 <%@page import="java.io.File"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.DashBoard.DashBoard"%>
 <%@page import="java.util.List"%>
-<%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.SessionHelper"%>
+<%@page import="com.mohakchavan.pustakniparab_web.Helpers.SessionHelper"%>
 <%@page import="java.util.Map"%>
 <%@page import="com.mohakchavan.pustakniparab_web.Models.SessionUser"%>
 <%@page import="com.mohakchavan.pustakniparab_web.StaticClasses.Constants"%>
@@ -34,7 +34,7 @@
 	<%
 	    try {
 		SessionUser currentUser;
-		Map map = SessionHelper.checkSessionAndGetCurrentUser(request);
+		Map map = new SessionHelper(request).checkSessionAndGetCurrentUser();
 		if (map.containsKey(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID) && ((Boolean) map.get(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID))) {
 		    currentUser = (SessionUser) map.get(Constants.ATTRIBUTE_KEY_NAMES.CURRENT_USER);
 	%>
@@ -52,7 +52,10 @@
 		<!--Use this div for showing all the dashboard items-->
 
 		<%
-		    File dashDataFile = new File(getServletContext().getRealPath(Constants.PATHS.DASHBOARD_DATA_PATH));
+		    File dashDataFile = new File(getServletContext().getRealPath(
+			    Constants.PATHS.RESTRICTED_DATA_PATH
+			    + "/" + (new SessionHelper(request).isDeveloperMode() ? Constants.FIREBASE.DATABASE.TESTDATA : Constants.FIREBASE.DATABASE.BASEPOINT)
+			    + Constants.PATHS.DASHBOARD_DATA_PATH));
 		    if (dashDataFile.exists()) {
 			BufferedReader reader = new BufferedReader(new FileReader(dashDataFile));
 			String lines = "", str;

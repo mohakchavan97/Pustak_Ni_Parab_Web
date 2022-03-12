@@ -37,16 +37,49 @@ public class Logout extends HttpServlet {
 	    out.println("<!DOCTYPE html>");
 	    out.println("<html>");
 	    out.println("<head>");
-	    out.println("<title>Servlet Logout</title>");
+	    out.println("<title>Logout | Pustak Ni Parab</title>");
+	    out.println("<script src=\"https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js\"></script>");
+	    out.println("<script src=\"https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js\"></script>");
 	    out.println("</head>");
-	    out.println("<body>");
-	    out.println("<h1>Servlet Logout at " + request.getContextPath() + "</h1>");
+	    out.println("<body onload=\"loaded();\">");
+//	    out.println("<h1>Servlet Logout at " + request.getContextPath() + "</h1>");
+
+	    out.println("<div>");
+	    request.getRequestDispatcher("./genericContent/loader.jsp").include(request, response);
+	    out.println("</div>");
 
 	    HttpSession session = request.getSession(false);
 	    if (session != null) {
 		session.invalidate();
 	    }
-	    request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
+//	    request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
+
+	    out.println("<script>\n"
+		    + "var firebaseConfig = {\n"
+		    + "    apiKey: \"AIzaSyAW4PSGz4Slo2ihuYsn5t7Rselk0631pic\",\n"
+		    + "    authDomain: \"pustak-ni-parab.firebaseapp.com\",\n"
+		    + "    databaseURL: \"https://pustak-ni-parab.firebaseio.com\",\n"
+		    + "    projectId: \"pustak-ni-parab\",\n"
+		    + "    storageBucket: \"pustak-ni-parab.appspot.com\",\n"
+		    + "    messagingSenderId: \"172709641516\",\n"
+		    + "    appId: \"1:172709641516:web:e0b082c93bf2cd8d9ec089\",\n"
+		    + "    measurementId: \"G-MF9K8JKM3V\"\n"
+		    + "};\n"
+		    + "function loaded(){\n"
+		    + "    firebase.initializeApp(firebaseConfig);\n"
+		    + "    var unsubscribe = firebase.auth().onAuthStateChanged((firebaseUser) => {\n"
+		    + "    if(firebaseUser){\n"
+		    + "        firebase.auth().signOut().then(() => {\n"
+		    + "            console.log(\"Sign-out successful.\");\n"
+		    + "        }).catch((error) => {\n"
+		    + "            console.log(error);\n"
+		    + "        });\n"
+		    + "    }\n"
+		    + "    unsubscribe();\n"
+		    + "    document.location.href=\"login\";\n"
+		    + "    });\n"
+		    + "}\n"
+		    + "</script>");
 
 	    out.println("</body>");
 	    out.println("</html>");

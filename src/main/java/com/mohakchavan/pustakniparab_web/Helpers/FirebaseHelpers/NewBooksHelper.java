@@ -22,8 +22,8 @@ public class NewBooksHelper {
     private final DatabaseReference newBooksReference;
     private final BaseHelper baseHelper;
 
-    public NewBooksHelper() {
-	baseHelper = new BaseHelper();
+    public NewBooksHelper(boolean developerMode) {
+	baseHelper = new BaseHelper(developerMode);
 	newBooksReference = baseHelper.getBaseReference().child(Constants.FIREBASE.DATABASE.NEW_BOOKS);
     }
 

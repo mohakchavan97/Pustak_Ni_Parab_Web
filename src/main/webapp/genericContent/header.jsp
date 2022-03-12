@@ -100,19 +100,21 @@
         </div>
 
 	<div id="navigationDrawer" style="display: none;">
-	    <jsp:include page="navigationDrawer.jsp" flush="true"></jsp:include>
-	    </div>
+	    <jsp:include page="navigationDrawer.jsp" flush="true">
+		<jsp:param name="toShowToggle" value="<%=String.valueOf(currentUser.isDeveloper())%>"/>
+	</jsp:include>
+    </div>
 
-	<%
-	    if (session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED) != null
-		    && !((Boolean) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED))) {
-	%>
-	<div id="notVerifiedUser" align="center" style="margin-top: 10%; color: red; font-size: x-large; font-weight: bolder; margin-bottom: -11.8%;">
-	    You are not a verified user. Please verify yourself.
-	</div>
-	<%
-		}
+    <%
+	if (session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED) != null
+		&& !((Boolean) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED))) {
+    %>
+    <div id="notVerifiedUser" align="center" style="margin-top: 10%; color: red; font-size: x-large; font-weight: bolder; margin-bottom: -11.8%;">
+	You are not a verified user. Please verify yourself.
+    </div>
+    <%
 	    }
-	%>
-    </body>
+	}
+    %>
+</body>
 </html>

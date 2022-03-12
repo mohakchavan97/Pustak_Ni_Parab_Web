@@ -12,7 +12,7 @@ import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.NamesHelper;
 import com.mohakchavan.pustakniparab_web.Models.Issues;
 import com.mohakchavan.pustakniparab_web.Models.Names;
 import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
-import com.mohakchavan.pustakniparab_web.StaticClasses.SessionHelper;
+import com.mohakchavan.pustakniparab_web.Helpers.SessionHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -52,7 +52,8 @@ public class ReturnIssue extends HttpServlet {
 	PrintWriter out = response.getWriter();
 	RequestDispatcher dispatchToReturnsJSP = request.getRequestDispatcher("returns");
 
-	Map sessionMap = SessionHelper.checkSessionAndGetCurrentUser(request);
+	SessionHelper sessionHelper = new SessionHelper(request);
+	Map sessionMap = sessionHelper.checkSessionAndGetCurrentUser();
 	if (!sessionMap.containsKey(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID) || !((Boolean) sessionMap.get(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID))) {
 	    request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
 	}
@@ -67,7 +68,7 @@ public class ReturnIssue extends HttpServlet {
 		isForReturn = false;
 	    }
 	}
-	IssuesHelper issuesHelper = new IssuesHelper();
+	IssuesHelper issuesHelper = new IssuesHelper(sessionHelper.isDeveloperMode());
 
 	if (!isForReturn) {
 	    //Enable this code if request is from homepage. (i.e.: By default, enable this code.)
@@ -156,7 +157,7 @@ public class ReturnIssue extends HttpServlet {
 	    }
 	});
 
-	NamesHelper namesHelper = new NamesHelper();
+	NamesHelper namesHelper = new NamesHelper(new SessionHelper(request).isDeveloperMode());
 	namesHelper.getAllNamesOnce(new BaseHelper.onCompleteRetrieval() {
 	    @Override
 	    public void onComplete(Object data) {

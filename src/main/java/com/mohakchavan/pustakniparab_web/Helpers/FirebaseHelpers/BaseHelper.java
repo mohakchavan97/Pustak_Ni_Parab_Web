@@ -30,9 +30,11 @@ public class BaseHelper {
     private final FirebaseDatabase firebaseDatabase;
     private DatabaseReference rootReference;
     private DatabaseReference baseReference;
+    private boolean developerMode;
 
-    public BaseHelper() {
+    public BaseHelper(boolean developerMode) {
 	firebaseDatabase = FirebaseDatabase.getInstance(BaseAuthenticator.getFirebaseApp());
+	this.developerMode = developerMode;
 	setRootReference();
 	setBaseReference();
     }
@@ -51,7 +53,12 @@ public class BaseHelper {
 
     private void setBaseReference() {
 //	baseReference = getRootReference().child(Constants.FIREBASE.DATABASE.BASEPOINT);
-	baseReference = getRootReference().child(Constants.FIREBASE.DATABASE.TESTDATA);
+//	baseReference = getRootReference().child(Constants.FIREBASE.DATABASE.TESTDATA);
+	if (developerMode) {
+	    baseReference = getRootReference().child(Constants.FIREBASE.DATABASE.TESTDATA);
+	} else {
+	    baseReference = getRootReference().child(Constants.FIREBASE.DATABASE.BASEPOINT);
+	}
     }
 
     public void getAllVerifiedUsers(final onCompleteRetrieval onCompleteRetrieval, final onFailure onFailure) {

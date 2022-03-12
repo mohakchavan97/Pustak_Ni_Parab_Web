@@ -11,16 +11,19 @@ package com.mohakchavan.pustakniparab_web.Models;
  */
 public class VerifiedUsers {
 
-    private String userEmail, userName, userPhoto, userUid;
+    private String userEmail, userName, userPhoto, userUid, fcmId, isDeveloper, providerUserUid;
 
     public VerifiedUsers() {
     }
 
-    public VerifiedUsers(String userEmail, String userName, String userPhoto, String userUid) {
+    public VerifiedUsers(String userEmail, String userName, String userPhoto, String userUid, String fcmId, String isDeveloper, String providerUserUid) {
 	this.userEmail = userEmail;
 	this.userName = userName;
 	this.userPhoto = userPhoto;
 	this.userUid = userUid;
+	this.fcmId = fcmId;
+	this.isDeveloper = isDeveloper;
+	this.providerUserUid = providerUserUid;
     }
 
     public String getUserEmail() {
@@ -53,6 +56,34 @@ public class VerifiedUsers {
 
     public void setUserUid(String userUid) {
 	this.userUid = userUid;
+    }
+
+    public String getFcmId() {
+	return fcmId;
+    }
+
+    public void setFcmId(String fcmId) {
+	this.fcmId = fcmId;
+    }
+
+    public boolean isDeveloper() {
+	return isDeveloper != null && isDeveloper.equalsIgnoreCase("true");
+    }
+
+    public String getIsDeveloper() {
+	return isDeveloper;
+    }
+
+    public void setIsDeveloper(String isDeveloper) {
+	this.isDeveloper = isDeveloper;
+    }
+
+    public String getProviderUserUid() {
+	return providerUserUid;
+    }
+
+    public void setProviderUserUid(String providerUserUid) {
+	this.providerUserUid = providerUserUid;
     }
 
 }
