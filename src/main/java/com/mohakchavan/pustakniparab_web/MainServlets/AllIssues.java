@@ -5,8 +5,22 @@
  */
 package com.mohakchavan.pustakniparab_web.MainServlets;
 
+import com.google.firebase.database.DatabaseError;
+import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.BaseHelper;
+import com.mohakchavan.pustakniparab_web.Helpers.FirebaseHelpers.IssuesHelper;
+import com.mohakchavan.pustakniparab_web.Helpers.SessionHelper;
+import com.mohakchavan.pustakniparab_web.Models.Issues;
+import com.mohakchavan.pustakniparab_web.StaticClasses.Constants;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +43,23 @@ public class AllIssues extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
 	response.setContentType("text/html;charset=UTF-8");
-	try (PrintWriter out = response.getWriter()) {
+	PrintWriter out = response.getWriter();
+
+	RequestDispatcher dispatchToAllIssuesJSP = request.getRequestDispatcher(Constants.PATHS.JSP.VIEW_ALL_ISSUES);
+	SessionHelper sessionHelper = new SessionHelper(request);
+	Map sessionMap = sessionHelper.checkSessionAndGetCurrentUser();
+	if (!sessionMap.containsKey(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID) || !((Boolean) sessionMap.get(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID))) {
+	    request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
+	}
+	IssuesHelper issuesHelper = new IssuesHelper(sessionHelper.isDeveloperMode());
+
+	try {
+	    redirectToAllIssuesJSP(request, response, issuesHelper, dispatchToAllIssuesJSP);
+	} catch (InterruptedException ex) {
+	    Logger.getLogger(AllIssues.class.getName()).log(Level.SEVERE, null, ex);
+	}
+
+	try {
 	    /* TODO output your page here. You may use following sample code. */
 	    out.println("<!DOCTYPE html>");
 	    out.println("<html>");
@@ -40,7 +70,40 @@ public class AllIssues extends HttpServlet {
 	    out.println("<h1>Servlet AllIssues at " + request.getContextPath() + "</h1>");
 	    out.println("</body>");
 	    out.println("</html>");
+	} catch (Exception e) {
 	}
+    }
+
+    private void redirectToAllIssuesJSP(final HttpServletRequest request, HttpServletResponse response, IssuesHelper issuesHelper,
+	    RequestDispatcher dispatchToAllIssuesJSP) throws ServletException, IOException, InterruptedException {
+	final CountDownLatch latch = new CountDownLatch(1);
+
+	issuesHelper.getAllIssuesOnce(new BaseHelper.onCompleteRetrieval() {
+	    @Override
+	    public void onComplete(Object data) {
+		if (data != null) {
+		    List<Issues> issuesList = (List<Issues>) data;
+		    Collections.sort(issuesList, new Comparator<Issues>() {
+			@Override
+			public int compare(Issues o1, Issues o2) {
+			    return (int) (o2.getIssueNo() - o1.getIssueNo());
+			}
+		    });
+		    request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.ALL_ISSUES_FOR_HTML, issuesList);
+		}
+		latch.countDown();
+	    }
+	}, new BaseHelper.onFailure() {
+	    @Override
+	    public void onFail(Object data) {
+		System.err.println(((DatabaseError) data).toString());
+		request.setAttribute(Constants.ATTRIBUTE_KEY_NAMES.HAS_ERROR_WITH_DATA, Constants.ERRORS.SOME_ERROR_FULL);
+		latch.countDown();
+	    }
+	});
+
+	latch.await();
+	dispatchToAllIssuesJSP.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

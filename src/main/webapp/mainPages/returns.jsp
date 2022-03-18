@@ -29,7 +29,7 @@
 	if (!sessionMap.containsKey(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID) || !((Boolean) sessionMap.get(Constants.ATTRIBUTE_KEY_NAMES.IS_SESSION_VALID))) {
 	    request.getRequestDispatcher(Constants.PATHS.JSP.LOGIN).forward(request, response);
 	}
-	
+
 	Boolean isVerified = (Boolean) session.getAttribute(Constants.ATTRIBUTE_KEY_NAMES.IS_CURRENT_USER_VERIFIED);
 
 	List<Issues> issuesList = null;
@@ -213,6 +213,7 @@
 			 <jsp:param name="name_id" value="<%=issue.getIssuerId()%>"/>
 			 <jsp:param name="issuer_name" value="<%=issue.getIssuerName()%>"/>
 			 <jsp:param name="issue_date" value="<%=issue.getIssueDate()%>"/>
+			 <jsp:param name="isEditable" value="<%=Constants.YES%>"/>
 		     </jsp:include>
 
 		     <%
