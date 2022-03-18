@@ -66,6 +66,14 @@
         <servlet-name>HomePageJSP</servlet-name>
         <jsp-file>/mainPages/homePage.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>ViewAllIssuesJSP</servlet-name>
+        <jsp-file>/mainPages/viewAllIssues.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>AllIssues</servlet-name>
+        <servlet-class>com.mohakchavan.pustakniparab_web.MainServlets.AllIssues</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserSignedIn</servlet-name>
         <url-pattern>/UserSignedIn</url-pattern>
@@ -129,6 +137,14 @@
     <servlet-mapping>
         <servlet-name>HomePageJSP</servlet-name>
         <url-pattern>/homePage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewAllIssuesJSP</servlet-name>
+        <url-pattern>/viewAllIssues</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AllIssues</servlet-name>
+        <url-pattern>/AllIssues</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

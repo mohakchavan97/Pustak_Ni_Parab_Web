@@ -22,6 +22,7 @@ public final class Constants {
 	    public static final String LOGIN = "login";
 	    public static final String ADD_NAME = "addName";
 	    public static final String NEW_BOOKS = "newBooks";
+	    public static final String VIEW_ALL_ISSUES = "viewAllIssues";
 //	    public static final String  = "";
 	}
 
@@ -29,6 +30,7 @@ public final class Constants {
 
 	    public static final String HOME = "Home";
 	    public static final String ADD_ISSUE = "AddIssue";
+	    public static final String ALL_ISSUES = "AllIssues";
 	    public static final String RETURN_ISSUE = "ReturnIssue";
 	    public static final String ALL_NAMES = "AllNames";
 	    public static final String LOGOUT = "Logout";
@@ -77,20 +79,8 @@ public final class Constants {
 	public static final String IS_SESSION_VALID = "isSessionValidWithUserData";
 	public static final String CURRENT_USER = "currentUser";
 	public static final String IS_DEVELOPER_MODE = "isDeveloperMode";
-    }
-
-    public static final class ERRORS {
-
-	public static final String SOME_ERROR = "Some Error Occurred.";
-	public static final String TRY_AGAIN = "Please try again.";
-	public static final String NO_ISSUES = "No Issues Found.";
-	public static final String NO_NAMES = "No Names Found.";
-	public static final String ISSUE_NOT_ADDED = "Issue not added." + SPACE + Constants.ERRORS.SOME_ERROR_FULL;
-	public static final String ISSUE_NOT_RETURNED = "Issues are not returned." + SPACE + Constants.ERRORS.SOME_ERROR_FULL;
-	public static final String NO_NAME_ID = "The selected ID of the name does not exists. " + TRY_AGAIN;
-	public static final String SOME_ERROR_FULL = SOME_ERROR + SPACE + TRY_AGAIN;
-	public static final String NAME_NOT_ADDED = "The details of the person were not added." + SPACE + Constants.ERRORS.SOME_ERROR_FULL;
-	public static final String BOOKS_NOT_ADDED = "The details of the new books were not added." + SPACE + Constants.ERRORS.SOME_ERROR_FULL;
+	public static final String IS_EDITABLE = "isEditable";
+	public static final String IS_RETURNED = "isReturned";
     }
 
     public static final class IDS {
@@ -121,6 +111,20 @@ public final class Constants {
 	public static final String SEL_LANG = "sel_lang";
 //	public static final String  = "";
 
+    }
+
+    public static final class ERRORS {
+
+	public static final String SOME_ERROR = "Some Error Occurred.";
+	public static final String TRY_AGAIN = "Please try again.";
+	public static final String NO_ISSUES = "No Issues Found.";
+	public static final String NO_NAMES = "No Names Found.";
+	public static final String ISSUE_NOT_ADDED = "Issue not added." + SPACE + Constants.ERRORS.SOME_ERROR_FULL;
+	public static final String ISSUE_NOT_RETURNED = "Issues are not returned." + SPACE + Constants.ERRORS.SOME_ERROR_FULL;
+	public static final String NO_NAME_ID = "The selected ID of the name does not exists. " + TRY_AGAIN;
+	public static final String SOME_ERROR_FULL = SOME_ERROR + SPACE + TRY_AGAIN;
+	public static final String NAME_NOT_ADDED = "The details of the person were not added." + SPACE + Constants.ERRORS.SOME_ERROR_FULL;
+	public static final String BOOKS_NOT_ADDED = "The details of the new books were not added." + SPACE + Constants.ERRORS.SOME_ERROR_FULL;
     }
 
     public static enum VALUES {

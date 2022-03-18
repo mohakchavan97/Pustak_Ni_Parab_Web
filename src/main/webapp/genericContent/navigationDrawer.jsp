@@ -146,12 +146,16 @@
 		</tr>
 		<tr><td colspan="2"><hr/></td></tr>
 		<tr style="cursor: pointer;" onclick="location.href = './<%=Constants.PATHS.SERVLET.ADD_ISSUE%>';">
-		    <td class="drawerImg"><img src="./icons/ic_issues.svg" alt="ic_issues" align="center" style="vertical-align: middle;"/></td>
+		    <td class="drawerImg"><img src="./icons/ic_add_issue_24px.svg" alt="ic_issues" align="center" style="vertical-align: middle;"/></td>
 		    <td class="drawerLabel">Add New Issue</td>
 		</tr>
 		<tr style="cursor: pointer;" onclick="location.href = './<%=Constants.PATHS.SERVLET.RETURN_ISSUE%>';">
 		    <td class="drawerImg"><img src="./icons/ic_returns.svg" alt="ic_returns" align="center" style="vertical-align: middle;"/></td>
 		    <td class="drawerLabel">Returns</td>
+		</tr>
+		<tr style="cursor: pointer;" onclick="location.href = './<%=Constants.PATHS.SERVLET.ALL_ISSUES%>';">
+		    <td class="drawerImg"><img src="./icons/ic_view_all_issues.svg" alt="ic_issues" align="center" style="vertical-align: middle;"/></td>
+		    <td class="drawerLabel">View All Issues</td>
 		</tr>
 		<tr><td colspan="2"><hr/></td></tr>
 		<tr>
@@ -168,7 +172,7 @@
 		</tr>
 		<tr><td colspan="2"><hr/></td></tr>
 		<tr style="cursor: pointer;" onclick="location.href = './<%=Constants.PATHS.JSP.NEW_BOOKS%>';">
-		    <td class="drawerImg"><img src="./icons/ic_add_book_24px.svg" alt="ic_add_book" align="center" style="vertical-align: middle;"/></td>
+		    <td class="drawerImg"><img src="./icons/ic_add_book.svg" alt="ic_add_book" align="center" style="vertical-align: middle;"/></td>
 		    <td class="drawerLabel">Add New Books</td>
 		</tr>
 		<tr><td colspan="2"><hr/></td></tr>

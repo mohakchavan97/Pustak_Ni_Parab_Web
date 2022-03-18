@@ -19,8 +19,24 @@
 		<tr>
 		    <th class="td-th-large" colspan="2" align="left" style="width: 73%;"><%=request.getParameter(Constants.IDS.ISSUE_ID)%></th>
 		    <td rowspan="2" class="td-content-1">
-			<label class="container"><input type="checkbox" name="isIssueChecked" id="isIssueChecked_<%=request.getParameter(Constants.IDS.ISSUE_ID)%>" 
-							onclick="issueCheckedChange(<%=request.getParameter(Constants.IDS.ISSUE_ID)%>)">&nbsp;
+			<label class="container"><input type="checkbox" name="isIssueChecked"
+							<%
+							    if (request.getParameter(Constants.ATTRIBUTE_KEY_NAMES.IS_EDITABLE) != null
+								    && request.getParameter(Constants.ATTRIBUTE_KEY_NAMES.IS_EDITABLE).contentEquals(Constants.YES)) {
+							%>
+							id="isIssueChecked_<%=request.getParameter(Constants.IDS.ISSUE_ID)%>"
+							onclick="issueCheckedChange(<%=request.getParameter(Constants.IDS.ISSUE_ID)%>)"
+							<%
+							    } else {
+								out.println(" disabled ");
+							    }
+							    if (request.getParameter(Constants.ATTRIBUTE_KEY_NAMES.IS_RETURNED) != null
+								    && request.getParameter(Constants.ATTRIBUTE_KEY_NAMES.IS_RETURNED).contentEquals(Constants.YES)) {
+								out.println(" checked ");
+							    }
+
+							%>
+							>&nbsp;
 			    <span class="checkMark"></span></label>
 		    </td>
 		</tr>
